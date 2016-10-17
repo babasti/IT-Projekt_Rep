@@ -1,12 +1,14 @@
 package client;
 
+import java.io.Serializable;
+
 import javafx.application.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class MainTest extends Application {
+public class MainTest extends Application implements Serializable {
 	
 	
 
