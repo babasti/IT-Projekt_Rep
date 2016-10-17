@@ -8,7 +8,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
    <center>
-      <Pane fx:id="p1" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="p2" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="b1" layoutX="74.0" layoutY="88.0" mnemonicParsing="false" text="Button" />
             <TextField fx:id="tf1" layoutX="26.0" layoutY="125.0" />
