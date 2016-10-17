@@ -21,10 +21,8 @@ public class GameController implements Initializable {
 		
 	}
 	
-	public void sendToServer(ActionEvent e){
-		
-	
-	
+	public void handle(){
+		client.ClientCommunication.sendToServer("localHost",1234,b1);
 	}
 	
 }

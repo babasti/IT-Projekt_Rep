@@ -4,12 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerCommunication {
+import javafx.scene.control.Button;
+
+public class ServerCommunication implements Serializable{
 
 	public static void main(String[] args) {
 		try {
@@ -22,12 +27,19 @@ public class ServerCommunication {
 			Socket client = server.accept();
 			
 			//Server schickt etwas an Client
-			OutputStream out = client.getOutputStream();
+			ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
 			PrintWriter pw = new PrintWriter(out);
 			
 			//Client Daten empfangen
-			InputStream in = client.getInputStream();
+			ObjectInputStream in = new ObjectInputStream(client.getInputStream());
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			
+			try {
+				Button b1 = (Button)in.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			//chat
 			String s = null;
