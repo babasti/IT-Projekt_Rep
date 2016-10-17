@@ -23,7 +23,6 @@ public class GameController implements Initializable {
 	
 	public void sendToServer(ActionEvent e){
 		
-		
 	
 	
 	}
