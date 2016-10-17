@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -24,24 +23,22 @@ public class ClientCommunication implements Serializable{
 
 	public static void sendToServer(String IP, int port, Object data){
 
+
 		try {
-			
-			ServerSocket server = new ServerSocket(1234);
-			System.out.println("server gestartet");
-			
 			Socket client = new Socket(IP, port);
-			
+
 			ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
 			PrintWriter pw = new PrintWriter(out);
 
 			//Client Daten empfangen
 			ObjectInputStream in = new ObjectInputStream(client.getInputStream());
-			
-			
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
 			pw.print(data);
 			pw.flush();
 
 			pw.close();
+			br.close();
 
 
 		} catch (UnknownHostException e) {
