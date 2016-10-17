@@ -14,7 +14,7 @@ public class MainGame extends Application {
 		try {
 			Pane root = (Pane)FXMLLoader.load(getClass().getResource("Game.fxml"));
 			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
+			primaryStage.setScene(scene); 
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
