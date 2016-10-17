@@ -1,4 +1,4 @@
-package server;
+package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,42 +6,40 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
-public class Communication {
+public class ClientCommunication {
 
 	public static void main(String[] args) {
+
 		try {
-			
-			//startet Server
-			ServerSocket server = new ServerSocket(1234);
-			System.out.println("Server gestartet!");
-			
-			//Server wartet auf Nachrichten von Clients
-			Socket client = server.accept();
-			
-			//Server schickt etwas an Client
+
+			Socket client = new Socket("localHost", 1234);
+			System.out.println("Client wurde gestartet!");
+
 			OutputStream out = client.getOutputStream();
 			PrintWriter pw = new PrintWriter(out);
-			
+
 			//Client Daten empfangen
 			InputStream in = client.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			
-			//chat
-			String s = null;
-			
-			while((s = br.readLine()) != null){
-				System.out.println("Empfangen von Client:" + s);
-			}
+
+			pw.write("Hallo Server");
+			pw.flush();
+
 			pw.close();
 			br.close();
-			
-		} catch (IOException e) {
 
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+
 
 	}
 
