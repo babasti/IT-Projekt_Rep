@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
 
+import client.GameController;
+
 
 // receives objects from client, replace their names and send it back to client
 // needs ObjectOutputStream and ObjectInputStream to send and read Objects
@@ -27,16 +29,13 @@ public class ServerObject {
 			
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 			
-			client.Game game2 = (client.Game)in.readObject();
+			common.Game game2 = (common.Game)in.readObject();
 			
 			System.out.println("Objekt beim Server angekommen");
-			
-			
-			game2.setPlayer("di vater");
-			
+					
 			out.writeObject(game2);
 			
-			System.out.println("Objekt vom Server zurückgeschickt! ");
+			System.out.println("Objekt vom Server zurï¿½ckgeschickt! ");
 			System.out.println(game2);
 			
 		}catch (Exception e){

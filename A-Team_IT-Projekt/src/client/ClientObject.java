@@ -3,6 +3,8 @@ package client;
 import java.io.*;
 import java.net.Socket;
 
+import common.Game;
+
 public class ClientObject {
 	
 	

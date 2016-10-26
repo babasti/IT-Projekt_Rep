@@ -1,4 +1,4 @@
-package client;
+package common;
 
 import java.awt.TextField;
 import java.io.Serializable;
