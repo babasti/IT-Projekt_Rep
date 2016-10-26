@@ -29,6 +29,9 @@ public class LoginController implements Initializable{
 	Label text_Passwort;
 	
 	@FXML
+	Label text_Fehlermeldung;
+	
+	@FXML
 	Button b_login;
 	
 	@FXML

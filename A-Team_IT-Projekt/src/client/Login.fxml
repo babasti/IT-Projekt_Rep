@@ -12,10 +12,13 @@
 
 <Pane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LoginController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="600.0">
+      <ImageView disable="true" fitHeight="500.0" fitWidth="600.0">
          <image>
-            <Image url="@../../../../../Desktop/Studium/5.%20Semester/IT-Projekt/Atlantis/Login_Bild.jpg" />
+            <Image url="@Login_Bild.jpg" />
          </image>
+         <effect>
+            <Glow level="0.17" />
+         </effect>
       </ImageView>
       <TextField fx:id="tf_username" layoutX="240.0" layoutY="213.0" prefHeight="27.0" prefWidth="200.0">
          <font>
@@ -75,5 +78,20 @@
                </light>
             </Lighting>
          </effect></Label>
+      <Label fx:id="text_Fehlermeldung" layoutX="295.0" layoutY="89.0" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
    </children>
 </Pane>
