@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.paint.*?>
@@ -21,11 +22,15 @@
             <Font name="Baskerville Bold" size="14.0" />
          </font>
          <effect>
-            <BoxBlur />
+            <InnerShadow color="#e44317" />
          </effect></TextField>
-      <Label fx:id="text_Benutzername" layoutX="110.0" layoutY="218.0" text="Benutzername:" textFill="#e82e44f5" underline="true">
+      <PasswordField fx:id="pf_password" layoutX="240.0" layoutY="250.0" prefHeight="27.0" prefWidth="200.0">
+         <effect>
+            <InnerShadow color="#e44317" />
+         </effect></PasswordField>
+      <Label fx:id="text_Benutzername" layoutX="91.0" layoutY="216.0" text="Benutzername:" textFill="#e44417f5">
          <font>
-            <Font name="Baskerville Bold" size="16.0" />
+            <Font name="Baskerville Bold" size="18.0" />
          </font>
          <effect>
             <Lighting bumpInput="$null">
@@ -34,9 +39,9 @@
                </light>
             </Lighting>
          </effect></Label>
-      <Label fx:id="text_Passwort" layoutX="110.0" layoutY="255.0" text="Passwort:" textFill="#e82e44" underline="true">
+      <Label fx:id="text_Passwort" layoutX="91.0" layoutY="253.0" text="Passwort:" textFill="#e44317">
          <font>
-            <Font name="Baskerville Bold" size="16.0" />
+            <Font name="Baskerville Bold" size="18.0" />
          </font>
          <effect>
             <Lighting bumpInput="$null">
@@ -59,11 +64,7 @@
          <effect>
             <SepiaTone />
          </effect></Button>
-      <PasswordField fx:id="pf_password" layoutX="240.0" layoutY="250.0" prefHeight="27.0" prefWidth="200.0">
-         <effect>
-            <BoxBlur />
-         </effect></PasswordField>
-      <Label fx:id="text_LoginAtlantis" layoutX="253.0" layoutY="14.0" text="Atlantis" textFill="#e82e44" underline="true">
+      <Label fx:id="text_LoginAtlantis" layoutX="253.0" layoutY="14.0" text="Atlantis" textFill="#e44317">
          <font>
             <Font name="Baskerville Bold" size="36.0" />
          </font>
