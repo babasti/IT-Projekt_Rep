@@ -128,7 +128,7 @@
             <InnerShadow color="#e44317" />
          </effect>
       </PasswordField>
-      <DatePicker fx:id="dp_geburtsdatum" layoutX="316.0" layoutY="296.0" prefHeight="27.0" prefWidth="176.0">
+      <DatePicker fx:id="dp_geburtsdatum" blendMode="LIGHTEN" layoutX="316.0" layoutY="296.0" prefHeight="27.0" prefWidth="176.0">
          <effect>
             <Lighting>
                <bumpInput>
