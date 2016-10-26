@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LoginController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="600.0">
+         <image>
+            <Image url="@../../../../../Desktop/Studium/5.%20Semester/IT-Projekt/Atlantis/Login_Bild.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tf_username" layoutX="240.0" layoutY="213.0" prefHeight="27.0" prefWidth="200.0">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <BoxBlur />
+         </effect></TextField>
+      <Label fx:id="text_Benutzername" layoutX="110.0" layoutY="218.0" text="Benutzername:" textFill="#e82e44f5" underline="true">
+         <font>
+            <Font name="Baskerville Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting bumpInput="$null">
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Label>
+      <Label fx:id="text_Passwort" layoutX="110.0" layoutY="255.0" text="Passwort:" textFill="#e82e44" underline="true">
+         <font>
+            <Font name="Baskerville Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting bumpInput="$null">
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Label>
+      <Button fx:id="b_login" layoutX="240.0" layoutY="301.0" mnemonicParsing="false" onAction="#login" text="Anmelden" textFill="#e82e44">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect></Button>
+      <Button fx:id="b_registration" layoutX="333.0" layoutY="301.0" mnemonicParsing="false" onAction="#switchToRegistration" prefHeight="28.0" prefWidth="103.0" text="Registrieren" textFill="#e82e44">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect></Button>
+      <PasswordField fx:id="pf_password" layoutX="240.0" layoutY="250.0" prefHeight="27.0" prefWidth="200.0">
+         <effect>
+            <BoxBlur />
+         </effect></PasswordField>
+      <Label fx:id="text_LoginAtlantis" layoutX="253.0" layoutY="14.0" text="Atlantis" textFill="#e82e44" underline="true">
+         <font>
+            <Font name="Baskerville Bold" size="36.0" />
+         </font>
+         <effect>
+            <Lighting bumpInput="$null">
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Label>
+   </children>
+</Pane>
