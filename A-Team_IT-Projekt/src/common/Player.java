@@ -16,8 +16,8 @@ public class Player {
 		this.userName = userName;
 		this.dateOfBirth= dateOfBirth;
 		this.password = password;
-		cards = new ArrayList<Card>;
-		tiles = new ArrayList<Tile>;
+		cards = new ArrayList<Card>();
+		tiles = new ArrayList<Tile>();
 		score = 0;	
 	}
 	
