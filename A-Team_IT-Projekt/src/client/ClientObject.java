@@ -5,12 +5,10 @@ import java.net.Socket;
 
 import common.Game;
 
-public class ClientObject {
-	
+public class ClientObject{
 	
 	private static Game game = new Game("Simone");
 
-	
 	// connect client with Server
 	public static Game clientServerCommunication(Game game) {
 		
@@ -22,8 +20,6 @@ public class ClientObject {
 			ObjectInputStream in = new ObjectInputStream (client.getInputStream());
 			
 			System.out.println("Server kontaktiert: " +client.getInetAddress());
-			
-			
 			
 			out.writeObject(game);
 			
@@ -57,6 +53,8 @@ public class ClientObject {
 		
 		
 	}
+
+	
 	
 }
 

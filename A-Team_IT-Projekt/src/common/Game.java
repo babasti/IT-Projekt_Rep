@@ -10,20 +10,12 @@ public class Game implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String player;
+	private Player[] players;
 	
-	public Game(String player){
-		this.player = player;
+	public Game(Player[] players){
+		this.players = players;
 	}
-	
-	public void setPlayer(String player){
-		this.player = player;
-	}
-	
-	public String getPlayer(){
-		return this.player;
-	}
-	
+		
 	public String toSTring(){
 		return "Player name: "+player;
 	}
