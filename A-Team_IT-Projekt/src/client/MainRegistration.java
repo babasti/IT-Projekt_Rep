@@ -18,6 +18,7 @@ public class MainRegistration extends Application implements Serializable {
 		try{
 			Pane root = (Pane)FXMLLoader.load(getClass().getResource("Registration.fxml"));
 			Scene scene = new Scene(root);
+			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			

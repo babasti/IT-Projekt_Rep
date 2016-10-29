@@ -18,6 +18,7 @@ public class MainLogin extends Application implements Serializable {
 		try{
 			Pane root = (Pane)FXMLLoader.load(getClass().getResource("Login.fxml"));
 			Scene scene = new Scene(root);
+			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
