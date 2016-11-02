@@ -1,9 +1,15 @@
 package common;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Player {
 
@@ -14,10 +20,8 @@ public class Player {
 	private int score;
 	public ArrayList<Tile> tiles;
 	private String PCName;
-	public static ArrayList<Player> registeredPlayers = new ArrayList<Player>();
-	private boolean exist;
 
-	public Player(String userName, Date dateOfBirth, String password){
+	public Player(String userName, String password, Date dateOfBirth){
 		this.userName = userName;
 		this.dateOfBirth= dateOfBirth;
 		this.password = password;
@@ -25,10 +29,10 @@ public class Player {
 		cards = new ArrayList<Card>();
 		tiles = new ArrayList<Tile>();
 		score = 0;
-		checkUser(userName);
-		if(exist==false){
-			registeredPlayers.add(this);
-			}
+
+		if(checkUser(userName)==false){
+			addUser(userName, password, dateOfBirth, PCName);
+		}
 	}
 
 	public void setScore(int score){
@@ -50,24 +54,94 @@ public class Player {
 	public String getPassword(){
 		return this.password;
 	}
-	
+
+	//Methode überladen, damit man mit userNamen Passwort holen kann
+	public static String getPassword(String userName){
+		String pw = null;
+		Scanner scan;
+		try {
+			scan = new Scanner(new File("RegisteredPlayers.txt"));
+
+			scan.useDelimiter(Pattern.compile(":"));
+			//geht Zeile für Zeile das File durch und vergleicht erster Eintrag pro Zeile mit eingegebenem Usernamen
+			while(scan.hasNext()){
+				String[] regUser = scan.nextLine().split(":");
+				if(regUser[0].equals(userName)){
+					pw = regUser[1];
+				}	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pw;
+	}
+
+
 	public String getPCName(){
 		return System.getProperty("user.name");
 	}
-	
+
+
 	//prüft, ob Player bereits erstellt
-	public void checkUser(String userName){
-		exist = false;
-		for(int i=0;i<Player.registeredPlayers.size(); i++){
-			if(userName.equals(Player.registeredPlayers.get(i).userName)){
-				System.out.println("Dieser Benutzername ist schon vergeben!");
-				exist=true;
+	public static boolean checkUser(Player p){
+		boolean exist = false;
+		String userName = p.getUserName();
+		try {
+			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
+			scan.useDelimiter(Pattern.compile(":"));
+			//geht Zeile für Zeile das File durch und vergleicht erster Eintrag pro Zeile mit eingegebenem Usernamen
+			while(scan.hasNext()){
+				String regUser = scan.next();
+				if(regUser.equals(userName)){
+					exist = true;
+				}	
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return exist;
 	}
-	
+
+	//CheckUser überladen, damit ich mit userName oder Player nach Usern im File suchen kann
+	public static boolean checkUser(String userName){
+		boolean exist = false;
+		try {
+			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
+			scan.useDelimiter(Pattern.compile(":"));
+			//geht Zeile für Zeile das File durch und vergleicht erster Eintrag pro Zeile mit eingegebenem Usernamen
+			while(scan.hasNext()){
+				String regUser = scan.next();
+				if(regUser.equals(userName)){
+					exist = true;
+				}	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exist;
+	}
+	// fügt neuen User im File RegisteredPlayers hinzu
+	public static void addUser(String userName, String password, Date dateOfBirth, String PCName){
+		try {
+			FileWriter fw = new FileWriter("RegisteredPlayers.txt", true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
+
+			bw.write(userName+":"+password+":"+dateFormat.format(dateOfBirth)+":"+PCName+"\n");
+
+			bw.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
 	public String toString(){
-		return "Name: "+this.userName+"\n"+"Passwort: "+this.password+"\n"+"Geburtsdatum: "+this.dateOfBirth;
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		return "Name: "+this.userName+"\n"+"Passwort: "+this.password+"\n"+"Geburtsdatum: "+dateFormat.format(this.dateOfBirth);
 	}
 
 }

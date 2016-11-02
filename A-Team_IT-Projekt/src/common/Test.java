@@ -6,24 +6,17 @@ import java.util.Date;
 public class Test {
 
 	public static void main(String[] args){
-		System.out.println(System.getProperty("user.name"));
-		@SuppressWarnings("deprecation")
-		Date d = new Date(92,0,15);
-		Player b = new Player("babs",d,"fhnw");
-		Player c = new Player("alen",d,"alen");
-		System.out.println(Player.registeredPlayers.size());
+		Date d1 = new Date(92,0,15);
+		Date d2 = new Date(91,1,25);
+		Date d3 = new Date(57,10,1);
 		
+		Player p1 = new Player("Barbara","ananas",d1);
+		Player p2 = new Player("alen","fhnw",d2);
+		Player p3 = new Player("simi","naros",d3);
 		
-		System.out.println(b);
-		
-		System.out.println(Player.registeredPlayers);
-
-		Player.registeredPlayers.clear();
-		
-		for(int i=0;i<Player.registeredPlayers.size(); i++){
-			System.out.println(Player.registeredPlayers.get(i));
-		}
-		
+		System.out.println(Player.getPassword("Barbara"));
+		System.out.println(p2);
+		System.out.println(p3);
 	}
 
 }
