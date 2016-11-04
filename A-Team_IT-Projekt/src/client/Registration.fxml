@@ -1,8 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<Pane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.RegistrationController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="600.0">
+         <image>
+            <Image url="@Registration_Bild.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="text_Registration" layoutX="194.0" layoutY="25.0" text="Registration" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="36.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <Label fx:id="text_Benutzername" layoutX="98.0" layoutY="178.0" text="Benutzername:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <Label fx:id="text_Passwort" layoutX="98.0" layoutY="218.0" text="Passwort:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <Label fx:id="text_PasswortWiederholen" layoutX="97.0" layoutY="257.0" text="Passwort wiederholen:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <Label fx:id="text_Geburtsdatum" layoutX="97.0" layoutY="298.0" text="Geburtsdatum:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <TextField fx:id="tf_username" layoutX="316.0" layoutY="176.0">
+         <effect>
+            <InnerShadow color="#e44317" />
+         </effect>
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="pf_password" layoutX="316.0" layoutY="216.0" prefHeight="27.0" prefWidth="176.0">
+         <effect>
+            <InnerShadow color="#e44317" />
+         </effect>
+      </PasswordField>
+      <PasswordField fx:id="pf_repeatPassword" layoutX="316.0" layoutY="255.0" prefHeight="27.0" prefWidth="176.0">
+         <effect>
+            <InnerShadow color="#e44317" />
+         </effect>
+      </PasswordField>
+      <DatePicker fx:id="dp_geburtsdatum" blendMode="LIGHTEN" layoutX="316.0" layoutY="296.0" prefHeight="27.0" prefWidth="176.0">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#f4a18e" />
+               </light>
+            </Lighting>
+         </effect>
+      </DatePicker>
+      <Button fx:id="b_register" layoutX="389.0" layoutY="360.0" mnemonicParsing="false" onAction="#register" text="Registrieren">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </Button>
+   </children>
 </Pane>
-
