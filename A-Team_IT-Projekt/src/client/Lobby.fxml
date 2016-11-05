@@ -1,17 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="850.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="850.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LobbyController">
    <children>
       <ImageView fitHeight="850.0" fitWidth="1350.0">
          <image>
             <Image url="@Lobby_Bild.jpg" />
          </image>
       </ImageView>
+      <Label fx:id="text_OffeneSitzungen" layoutX="393.0" layoutY="83.0" text="Offene Sitzungen:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="24.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Blend />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <TableView fx:id="table_OffeneSitzungen" layoutX="393.0" layoutY="111.0" onMouseClicked="#selectSession" prefHeight="200.0" prefWidth="450.0">
+        <columns>
+            <TableColumn fx:id="spalte_Sitzung" prefWidth="150.0" text="Sitzung" />
+          <TableColumn fx:id="spalte_Spieler" prefWidth="150.0" text="Spieler" />
+          <TableColumn fx:id="spalte_Anzahl" prefWidth="150.0" text="Anzahl" />
+        </columns>
+         <effect>
+            <InnerShadow color="#e44317" />
+         </effect>
+      </TableView>
+      <Button fx:id="b_SitzungBeitreten" layoutX="393.0" layoutY="339.0" mnemonicParsing="false" onAction="#joinSession" text="Sitzung beitreten" textFill="#e82e44">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="b_SitzungVerlassen" layoutX="535.0" layoutY="339.0" mnemonicParsing="false" onAction="#exitSession" text="Sitzung verlassen" textFill="#e82e44">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect></Button>
+      <Button fx:id="b_SpielStarten" layoutX="678.0" layoutY="339.0" mnemonicParsing="false" onAction="#startSession" text="Spiel starten" textFill="#e82e44">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect></Button>
+      <Label fx:id="text_NeueSitzungErstellen" layoutX="386.0" layoutY="495.0" text="Neue Sitzung erstellen:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="24.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Blend />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <Label fx:id="text_Sitzungsname" layoutX="388.0" layoutY="537.0" text="Sitzungsname:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Blend />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Label>
+      <Label fx:id="text_AnzahlSpieler" layoutX="388.0" layoutY="597.0" text="Anzahl Spieler:" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Blend />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Label>
+      <TextField fx:id="tf_Sitzungsname" layoutX="530.0" layoutY="534.0">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <InnerShadow color="#e44317" />
+         </effect></TextField>
+      <ChoiceBox fx:id="cb_AnzahlSpieler" layoutX="528.0" layoutY="595.0" prefWidth="150.0">
+         <effect>
+            <SepiaTone />
+         </effect></ChoiceBox>
+      <Button fx:id="b_SitzungErstellen" layoutX="529.0" layoutY="650.0" mnemonicParsing="false" onAction="#createNewSession" text="Sitzung erstellen" textFill="#e82e44">
+         <font>
+            <Font name="Baskerville Bold" size="14.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect></Button>
    </children>
 </Pane>
