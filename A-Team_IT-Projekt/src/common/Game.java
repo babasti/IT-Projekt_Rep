@@ -12,6 +12,9 @@ public class Game implements Serializable {
 	
 	private Player[] players;
 	
+	
+
+	
 	public Game(Player[] players){
 		this.players = players;
 	}
