@@ -68,6 +68,10 @@ public class RegistrationController implements Initializable {
 		String eingabePW2 = pf_repeatPassword.getText();
 		Date eingabeDatum = Date.from(dp_geburtsdatum.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+		if(checkUser(userName)==false){
+			addUser(userName, password, dateOfBirth, PCName);
+		}
+		
 		//		if(!common.Player.checkUser(eingabeName) && !(eingabeName == null) && eingabePW1.equals(eingabePW2) && !(eingabePW1 == null) && eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))){
 		//			{
 		//				b_register.setDisable(false);
