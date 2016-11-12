@@ -1,8 +1,10 @@
 package common;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -88,11 +90,10 @@ public class Player {
 		String userName = p.getUserName();
 		try {
 			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-			scan.useDelimiter(Pattern.compile(":"));
+			scan.useDelimiter(":");
 			//geht Zeile für Zeile das File durch und vergleicht erster Eintrag pro Zeile mit eingegebenem Usernamen
 			while(scan.hasNext()){
-				String regUser = scan.next();
-				if(regUser.equals(userName)){
+				if(scan.next().equals(userName)){
 					exist = true;
 				}	
 			}
@@ -107,15 +108,16 @@ public class Player {
 		boolean exist = false;
 		try {
 			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-			scan.useDelimiter(Pattern.compile(":"));
-			//geht Zeile für Zeile das File durch und vergleicht erster Eintrag pro Zeile mit eingegebenem Usernamen
+			scan.useDelimiter(":");
+
 			while(scan.hasNext()){
-				String regUser = scan.next();
-				if(regUser.equals(userName)){
-					exist = true;
-				}	
+				String next= scan.next();
+				if(next.equals(userName)){
+					exist=true;
+				}
 			}
-		} catch (Exception e) {
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return exist;
