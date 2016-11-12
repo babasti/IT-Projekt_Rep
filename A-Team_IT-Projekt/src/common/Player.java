@@ -100,24 +100,24 @@ public class Player {
 	}
 
 	//CheckUser überladen, damit ich mit userName oder Player nach Usern im File suchen kann
-//	public static boolean checkUser(String userName){
-//		boolean exist = false;
-//		try {
-//			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-//			scan.useDelimiter(":");
-//
-//			while(scan.hasNext()){
-//				String next= scan.next();
-//				if(next.equals(userName)){
-//					exist=true;
-//				}
-//			}
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return exist;
-//	}
+	public static boolean checkUser(String userName){
+		boolean exist = false;
+		try {
+			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
+			scan.useDelimiter(":");
+
+			while(scan.hasNext()){
+				String next= scan.next();
+				if(next.equals(userName)){
+					exist=true;
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return exist;
+	}
 	
 	// fügt neuen User im File RegisteredPlayers hinzu
 	public static void addUser(String userName, String password, Date dateOfBirth, String PCName){
