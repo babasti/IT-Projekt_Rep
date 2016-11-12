@@ -7,10 +7,14 @@ public class Session {
 	private Player[] players;
 	private String sessionName;
 
+
 	public Session(String sessionName, int numOfPlayers){
 		this.sessionName = sessionName;
 		this.numOfPlayers = numOfPlayers;
 		players = new Player[numOfPlayers];
+		
+
+		
 		
 		//Player, der Session erstellt hat, wird an erster Stelle
 		//zum Player-Array hinzugefügt
