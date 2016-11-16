@@ -41,6 +41,7 @@ public class ServerThread extends Thread {
 
 				doSomething(game);
 				objectOutputStream.writeObject(game);
+				objectOutputStream.writeObject(regPlayers);
 
 				System.out.println("Object has been changed and sent.");
 

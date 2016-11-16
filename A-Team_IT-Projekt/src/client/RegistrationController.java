@@ -1,6 +1,10 @@
 package client;
 
 import java.io.BufferedReader;
+
+import javafx.beans.value.ChangeListener; 
+import javafx.beans.value.ObservableValue;
+
 import java.io.FileReader;
 import java.net.URL;
 import java.time.LocalDate;
@@ -20,6 +24,8 @@ import javafx.scene.control.TextField;
 
 public class RegistrationController implements Initializable {
 
+	
+
 
 	@FXML
 	Label text_Registration;
@@ -37,79 +43,108 @@ public class RegistrationController implements Initializable {
 	Label text_Geburtsdatum;
 
 	@FXML
-	TextField tf_username;
+	public static TextField tf_username;
 
 	@FXML
-	PasswordField pf_password;
+	public static PasswordField pf_password;
 
 	@FXML
-	PasswordField pf_repeatPassword;
+	public static PasswordField pf_repeatPassword;
 
 	@FXML
-	DatePicker dp_geburtsdatum;
+	public static DatePicker dp_geburtsdatum;
 
 	@FXML
-	public Button b_register;
+	public static Button b_register;
 
 	@FXML
-	Label text_Fehlermeldung;
+	public static Label text_Fehlermeldung;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 
 	}
 
-	public void register(){
-		Date oldest = new Date(1900,0,1); //ältestes mögliches Datum ist 1.1.1900
-		Calendar cal;
-		String eingabeName = tf_username.getText();
-		String eingabePW1 = pf_password.getText();
-		String eingabePW2 = pf_repeatPassword.getText();
-		Date eingabeDatum = Date.from(dp_geburtsdatum.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		if(checkUser(userName)==false){
-			addUser(userName, password, dateOfBirth, PCName);
-		}
+	public RegistrationController(){
 		
-		//		if(!common.Player.checkUser(eingabeName) && !(eingabeName == null) && eingabePW1.equals(eingabePW2) && !(eingabePW1 == null) && eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))){
-		//			{
-		//				b_register.setDisable(false);
-		//				//in Lobby weiterleiten
-		//			}
-		//		}
+		int sum=0;
 
-		if(common.Player.checkUser(eingabeName)){
-			text_Fehlermeldung.setText("Diesen Benutzer gibt es schon. \n Bitte wähle einen anderen Namen.");
-		}else if(eingabeName == null){
-			text_Fehlermeldung.setText("Sie haben keinen Benutzernamen eingegeben.");
-		}else{
-			if(!eingabePW1.equals(eingabePW2)){
-				text_Fehlermeldung.setText("Die beiden Passwörter stimmen nicht überein. Bitte gib sie noch einmal ein.");
-			}else if(eingabePW1 == null || eingabePW2 == null){
-				b_register.setDisable(true);
-				text_Fehlermeldung.setText("Sie haben kein Passwort eingegeben.");
-				//prüft ob Datum zwischen 1.1.1900 und heute liegt
-				if(!(eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())))){
-					b_register.setDisable(true);
-				}else{
-					try{
-						BufferedReader in = new BufferedReader(new FileReader("RegisteredPlayers.txt"));
-						int count = 0;
-						while(in.readLine() != null){
-							count++;
-						}
-						String playerName = "player"+String.valueOf(count);
-						
-						Player.addUser(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
-					}catch(Exception e){
-						e.printStackTrace();
-					}
+		tf_username.textProperty().addListener(new ChangeListener<String>(){
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
+				sum += 1;
+				if(sum == 3){
+					b_register.setDisable(false);
 				}
 			}
-		}
-
-
+		});
+		pf_password.textProperty().addListener(new ChangeListener<String>(){
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
+				sum += 1;
+				if(sum == 3){
+					b_register.setDisable(false);
+				}
+			}
+		});
+		pf_repeatPassword.textProperty().addListener(new ChangeListener<String>(){
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
+				sum += 1;
+				if(sum == 3){
+					b_register.setDisable(false);
+				}
+			}
+		});
 	}
 
+
+	public void register(){
+		try{
+			Date oldest = new Date(1900,0,1); //ältestes mögliches Datum ist 1.1.1900
+			Calendar cal;
+			String eingabeName = "Benutzername";
+			eingabeName = tf_username.getText();
+			String eingabePW1 = pf_password.getText();
+			String eingabePW2 = pf_repeatPassword.getText();
+			Date eingabeDatum = Date.from(dp_geburtsdatum.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			System.out.println("Hallo");
+
+
+			//			if(!common.Player.checkUser(eingabeName) && !(eingabeName == null) && eingabePW1.equals(eingabePW2) && !(eingabePW1 == null) && eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))){
+			//				{
+			//					b_register.setDisable(false);
+			//					//in Lobby weiterleiten
+			//				}
+			//			}
+
+
+			if(eingabeName.equals("Benutzername")){
+				System.out.println("2");
+				text_Fehlermeldung.setText("Sie haben keinen Benutzernamen eingegeben.");
+			}else if(common.Player.checkUser(eingabeName)){
+				System.out.println("1");
+				text_Fehlermeldung.setText("Diesen Benutzer gibt es schon. \n Bitte wähle einen anderen Namen.");
+			}else{
+				if(eingabePW1.isEmpty() || eingabePW2.isEmpty()){
+					System.out.println("4");
+					b_register.setDisable(true);
+					text_Fehlermeldung.setText("Sie haben kein Passwort eingegeben.");
+				} if(!eingabePW1.equals(eingabePW2)){
+					System.out.println("3");
+					text_Fehlermeldung.setText("Die beiden Passwörter stimmen nicht überein. Bitte gib sie noch einmal ein.");
+				}
+				//prüft ob Datum zwischen 1.1.1900 und heute liegt
+				//			if(!(eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())))){
+				//				b_register.setDisable(true);
+				//				System.out.println("5");
+				else{
+					System.out.println("6");
+					Player.addUser(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
+				}
+			}
+
+		}catch(Exception e){
+			text_Fehlermeldung.setText("Bitte füllen Sie alle Felder aus.");
+		}
+	}
 }
+
