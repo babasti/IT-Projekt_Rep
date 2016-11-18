@@ -64,12 +64,12 @@ public class LoginController implements Initializable{
 		}
 	}
 
-
-
-
-
 	public void switchToRegistration(){
-
+		try{
+			MainRegistration.main(null);
+		}catch(Exception e){
+			System.out.println(e);
+		}
 	}
 
 
