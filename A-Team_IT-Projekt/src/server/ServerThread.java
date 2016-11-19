@@ -16,10 +16,31 @@ public class ServerThread extends Thread {
 	ServerThread(Socket socket){
 		this.socket = socket;
 	}
+	
+	public static ArrayList<Player> regPlayers;
 
 
 	public void run(){
 		//common.Game game = null;
+		regPlayers = new ArrayList<Player>();
+	
+		try{
+			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
+			
+
+			while(scan.hasNextLine()){
+				String[] next = scan.nextLine().split(":");
+				String[] d = next[2].split("-");
+				Date date = new Date(Integer.parseInt(d[2]), Integer.parseInt(d[1]), Integer.parseInt(d[0]));
+				regPlayers.add(new Player(next[0], next[1], date));			
+			}
+
+			for(int i=0; i<regPlayers.size(); i++){
+				System.out.println(regPlayers.get(i));
+			}
+		}catch(Exception e){
+		}
+		
 
 		try{
 //			//schreibt alle User in File in eine ArrayList

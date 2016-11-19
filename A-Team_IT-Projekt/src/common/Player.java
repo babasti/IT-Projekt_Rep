@@ -61,6 +61,18 @@ public class Player {
 		this.PCName = PCName;
 	}
 	
+	//geht Spieler aus File durch
+	public static String[] regPlayerFile(){
+		Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
+		
+
+		while(scan.hasNextLine()){
+			String[] next = scan.nextLine().split(":");
+			String[] d = next[2].split("-");
+			Date date = new Date(Integer.parseInt(d[2]), Integer.parseInt(d[1]), Integer.parseInt(d[0]));
+			regPlayers.add(new Player(next[0], next[1], date));			
+		}
+	}
 	//wenn PCName des registrierten Benutzers nicht mit aktuellem PC übereinstimmt.
 	//wird der Player
 	public void updatePCName(){
@@ -93,17 +105,17 @@ public class Player {
 				}
 			}
 		}else{
-			return client.Client.regPlayers.get(0);
+			return server.ServerThread.regPlayers.get(0);
 		}
 
-		return client.Client.regPlayers.get(0);
+		return server.ServerThread.regPlayers.get(0);
 	}
 
 
 	//prüft, ob Player mit diesem UserName bereits erstellt
 	public static boolean checkUser(String userName){
 		boolean exist = false;
-			for(Player p:client.Client.regPlayers){
+			for(Player p:server.ServerThread.regPlayers){
 				if(p.getUserName().equals(userName)){
 					exist = true;
 				}

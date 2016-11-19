@@ -1,6 +1,10 @@
 package client;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
+import common.Player;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +20,22 @@ public class MainLogin extends Application implements Serializable {
 
 	public void start(Stage primaryStage) throws Exception {
 		try{
+			server.ServerThread.regPlayers = new ArrayList<Player>();
+
+			Date d1 = new Date(92,0,15);
+			Date d2 = new Date(91,1,25);
+			Date d3 = new Date(57,10,1);
+
+			Player p1 = new Player("Barbara","ananas",d1);
+			server.ServerThread.regPlayers.add(p1);
+			System.out.println(Player.checkUser("Barbara"));
+			Player p2 = new Player("alen","fhnw",d2);
+			server.ServerThread.regPlayers.add(p2);
+			System.out.println(Player.checkUser("alen"));
+			Player p3 = new Player("simi","naros",d3);
+			server.ServerThread.regPlayers.add(p3);
+			System.out.println(Player.checkUser("simi"));
+			
 			Pane root = (Pane)FXMLLoader.load(getClass().getResource("Login.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setResizable(false);

@@ -50,6 +50,8 @@ public class LoginController implements Initializable{
 	public void login(){
 		String eingabeName = tf_username.getText();
 		String eingabePW = pf_password.getText();
+		
+		
 
 		if(Player.checkUser(eingabeName)){ //Benutzer existiert
 			if(Player.getPlayerUser(eingabeName).getPassword().equals(eingabePW)){// Benutzer existier&Passwort korrekt
@@ -67,7 +69,7 @@ public class LoginController implements Initializable{
 
 	public void switchToRegistration(){
 		try{
-			MainRegistration.main(null);
+			//MainRegistration.main(null);
 		}catch(Exception e){
 			System.out.println(e);
 		}

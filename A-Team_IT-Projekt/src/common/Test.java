@@ -12,6 +12,8 @@ import java.util.Scanner;
 public class Test {
 
 	public static void main(String[] args){
+		
+		System.out.println(client.Client.regPlayers);
 
 		client.Client.regPlayers = new ArrayList<Player>();
 
@@ -28,6 +30,8 @@ public class Test {
 		Player p3 = new Player("simi","naros",d3);
 		client.Client.regPlayers.add(p3);
 		System.out.println(Player.checkUser("simi"));
+		
+		System.out.println(client.Client.regPlayers);
 
 
 
