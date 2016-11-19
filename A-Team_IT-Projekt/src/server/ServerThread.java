@@ -27,7 +27,6 @@ public class ServerThread extends Thread {
 		try{
 			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
 			
-
 			while(scan.hasNextLine()){
 				String[] next = scan.nextLine().split(":");
 				String[] d = next[2].split("-");

@@ -12,26 +12,32 @@ import java.util.Scanner;
 public class Test {
 
 	public static void main(String[] args){
-		
-		System.out.println(client.Client.regPlayers);
-
-		client.Client.regPlayers = new ArrayList<Player>();
+//		
+//		System.out.println(client.Client.regPlayers);
+//
+		server.ServerThread.regPlayers = new ArrayList<Player>();
 
 		Date d1 = new Date(92,0,15);
 		Date d2 = new Date(91,1,25);
 		Date d3 = new Date(57,10,1);
 
-		Player p1 = new Player("Barbara","ananas",d1);
-		client.Client.regPlayers.add(p1);
-		System.out.println(Player.checkUser("Barbara"));
-		Player p2 = new Player("alen","fhnw",d2);
-		client.Client.regPlayers.add(p2);
-		System.out.println(Player.checkUser("alen"));
-		Player p3 = new Player("simi","naros",d3);
-		client.Client.regPlayers.add(p3);
-		System.out.println(Player.checkUser("simi"));
+		Player p1 = new Player("Barbara","ananas",d1,"ananas");
+//		Player.addUser("Barbara","ananas",d1,"ananas");
+//		System.out.println(server.ServerThread.regPlayers);
 		
-		System.out.println(client.Client.regPlayers);
+		p1.updatePCName();
+//		System.out.println(server.ServerThread.regPlayers);
+//		System.out.println(p1.getPCName());
+//		client.Client.regPlayers.add(p1);
+//		System.out.println(Player.checkUser("Barbara"));
+//		Player p2 = new Player("alen","fhnw",d2);
+//		client.Client.regPlayers.add(p2);
+//		System.out.println(Player.checkUser("alen"));
+//		Player p3 = new Player("simi","naros",d3);
+//		client.Client.regPlayers.add(p3);
+//		System.out.println(Player.checkUser("simi"));
+//		
+//		System.out.println(client.Client.regPlayers);
 
 
 
