@@ -15,8 +15,12 @@ public class Client {
 	//	common.Player p1 = new common.Player("simi", "lala", null);
 	//	common.Player p2 = new common.Player("al", "lele", null);
 	//	
+	public static ArrayList<Player> regPlayers;
 
+	
 	public static void main(String[] args) throws Exception{
+		regPlayers = new ArrayList<Player>();
+		
 		System.out.println("Connecting...");
 		Socket socket = new Socket ("localhost", server.Server.PORT);
 		System.out.println("Connection successful.");
@@ -29,7 +33,7 @@ public class Client {
 
 			try{
 				Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-				ArrayList<Player> regPlayers = new ArrayList<Player>();
+				
 
 				while(scan.hasNextLine()){
 					String[] next = scan.nextLine().split(":");

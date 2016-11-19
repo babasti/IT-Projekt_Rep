@@ -52,9 +52,10 @@ public class LoginController implements Initializable{
 		String eingabePW = pf_password.getText();
 
 		if(Player.checkUser(eingabeName)){ //Benutzer existiert
-			if(Player.getPassword(eingabeName).equals(eingabePW)){ // Benutzer existier&Passwort korrekt
-				//go to lobby
+			if(Player.getPlayerUser(eingabeName).getPassword().equals(eingabePW)){// Benutzer existier&Passwort korrekt
+				Player.getPlayerUser(eingabeName).updatePCName();
 				text_Fehlermeldung.setText("Eingaben korrekt");
+				//MainLobby.main(null);
 			}else{ //Benutzer existiert aber Passwort falsch
 				text_Fehlermeldung.setText("Das Passwort ist falsch.");
 			}
@@ -71,6 +72,4 @@ public class LoginController implements Initializable{
 			System.out.println(e);
 		}
 	}
-
-
 }

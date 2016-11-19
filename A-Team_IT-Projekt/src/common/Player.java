@@ -53,72 +53,64 @@ public class Player {
 		return this.password;
 	}
 
-	//Methode überladen, damit man mit userNamen Passwort holen kann
-//	public static String getPassword(String userName){
-//		String pw = null;
-//		Scanner scan;
-//		try {
-//			scan = new Scanner(new File("RegisteredPlayers.txt"));
-//
-//			scan.useDelimiter(Pattern.compile(":"));
-//			//geht Zeile für Zeile das File durch und vergleicht erster Eintrag pro Zeile mit eingegebenem Usernamen
-//			while(scan.hasNext()){
-//				String[] regUser = scan.nextLine().split(":");
-//				if(regUser[0].equals(userName)){
-//					pw = regUser[1];
-//				}	
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return pw;
-//	}
-
-
 	public String getPCName(){
 		return System.getProperty("user.name");
 	}
 
-
-	//prüft, ob Player bereits erstellt
-	public static boolean checkUser(Player p){
-		boolean exist = false;
-		String userName = p.getUserName();
-		try {
-			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-			scan.useDelimiter(":");
-			//geht Zeile für Zeile das File durch und vergleicht erster Eintrag pro Zeile mit eingegebenem Usernamen
-			while(scan.hasNext()){
-				if(scan.next().equals(userName)){
-					exist = true;
-				}	
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return exist;
-	}
-
-	//CheckUser überladen, damit ich mit userName oder Player nach Usern im File suchen kann
-	public static boolean checkUser(String userName){
-		boolean exist = false;
-		try {
-			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-			scan.useDelimiter(":");
-
-			while(scan.hasNext()){
-				String next= scan.next();
-				if(next.equals(userName)){
-					exist=true;
-				}
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return exist;
+	public void setPCName(String PCName){
+		this.PCName = PCName;
 	}
 	
+	//wenn PCName des registrierten Benutzers nicht mit aktuellem PC übereinstimmt.
+	//wird der Player
+	public void updatePCName(){
+		if(!this.getPCName().equals(System.getProperty("user.name"))){
+			this.setPCName(System.getProperty("user.name"));
+		}
+	}
+
+	//identifiziert Player über dessen PCNamen
+	public static Player getPlayerPC(String PCName){
+		if(client.Client.regPlayers.size()>0){
+			for(Player p:client.Client.regPlayers){
+				if(p.getPCName().equals(PCName)){
+					return p;
+				}
+			}
+		}else{
+			return client.Client.regPlayers.get(0);
+		}
+
+		return client.Client.regPlayers.get(0);
+	}
+
+	//identifiziert Player über dessen UserNamen
+	public static Player getPlayerUser(String userName){
+		if(client.Client.regPlayers.size()>0){
+			for(Player p:client.Client.regPlayers){
+				if(p.getUserName().equals(userName)){
+					return p;
+				}
+			}
+		}else{
+			return client.Client.regPlayers.get(0);
+		}
+
+		return client.Client.regPlayers.get(0);
+	}
+
+
+	//prüft, ob Player mit diesem UserName bereits erstellt
+	public static boolean checkUser(String userName){
+		boolean exist = false;
+			for(Player p:client.Client.regPlayers){
+				if(p.getUserName().equals(userName)){
+					exist = true;
+				}
+			}
+		return exist;
+	}
+
 	// fügt neuen User im File RegisteredPlayers hinzu
 	public static void addUser(String userName, String password, Date dateOfBirth, String PCName){
 		try {
@@ -129,7 +121,7 @@ public class Player {
 
 			bw.write(userName+":"+password+":"+dateFormat.format(dateOfBirth)+":"+PCName+"\n");
 			bw.close();
-			
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
