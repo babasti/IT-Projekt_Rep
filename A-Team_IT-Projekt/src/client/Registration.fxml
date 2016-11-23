@@ -15,7 +15,7 @@
             <Image url="@Registration_Bild.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="text_Registration" layoutX="194.0" layoutY="25.0" text="Registration" textFill="#e44317">
+      <Label fx:id="text_Registration" layoutX="194.0" layoutY="25.0" text="Registrierung" textFill="#e44317">
          <font>
             <Font name="Baskerville Bold" size="36.0" />
          </font>
@@ -140,7 +140,7 @@
             </Lighting>
          </effect>
       </DatePicker>
-      <Button fx:id="b_register" disable="true" layoutX="389.0" layoutY="360.0" mnemonicParsing="false" onAction="#register" text="Registrieren">
+      <Button fx:id="b_register" layoutX="389.0" layoutY="360.0" mnemonicParsing="false" onAction="#register" text="Registrieren">
          <font>
             <Font name="Baskerville Bold" size="14.0" />
          </font>

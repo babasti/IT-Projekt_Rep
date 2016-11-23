@@ -25,14 +25,16 @@ public class MainLogin extends Application implements Serializable {
 			Date d1 = new Date(92,0,15);
 			Date d2 = new Date(91,1,25);
 			Date d3 = new Date(57,10,1);
+			
+			String PCName = System.getProperty("user.name");
 
-			Player p1 = new Player("Barbara","ananas",d1);
+			Player p1 = new Player("Barbara","ananas",d1,PCName);
 			server.ServerThread.regPlayers.add(p1);
 			System.out.println(Player.checkUser("Barbara"));
-			Player p2 = new Player("alen","fhnw",d2);
+			Player p2 = new Player("alen","fhnw",d2,PCName);
 			server.ServerThread.regPlayers.add(p2);
 			System.out.println(Player.checkUser("alen"));
-			Player p3 = new Player("simi","naros",d3);
+			Player p3 = new Player("simi","naros",d3,PCName);
 			server.ServerThread.regPlayers.add(p3);
 			System.out.println(Player.checkUser("simi"));
 			

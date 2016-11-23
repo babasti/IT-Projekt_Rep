@@ -78,7 +78,7 @@
                </light>
             </Lighting>
          </effect></Label>
-      <Label fx:id="text_Fehlermeldung" layoutX="295.0" layoutY="89.0" textFill="#e44317">
+      <Label fx:id="text_Fehlermeldung" layoutX="191.0" layoutY="100.0" prefHeight="27.0" prefWidth="218.0" textFill="#e44317">
          <font>
             <Font name="Baskerville Bold" size="18.0" />
          </font>

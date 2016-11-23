@@ -1,6 +1,12 @@
+
+
 package client;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
+import common.Player;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +26,15 @@ public class MainRegistration extends Application implements Serializable {
 			Scene scene = new Scene(root);
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
-			primaryStage.show();			
+			primaryStage.show();
 
-		}catch(Exception e){
+		}catch (Exception e){
 			e.printStackTrace();
 		}
 
 	}
 
 }
+
+
+

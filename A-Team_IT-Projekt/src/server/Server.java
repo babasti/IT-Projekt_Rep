@@ -3,8 +3,10 @@ package server;
 import java.io.*;
 import java.net.*;
 
+import common.Player;
+
 public class Server {
-	
+
 	public static final int PORT = 1234;
 	public static int counter = 0;
 
@@ -23,8 +25,15 @@ public class Server {
 			System.out.println("Client Nr : "+counter);
 			new ServerThread(socket).start();
 		}
-		
-	}
-	
 
+	}
+
+	//ArrayList regPlayer updaten (entweder Player hinzufügen, oder PCName updaten)
+	public static void updateList(Player p, String PCName){
+		if(server.ServerThread.regPlayers.contains(p)){
+			p.setPCName(PCName);
+		}else{
+			server.ServerThread.regPlayers.add(p);
+		}
+	}
 }
