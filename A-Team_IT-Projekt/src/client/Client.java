@@ -15,7 +15,10 @@ import javafx.stage.Stage;
 import common.Player;
 
 public class Client extends Application{
-	//	
+	static Socket socket;
+	static ObjectOutputStream objectOutputStream;
+	static ObjectInputStream objectInputStream;
+	
 	//	static common.Player [] playerArray;
 	//	
 	//	common.Player p1 = new common.Player("simi", "lala", null);
@@ -23,11 +26,16 @@ public class Client extends Application{
 	//	
 
 	public static void main(String[] args) throws Exception{	
+		
+		
+		
 		System.out.println("Connecting...");
-		Socket socket = new Socket ("localhost", server.Server.PORT);
+		
+		socket = new Socket ("localhost", server.Server.PORT);
 		System.out.println("Connection successful.");
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-		ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+		
+		objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		objectInputStream = new ObjectInputStream(socket.getInputStream());
 
 
 		BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(System.in));
@@ -81,6 +89,15 @@ public class Client extends Application{
 			System.out.println(e);
 		}
 	}
+	public void sendToServer(Object o){
+		try {
+			objectOutputStream.writeObject(o);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
 
 
