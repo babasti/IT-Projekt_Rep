@@ -67,80 +67,47 @@ public class RegistrationController implements Initializable {
 
 	}
 
-	//	public RegistrationController(){
-	//		
-	//		int sum=0;
-	//		
-	//		tf_username.textProperty().addListener(new ChangeListener<String>(){
-	//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-	//				sum += 1;
-	//				if(sum == 3){
-	//					b_register.setDisable(false);
-	//				}
-	//			}
-	//		});
-	//		pf_password.textProperty().addListener(new ChangeListener<String>(){
-	//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-	//				sum += 1;
-	//				if(sum == 3){
-	//					b_register.setDisable(false);
-	//				}
-	//			}
-	//		});
-	//		pf_repeatPassword.textProperty().addListener(new ChangeListener<String>(){
-	//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-	//				sum += 1;
-	//				if(sum == 3){
-	//					b_register.setDisable(false);
-	//				}
-	//			}
-	//		});
-	//	}
-
-
+	
 	public void register(){
-		Date oldest = new Date(0,0,1); //ältestes mögliches Datum ist 1.1.1900
-		String eingabeName  = tf_username.getText();
-		String eingabePW1 = pf_password.getText();
-		String eingabePW2 = pf_repeatPassword.getText();
-		Date eingabeDatum = Date.from(dp_geburtsdatum.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		System.out.println("Hallo");
-
-		if(eingabeName.isEmpty()){
-			System.out.println("2");
-			text_Fehlermeldung.setText("Sie haben keinen Benutzernamen eingegeben.");
-		}else if(common.Player.checkUser(eingabeName)){
-			System.out.println("1");
-			text_Fehlermeldung.setText("Diesen Benutzer gibt es schon. \n Bitte wähle einen anderen Namen.");
+		if(dp_geburtsdatum.getValue() == null){
+			text_Fehlermeldung.setText("Bitte wähle dein Geburtsdatum aus.");
 		}else{
-			if(eingabePW1.isEmpty() || eingabePW2.isEmpty()){
-				System.out.println("4");
-				text_Fehlermeldung.setText("Sie haben kein Passwort eingegeben.");
-			} if(!eingabePW1.equals(eingabePW2)){
-				System.out.println("3");
-				text_Fehlermeldung.setText("Die beiden Passwörter stimmen nicht überein. Bitte gib sie noch einmal ein.");
-			}
-			//prüft ob Datum zwischen 1.1.1900 und heute liegt
-			if(!(eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())))){
-				text_Fehlermeldung.setText("Das eingegebene Datum ist ungültig.");
-				System.out.println("5");
+			Date eingabeDatum = Date.from(dp_geburtsdatum.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			Date oldest = new Date(0,0,1); //ältestes mögliches Datum ist 1.1.1900
+			String eingabeName  = tf_username.getText();
+			String eingabePW1 = pf_password.getText();
+			String eingabePW2 = pf_repeatPassword.getText();
+			
+			if(eingabeName.isEmpty()){
+				text_Fehlermeldung.setText("Sie haben keinen Benutzernamen eingegeben.");
+			}else if(common.Player.checkUser(eingabeName)){
+				text_Fehlermeldung.setText("Diesen Benutzer gibt es schon. \n Bitte wähle einen anderen Namen.");
 			}else{
-				System.out.println("6");
-				Player.addUser(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
+				if(eingabePW1.isEmpty() || eingabePW2.isEmpty()){
+					text_Fehlermeldung.setText("Sie haben kein Passwort eingegeben.");
+				} if(!eingabePW1.equals(eingabePW2)){
+					text_Fehlermeldung.setText("Die beiden Passwörter stimmen nicht überein. Bitte gib sie noch einmal ein.");
+				}
+				//prüft ob Datum zwischen 1.1.1900 und heute liegt
+				if(!(eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())))){
+					text_Fehlermeldung.setText("Das eingegebene Datum ist ungültig.");
+				}else{
+					Player.addUser(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
 
-				try{
-					//Weiterleitung in Lobby				
-					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
-					Pane rootPane = (Pane) fxmlloader.load();
-					Stage stage = new Stage();
-					stage.setScene(new Scene(rootPane));
-					stage.show();
+					try{
+						//Weiterleitung in Lobby				
+						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+						Pane rootPane = (Pane) fxmlloader.load();
+						Stage stage = new Stage();
+						stage.setScene(new Scene(rootPane));
+						stage.show();
 
-					//schliesst das alte GUI
-					Stage stage1 = (Stage)b_register.getScene().getWindow();
-					stage1.close();
-				}catch(Exception e){
-					System.out.println(e);
+						//schliesst das alte GUI
+						Stage stage1 = (Stage)b_register.getScene().getWindow();
+						stage1.close();
+					}catch(Exception e){
+						System.out.println(e);
+					}
 				}
 			}
 		}
