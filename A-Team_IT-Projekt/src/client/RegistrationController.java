@@ -99,7 +99,7 @@ public class RegistrationController implements Initializable {
 
 
 	public void register(){
-		Date oldest = new Date(1900,0,1); //ältestes mögliches Datum ist 1.1.1900
+		Date oldest = new Date(0,0,1); //ältestes mögliches Datum ist 1.1.1900
 		String eingabeName  = tf_username.getText();
 		String eingabePW1 = pf_password.getText();
 		String eingabePW2 = pf_repeatPassword.getText();
