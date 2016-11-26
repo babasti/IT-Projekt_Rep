@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -12,7 +13,8 @@ import java.util.Scanner;
 public class Test {
 
 	public static void main(String[] args){
-//		
+		System.out.println(InetAddress.getLocalHost().getHostAddress());
+		
 //		System.out.println(client.Client.regPlayers);
 //
 		server.ServerThread.regPlayers = new ArrayList<Player>();
