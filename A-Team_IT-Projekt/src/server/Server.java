@@ -9,13 +9,16 @@ public class Server {
 
 	public static final int PORT = 1234;
 	public static int counter = 0;
+	private ServerSocket serverSocket;
 
 	public static void main(String[] args) throws Exception{
 		new Server().runServer();
 	}
 
 	public void runServer() throws Exception {
-		ServerSocket serverSocket = new ServerSocket (PORT);
+		if(serverSocket == null){
+			serverSocket = new ServerSocket (PORT);
+		}
 		System.out.println("Starting Server...");
 		System.out.println("Server started at: "+serverSocket.getInetAddress());
 		while(true){
@@ -24,9 +27,10 @@ public class Server {
 			System.out.println("Connection from: "+socket.getInetAddress());
 			System.out.println("Client Nr : "+counter);
 			new ServerThread(socket).start();
-		}
 
+		}
 	}
+
 
 	//ArrayList regPlayer updaten (entweder Player hinzufügen, oder PCName updaten)
 	public static void updateList(Player p, String PCName){
@@ -36,4 +40,8 @@ public class Server {
 			server.ServerThread.regPlayers.add(p);
 		}
 	}
+//
+//	public String getIP(){
+//		if(serverSocket == null)
+//	}
 }
