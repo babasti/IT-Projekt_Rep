@@ -65,6 +65,7 @@ public class LoginController implements Initializable{
 					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
 					Pane rootPane = (Pane) fxmlloader.load();
 					Stage stage = new Stage();
+					stage.setResizable(false);
 					stage.setScene(new Scene(rootPane));
 					stage.show();
 					
@@ -87,6 +88,7 @@ public class LoginController implements Initializable{
 			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Registration.fxml"));
 			Pane rootPane = (Pane) fxmlloader.load();
 			Stage stage = new Stage();
+			stage.setResizable(false);
 			stage.setScene(new Scene(rootPane));
 			stage.show();
 			

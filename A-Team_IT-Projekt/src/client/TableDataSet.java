@@ -1,17 +1,18 @@
 package client;
 
+import common.Player;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class TableDataSet {
 	
 	private final SimpleStringProperty sessionName;
 	private final SimpleStringProperty numOfPlayers;
-	private final SimpleStringProperty userName;
+
 	
-	public TableDataSet(String sName, Integer nOfPlayers, String uName){
+	public TableDataSet(String sName, Integer nOfPlayers){
 		this.sessionName = new SimpleStringProperty(sName);
 		this.numOfPlayers = new SimpleStringProperty(nOfPlayers.toString());
-		this.userName = new SimpleStringProperty(uName);
 	}
 	
 	public String getSessionName(){
@@ -30,12 +31,8 @@ public class TableDataSet {
 		numOfPlayers.set(nOfPlayers.toString());
 	}
 	
-	public String getUserName(){
-		return userName.get();
+	public StringProperty sessionNameProperty(){
+		return sessionName;
 	}
 	
-	public void setUserName(String uName){
-		userName.set(uName.toString());
-	}
-
 }
