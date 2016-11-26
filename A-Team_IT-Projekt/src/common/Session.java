@@ -18,8 +18,6 @@ public class Session {
 		
 	}
 		
-		
-	
 	//holt die selektierte Sitzung um das Spiel zu starten
 	public TableDataSet getOpenSession(TableDataSet data){
 		return data;
