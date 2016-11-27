@@ -1,6 +1,9 @@
 package client;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -43,6 +46,11 @@ public class LoginController implements Initializable{
 	@FXML
 	Button b_registration;
 
+	@FXML
+	Button hostButton;
+	
+	@FXML
+	TextField ipAdresse;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -99,6 +107,38 @@ public class LoginController implements Initializable{
 			e.printStackTrace();
 		}
 
+	}
+	public void setSocket(){
+		Socket socket = null;
+		try {
+			System.out.println("Connecting...");
+			socket = new Socket("localhost", server.Server.PORT);
+			ClientNew.setClientSocket(socket);
+			System.out.println("Connection successful...");
+			
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setServerSocket(){
+		Socket socket = null;
+		try{
+			System.out.println("Connecting...");
+			socket = new Socket(ipAdresse.getText(), server.Server.PORT);
+			ClientNew.setClientSocket(socket);
+			System.out.println("Connection successful...");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
