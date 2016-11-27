@@ -89,39 +89,39 @@ public class Player {
 
 	//identifiziert Player über dessen PCNamen
 	public static Player getPlayerPC(String PCName){
-		if(server.ServerThread.regPlayers.size()>0){
-			for(Player p:server.ServerThread.regPlayers){
+		if(server.Server.regPlayers.size()>0){
+			for(Player p:server.Server.regPlayers){
 				if(p.getPCName().equals(PCName)){
 					return p;
 				}
 			}
 		}else{
-			return server.ServerThread.regPlayers.get(0);
+			return server.Server.regPlayers.get(0);
 		}
 
-		return server.ServerThread.regPlayers.get(0);
+		return server.Server.regPlayers.get(0);
 	}
 
 	//identifiziert Player über dessen UserNamen
 	public static Player getPlayerUser(String userName){
-		if(server.ServerThread.regPlayers.size()>0){
-			for(Player p:server.ServerThread.regPlayers){
+		if(server.Server.regPlayers.size()>0){
+			for(Player p:server.Server.regPlayers){
 				if(p.getUserName().equals(userName)){
 					return p;
 				}
 			}
 		}else{
-			return server.ServerThread.regPlayers.get(0);
+			return server.Server.regPlayers.get(0);
 		}
 
-		return server.ServerThread.regPlayers.get(0);
+		return server.Server.regPlayers.get(0);
 	}
 
 
 	//prüft, ob Player mit diesem UserName bereits erstellt
 	public static boolean checkUser(String userName){
 		boolean exist = false;
-		for(Player p:server.ServerThread.regPlayers){
+		for(Player p:server.Server.regPlayers){
 			if(p.getUserName().equals(userName)){
 				exist = true;
 			}
@@ -140,7 +140,7 @@ public class Player {
 			bw.write(userName+":"+password+":"+dateFormat.format(dateOfBirth)+":"+PCName+"\n");
 			bw.close();
 
-			server.ServerThread.regPlayers.add(new Player(userName, password, dateOfBirth,PCName));
+			server.Server.regPlayers.add(new Player(userName, password, dateOfBirth,PCName));
 
 		}
 		catch (Exception e) {
