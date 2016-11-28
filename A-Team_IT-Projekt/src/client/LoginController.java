@@ -108,6 +108,9 @@ public class LoginController implements Initializable{
 		}
 
 	}
+	
+	//diese Methode wird aufgerufen wenn der Client selber sein PC als Host zur Verfügung stellt, 
+	//indem beim Login auf den Button "host" geklickt wird
 	public void setSocket(){
 		Socket socket = null;
 		try {
@@ -125,6 +128,8 @@ public class LoginController implements Initializable{
 		}
 	}
 	
+	//diese Methode wird aufgerufen wenn der Client auf einen bereits erstellten Server Spielen möchte
+	//indem er die IP Adresse eingibt wo der Server gestartet wurde
 	public void setServerSocket(){
 		Socket socket = null;
 		try{

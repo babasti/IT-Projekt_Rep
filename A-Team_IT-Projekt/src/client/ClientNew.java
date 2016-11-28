@@ -56,7 +56,7 @@ public class ClientNew extends Application{
 
 	public void start(Stage primaryStage) throws Exception {
 		try{
-			server.ServerThread.regPlayers = new ArrayList<Player>();
+			server.Server.regPlayers = new ArrayList<Player>();
 
 			Date d1 = new Date(92,0,15);
 			Date d2 = new Date(91,1,25);
@@ -65,13 +65,13 @@ public class ClientNew extends Application{
 			String PCName = System.getProperty("user.name");
 
 			Player p1 = new Player("Barbara","ananas",d1,PCName);
-			server.ServerThread.regPlayers.add(p1);
+			server.Server.regPlayers.add(p1);
 			System.out.println(Player.checkUser("Barbara"));
 			Player p2 = new Player("alen","fhnw",d2,PCName);
-			server.ServerThread.regPlayers.add(p2);
+			server.Server.regPlayers.add(p2);
 			System.out.println(Player.checkUser("alen"));
 			Player p3 = new Player("simi","naros",d3,PCName);
-			server.ServerThread.regPlayers.add(p3);
+			server.Server.regPlayers.add(p3);
 			System.out.println(Player.checkUser("simi"));
 
 			Pane root = (Pane)FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -92,6 +92,7 @@ public class ClientNew extends Application{
 		}
 	}
 	
+	// instanziert die Instanzvariabel entsprechend den gewünschten Vorgaben im LoginController
 	public static void setClientSocket(Socket socket1){
 		socket = socket1;
 	}
