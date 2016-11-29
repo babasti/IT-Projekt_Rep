@@ -96,5 +96,6 @@
       <Button fx:id="hostButton" layoutX="240.0" layoutY="353.0" mnemonicParsing="false" onAction="#setSocket" text="Host" />
       <TextField fx:id="ipAdresse" alignment="CENTER" layoutX="310.0" layoutY="353.0" promptText="enter IP Adress" />
       <Button fx:id="serverButton" layoutX="466.0" layoutY="353.0" mnemonicParsing="false" onAction="#setServerSocket" text="Connect to Server" />
+      <Label fx:id="text_Socket" layoutX="174.0" layoutY="441.0" prefHeight="45.0" prefWidth="325.0" textFill="#e44317" />
    </children>
 </Pane>
