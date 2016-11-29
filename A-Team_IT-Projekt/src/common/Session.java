@@ -22,6 +22,30 @@ public class Session {
 	public TableDataSet getOpenSession(TableDataSet data){
 		return data;
 	}
+	
+	public void setSessionName(String sessionName){
+		this.sessionName = sessionName;
+	}
+	
+	public String getSessionName(){
+		return this.sessionName;
+	}
+	
+	public void setNumOfPlayers(int numOfPlayers){
+		this.numOfPlayers = numOfPlayers;
+	}
+	
+	public int getNumOfPlayers(){
+		return this.numOfPlayers;
+	}
+	
+	public void setPlayers(Player [] players){
+		this.players = players;
+	}
+	
+	public Player [] getPlayers(){
+		return this.players;
+	}
 
 
 
