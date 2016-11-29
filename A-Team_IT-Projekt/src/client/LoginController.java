@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -51,9 +52,7 @@ public class LoginController implements Initializable{
 
 	@FXML
 	TextField ipAdresse;
-	
-	@FXML
-	Label text_Socket;
+
 
 	private boolean setSocket = false;
 
@@ -62,7 +61,6 @@ public class LoginController implements Initializable{
 		// TODO Auto-generated method stub
 
 	}
-
 
 	public void login(){
 		String eingabeName = tf_username.getText();
@@ -74,20 +72,20 @@ public class LoginController implements Initializable{
 				Player.getPlayerUser(eingabeName).updatePCName();
 				text_Fehlermeldung.setText("Eingaben korrekt");
 				try{
-					if(setSocket){
-					//Weiterleitung in Lobby				
-					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
-					Pane rootPane = (Pane) fxmlloader.load();
-					Stage stage = new Stage();
-					stage.setResizable(false);
-					stage.setScene(new Scene(rootPane));
-					stage.show();
+					if(setSocket){ //wenn Verbindung zum Server hergestellt wurde
+						//Weiterleitung in Lobby				
+						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+						Pane rootPane = (Pane) fxmlloader.load();
+						Stage stage = new Stage();
+						stage.setResizable(false);
+						stage.setScene(new Scene(rootPane));
+						stage.show();
 
-					//schliesst das alte GUI
-					Stage stage1 = (Stage)b_login.getScene().getWindow();
-					stage1.close();
+						//schliesst das alte GUI
+						Stage stage1 = (Stage)b_login.getScene().getWindow();
+						stage1.close();
 					}else{
-						text_Socket.setText("Bitte wählen Sie einen Host aus.");
+						text_Fehlermeldung.setText("Bitte wählen Sie einen Host aus.");
 					}
 				}catch(Exception e){
 					System.out.println(e);
@@ -102,7 +100,7 @@ public class LoginController implements Initializable{
 
 	public void switchToRegistration(){
 		try{
-			if(setSocket){
+			if(setSocket){ //wenn Verbindung zum Server hergestellt wurde
 				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Registration.fxml"));
 				Pane rootPane = (Pane) fxmlloader.load();
 				Stage stage = new Stage();
@@ -114,12 +112,11 @@ public class LoginController implements Initializable{
 				Stage stage1 = (Stage)b_registration.getScene().getWindow();
 				stage1.close();
 			}else{
-				text_Socket.setText("Bitte wählen Sie einen Host aus.");
+				text_Fehlermeldung.setText("Bitte wählen Sie einen Host aus.");
 			}
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-
 	}
 
 	//diese Methode wird aufgerufen wenn der Client selber sein PC als Host zur Verfügung stellt, 
@@ -127,19 +124,12 @@ public class LoginController implements Initializable{
 	public void setSocket(){
 		Socket socket = null;
 		try {
-			System.out.println("Connecting...");
-			socket = new Socket("localhost", server.Server.PORT);
-			ClientNew.setClientSocket(socket);
-			System.out.println("Connection successful...");
-			setSocket = true;
-
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			InetAddress ip = InetAddress.getLocalHost();
+			ipAdresse.setText(ip.getHostAddress());
+		}catch(Exception e){
 			e.printStackTrace();
 		}
+
 	}
 
 	//diese Methode wird aufgerufen wenn der Client auf einen bereits erstellten Server Spielen möchte
@@ -160,5 +150,4 @@ public class LoginController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-
 }
