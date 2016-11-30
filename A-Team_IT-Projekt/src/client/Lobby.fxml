@@ -32,15 +32,6 @@
             </Lighting>
          </effect>
       </Label>
-      <TableView fx:id="table_OffeneSitzungen" layoutX="393.0" layoutY="111.0" prefHeight="200.0" prefWidth="450.0">
-        <columns>
-            <TableColumn fx:id="spalte_Sitzung" prefWidth="225.0" text="Sitzung" />
-          <TableColumn fx:id="spalte_Anzahl" prefWidth="225.0" text="Anzahl" />
-        </columns>
-         <effect>
-            <InnerShadow color="#e44317" />
-         </effect>
-      </TableView>
       <Button fx:id="b_SitzungBeitreten" layoutX="393.0" layoutY="339.0" mnemonicParsing="false" onAction="#joinSession" text="Sitzung beitreten" textFill="#e82e44">
          <effect>
             <SepiaTone />
@@ -123,5 +114,21 @@
          <effect>
             <SepiaTone />
          </effect></Button>
+      <ListView fx:id="offeneSitzungen" layoutX="394.0" layoutY="123.0" prefHeight="200.0" prefWidth="388.0" />
+      <Label fx:id="fehlermeldung" layoutX="325.0" layoutY="432.0" textFill="#e44317">
+         <font>
+            <Font name="Baskerville Bold" size="24.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Blend />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
    </children>
 </Pane>
