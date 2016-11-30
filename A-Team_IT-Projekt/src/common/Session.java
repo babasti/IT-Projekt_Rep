@@ -1,6 +1,5 @@
 package common;
 
-import client.TableDataSet;
 
 public class Session {
 
@@ -18,10 +17,6 @@ public class Session {
 		
 	}
 		
-	//holt die selektierte Sitzung um das Spiel zu starten
-	public TableDataSet getOpenSession(TableDataSet data){
-		return data;
-	}
 	
 	public void setSessionName(String sessionName){
 		this.sessionName = sessionName;
