@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -13,11 +14,16 @@ import java.util.Scanner;
 public class Test {
 
 	public static void main(String[] args){
-		System.out.println(InetAddress.getLocalHost().getHostAddress());
+		try {
+			System.out.println(InetAddress.getLocalHost().getHostAddress());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		System.out.println(client.Client.regPlayers);
 //
-		server.ServerThread.regPlayers = new ArrayList<Player>();
+		server.Server.regPlayers = new ArrayList<Player>();
 
 		Date d1 = new Date(92,0,15);
 		Date d2 = new Date(91,1,25);

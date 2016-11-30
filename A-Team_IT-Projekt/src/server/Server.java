@@ -2,6 +2,8 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -28,19 +30,9 @@ public class Server {
 
 			//alle User aus dem File werden in eine ArrayList geschrieben
 			try{
-				Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-
-				while(scan.hasNextLine()){
-					String[] next = scan.nextLine().split(":");
-					String[] d = next[2].split("-");
-					Date date = new Date(Integer.parseInt(d[2]), Integer.parseInt(d[1]), Integer.parseInt(d[0]));
-					regPlayers.add(new Player(next[0], next[1], date, next[3]));
-				}
-
-				for(int i=0; i<regPlayers.size(); i++){
-					System.out.println(regPlayers.get(i));
-				}
+				this.fileToArrayList();
 			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 		System.out.println("Starting Server...");
@@ -54,8 +46,38 @@ public class Server {
 		}
 	}
 
-	//Player hinzufügen
-	public static void updateList(Player p){
-			server.Server.regPlayers.add(p);
+	//in ArrayList werden alle registrierten Player aus dem File geschrieben
+	public void fileToArrayList(){
+		try{
+			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
+			while(scan.hasNextLine()){
+				String[] next = scan.nextLine().split(":");
+				String[] d = next[2].split("-");
+				Date date = new Date(Integer.parseInt(d[2]), Integer.parseInt(d[1])-1, Integer.parseInt(d[0]));
+				regPlayers.add(new Player(next[0], next[1], date, next[3]));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public static void arrayListToFile(){
+		try{
+			//File wird geleert
+			FileWriter fw = new FileWriter("RegisteredPlayers.txt");
+			fw.write("");
+			fw.close();
+			//Player aus ArrayList werden in File geschrieben
+			FileWriter fwappend = new FileWriter("RegisteredPlayers.txt", true);
+			BufferedWriter bw = new BufferedWriter(fwappend);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+			for(Player p:Server.regPlayers){
+				bw.write(p.getUserName()+":"+p.getPassword()+":"+dateFormat.format(p.getDateOfBirth())+":"+p.getPCName()+"\n");	
+			}
+			bw.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }

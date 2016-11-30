@@ -69,11 +69,12 @@ public class LoginController implements Initializable{
 		if(Player.checkUser(eingabeName)){ //Benutzer existiert
 			Player p = Player.getPlayerUser(eingabeName);
 			if(p.getPassword().equals(eingabePW)){// Benutzer existier&Passwort korrekt
-				Player.getPlayerUser(eingabeName).updatePCName();
+				p.updatePCName();
 				text_Fehlermeldung.setText("Eingaben korrekt");
 				try{
 					if(setSocket){ //wenn Verbindung zum Server hergestellt wurde
-						//Weiterleitung in Lobby				
+						//Weiterleitung in Lobby	
+						System.out.println(p);
 						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
 						Pane rootPane = (Pane) fxmlloader.load();
 						Stage stage = new Stage();
@@ -84,6 +85,7 @@ public class LoginController implements Initializable{
 						//schliesst das alte GUI
 						Stage stage1 = (Stage)b_login.getScene().getWindow();
 						stage1.close();
+						
 					}else{
 						text_Fehlermeldung.setText("Bitte wählen Sie einen Host aus.");
 					}
@@ -132,8 +134,7 @@ public class LoginController implements Initializable{
 
 	}
 
-	//diese Methode wird aufgerufen wenn der Client auf einen bereits erstellten Server Spielen möchte
-	//indem er die IP Adresse eingibt wo der Server gestartet wurde
+	//mit dieser Methode wird die Verbindung zwischen Client und Server hergestellt
 	public void setServerSocket(){
 		Socket socket = null;
 		try{
