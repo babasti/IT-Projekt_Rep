@@ -92,7 +92,7 @@ public class RegistrationController implements Initializable {
 			}else{
 				Player p = new Player(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
 				//Player.addUser(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
-				ClientNew.sendToServer(new Game(p));
+				ClientThread.sendToServer(new Game(p));
 				try{
 					//Weiterleitung in Lobby				
 					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));

@@ -27,14 +27,14 @@ public class Server {
 		//Singleton
 		if(regPlayers == null){
 			regPlayers = new ArrayList<Player>();
-
-			//alle User aus dem File werden in eine ArrayList geschrieben
-			try{
-				this.fileToArrayList();
-			}catch(Exception e){
-				e.printStackTrace();
-			}
 		}
+		//alle User aus dem File werden in eine ArrayList geschrieben
+		try{
+			this.fileToArrayList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
 		System.out.println("Starting Server...");
 		System.out.println("Server started at: "+serverSocket.getInetAddress());
 		while(true){

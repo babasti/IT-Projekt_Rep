@@ -20,22 +20,15 @@ import common.Game;
 import common.Player;
 
 public class ClientNew extends Application implements Serializable{
-	private static Socket socket;
-	private static ObjectOutputStream objectOutputStream;
-	private static ObjectInputStream objectInputStream;
+
 
 	public static void main(String[] args) throws Exception{	
-
 		launch();
-
-		objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-		objectInputStream = new ObjectInputStream(socket.getInputStream());
 	}
 
 	public void start(Stage primaryStage) throws Exception {
 		try{
-			Game g;
-			server.Server.regPlayers = new ArrayList<Player>();
+			// server.Server.regPlayers = new ArrayList<Player>();
 			//
 			//			Date d1 = new Date(92,0,15);
 			//			Date d2 = new Date(91,1,25);
@@ -59,35 +52,14 @@ public class ClientNew extends Application implements Serializable{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-//			while((g = (Game)objectInputStream.readObject()) != null){
-//				if(g.getWhat().equals("arrayList")){
-//					ArrayList<Player> regPlayers = g.getAl();
-//					for(Player p : regPlayers){
-//						System.out.println(p);
-//					}
-//				}
-//			}
+			
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 
-	//sendet Objekt an Server
-	public static void sendToServer(Game g){
-		try {
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			objectOutputStream.writeObject(g);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
-	// instanziert die Instanzvariabel entsprechend den gewünschten Vorgaben im LoginController
-	public static void setClientSocket(Socket socket1){
-		socket = socket1;
-	}
-	
-	
 }
 
 

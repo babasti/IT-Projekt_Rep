@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import client.ClientThread;
+
 public class Player implements Serializable{
 
 	private String userName;
@@ -90,39 +92,39 @@ public class Player implements Serializable{
 
 	//identifiziert Player über dessen PCNamen
 	public static Player getPlayerPC(String PCName){
-		if(server.Server.regPlayers.size()>0){
-			for(Player p:server.Server.regPlayers){
+		if(ClientThread.regPlayers.size()>0){
+			for(Player p:ClientThread.regPlayers){
 				if(p.getPCName().equals(PCName)){
 					return p;
 				}
 			}
 		}else{
-			return server.Server.regPlayers.get(0);
+			return ClientThread.regPlayers.get(0);
 		}
 
-		return server.Server.regPlayers.get(0);
+		return ClientThread.regPlayers.get(0);
 	}
 
 	//identifiziert Player über dessen UserNamen
 	public static Player getPlayerUser(String userName){
-		if(server.Server.regPlayers.size()>0){
-			for(Player p:server.Server.regPlayers){
+		if(ClientThread.regPlayers.size()>0){
+			for(Player p:ClientThread.regPlayers){
 				if(p.getUserName().equals(userName)){
 					return p;
 				}
 			}
 		}else{
-			return server.Server.regPlayers.get(0);
+			return ClientThread.regPlayers.get(0);
 		}
 
-		return server.Server.regPlayers.get(0);
+		return ClientThread.regPlayers.get(0);
 	}
 
 
 	//prüft, ob Player mit diesem UserName bereits erstellt
 	public static boolean checkUser(String userName){
 		boolean exist = false;
-		for(Player p:server.Server.regPlayers){
+		for(Player p:ClientThread.regPlayers){
 			if(p.getUserName().equals(userName)){
 				exist = true;
 			}

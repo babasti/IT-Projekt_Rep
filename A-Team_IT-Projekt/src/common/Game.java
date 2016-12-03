@@ -5,10 +5,16 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
+	private String s;
 	private ArrayList<Player> al;
 	private Player p;
 	private String[] a;
 	private String what;
+	
+	public Game(String s){
+		this.s = s;
+		what = "string";
+	}
 	
 	public Game(ArrayList<Player> al){
 		this.al = al;

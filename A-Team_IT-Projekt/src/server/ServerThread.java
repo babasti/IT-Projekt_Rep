@@ -33,20 +33,14 @@ public class ServerThread extends Thread implements Serializable{
 		try{
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			//sobald ein neuer ServerThread gestartet wird, wird dem Client die aktuelle ArrayList gesandt
-			sendToClient(new Game(Server.regPlayers));
 			while((g = (Game)objectInputStream.readObject()) != null){
-				//wenn ein client "ich gehe" sendet wird arrayList auf Server in File geschrieben
+				//wenn ein client arrayList der Player anfragt
 				if(g.getWhat().equals("string")){
-					try {
-						Server.arrayListToFile();
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
+					sendToClient(new Game(Server.regPlayers));
+					objectOutputStream.reset();
 				}
 				//wenn gesendetes Game-Objekt player enthält, wird er der arraylist hinzugefügt	
-				if(g.getWhat().equals("player")){		
+				else if(g.getWhat().equals("player")){		
 					Server.regPlayers.add(g.getP());
 					Server.arrayListToFile();
 				}
