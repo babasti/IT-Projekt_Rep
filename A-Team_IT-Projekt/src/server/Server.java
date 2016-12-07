@@ -53,7 +53,7 @@ public class Server {
 			while(scan.hasNextLine()){
 				String[] next = scan.nextLine().split(":");
 				String[] d = next[2].split("-");
-				Date date = new Date(Integer.parseInt(d[2]), Integer.parseInt(d[1])-1, Integer.parseInt(d[0]));
+				Date date = new Date(Integer.parseInt(d[2])-1900, Integer.parseInt(d[1])-1, Integer.parseInt(d[0]));
 				regPlayers.add(new Player(next[0], next[1], date, next[3]));
 			}
 		}catch(Exception e){

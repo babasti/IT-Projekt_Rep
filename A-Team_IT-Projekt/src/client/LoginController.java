@@ -68,13 +68,12 @@ public class LoginController implements Initializable{
 
 		if(Player.checkUser(eingabeName)){ //Benutzer existiert
 			Player p = Player.getPlayerUser(eingabeName);
-			if(p.getPassword().equals(eingabePW)){// Benutzer existier&Passwort korrekt
+			if(p.getPassword().equals(eingabePW)){// Benutzer existiert&Passwort korrekt
 				p.updatePCName();
 				text_Fehlermeldung.setText("Eingaben korrekt");
 				try{
 					if(setSocket){ //wenn Verbindung zum Server hergestellt wurde
 						//Weiterleitung in Lobby	
-						System.out.println(p);
 						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
 						Pane rootPane = (Pane) fxmlloader.load();
 						Stage stage = new Stage();
@@ -95,7 +94,7 @@ public class LoginController implements Initializable{
 			}else{ //Benutzer existiert aber Passwort falsch
 				text_Fehlermeldung.setText("Das Passwort ist falsch.");
 			}
-		}else{
+		}else{ //Benutzer existiert nicht
 			text_Fehlermeldung.setText("Diesen Benutzer gibt es noch nicht.\n Bitte registrieren Sie sich.");
 		}
 	}
@@ -121,8 +120,8 @@ public class LoginController implements Initializable{
 		}
 	}
 
-	//diese Methode wird aufgerufen wenn der Client selber sein PC als Host zur Verfügung stellt, 
-	//indem beim Login auf den Button "host" geklickt wird
+	//diese Methode schreibt die eigene IP-Adresse in das Textfeld im Login
+	//die IP-Adresse im Textfeld wird benötigt um eine Verbindung mit dem Server herzustellen
 	public void setSocket(){
 		Socket socket = null;
 		try {
@@ -143,7 +142,6 @@ public class LoginController implements Initializable{
 			System.out.println("Connection successful...");
 			setSocket = true;
 			new ClientThread(socket).start();
-			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

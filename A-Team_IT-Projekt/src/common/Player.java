@@ -64,60 +64,31 @@ public class Player implements Serializable{
 		this.PCName = PCName;
 	}
 
-	//wenn PCName des registrierten Benutzers nicht mit aktuellem PC übereinstimmt.
-	//wird der Player
+	//wenn PCName des registrierten Benutzers nicht mit aktuellem PCNamen übereinstimmt
 	public void updatePCName(){
-//		try{
-//			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-//			BufferedWriter br = new BufferedWriter(new FileWriter("RegisteredPlayers.txt"));
-//
-//			while(scan.hasNextLine()){
-//				String line = scan.nextLine();
-//				String[] next = line.split(":");
-//				if(next[0].equals(this.getUserName()) && !this.getPCName().equals(System.getProperty("user.name"))){
-//					next[3]= System.getProperty("user.name");
-//					br.write(next[0]+":"+next[1]+":"+next[2]+":"+next[3]+"\n");
-//				}else{
-//					br.write(line+"\n");
-//				}
-//			}
-//			br.close();				
-//		}catch(Exception e){
-//			System.out.println(e);
-//		}	
-
 		this.setPCName(System.getProperty("user.name"));
 	}
 
-
 	//identifiziert Player über dessen PCNamen
 	public static Player getPlayerPC(String PCName){
-		if(ClientThread.regPlayers.size()>0){
-			for(Player p:ClientThread.regPlayers){
-				if(p.getPCName().equals(PCName)){
-					return p;
-				}
+		Player searchedPlayer = null;
+		for(Player p:ClientThread.regPlayers){
+			if(p.getPCName().equals(PCName)){
+				searchedPlayer = p;
 			}
-		}else{
-			return ClientThread.regPlayers.get(0);
 		}
-
-		return ClientThread.regPlayers.get(0);
+		return searchedPlayer;
 	}
 
 	//identifiziert Player über dessen UserNamen
 	public static Player getPlayerUser(String userName){
-		if(ClientThread.regPlayers.size()>0){
-			for(Player p:ClientThread.regPlayers){
-				if(p.getUserName().equals(userName)){
-					return p;
-				}
+		Player searchedPlayer = null;
+		for(Player p:ClientThread.regPlayers){
+			if(p.getUserName().equals(userName)){
+				searchedPlayer = p;
 			}
-		}else{
-			return ClientThread.regPlayers.get(0);
 		}
-
-		return ClientThread.regPlayers.get(0);
+		return searchedPlayer;
 	}
 
 
@@ -131,26 +102,6 @@ public class Player implements Serializable{
 		}
 		return exist;
 	}
-
-//	// fügt neuen User im File RegisteredPlayers hinzu
-//	public static void addUser(String userName, String password, Date dateOfBirth, String PCName){
-//		try {
-//			FileWriter fw = new FileWriter("RegisteredPlayers.txt", true);
-//			BufferedWriter bw = new BufferedWriter(fw);
-//			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//			Scanner scan = new Scanner(new File("RegisteredPlayers.txt"));
-//
-//			bw.write(userName+":"+password+":"+dateFormat.format(dateOfBirth)+":"+PCName+"\n");
-//			bw.close();
-//
-//			server.Server.regPlayers.add(new Player(userName, password, dateOfBirth,PCName));
-//
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
 
 	public String toString(){
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

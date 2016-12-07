@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
-
 public class ServerThread extends Thread implements Serializable{
 	private static Socket socket = null;
 	private static ObjectOutputStream objectOutputStream;
@@ -27,17 +25,16 @@ public class ServerThread extends Thread implements Serializable{
 	ServerThread(Socket socket){
 		this.socket = socket;
 	}
-
+	
 	public void run(){
 		Game g;
 		try{
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			while((g = (Game)objectInputStream.readObject()) != null){
 				//wenn ein client arrayList der Player anfragt
 				if(g.getWhat().equals("string")){
 					sendToClient(new Game(Server.regPlayers));
-					objectOutputStream.reset();
 				}
 				//wenn gesendetes Game-Objekt player enthält, wird er der arraylist hinzugefügt	
 				else if(g.getWhat().equals("player")){		
@@ -48,13 +45,13 @@ public class ServerThread extends Thread implements Serializable{
 				else if(g.getWhat().equals("array")){
 					Player p = Player.getPlayerUser(g.getA()[0]);
 					p.setPCName(g.getA()[1]);
+					Server.arrayListToFile();
 				}
 			}
-
-			objectInputStream.close();
-			objectOutputStream.close();
 			Server.arrayListToFile();
 			socket.close();
+			objectInputStream.close();
+			objectOutputStream.close();
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +60,6 @@ public class ServerThread extends Thread implements Serializable{
 
 	public static void sendToClient(Game g){
 		try {
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			objectOutputStream.writeObject(g);
 		} catch (IOException e) {
 			e.printStackTrace();

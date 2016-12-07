@@ -91,7 +91,7 @@ public class RegistrationController implements Initializable {
 				text_Fehlermeldung.setText("Das eingegebene Datum ist ungültig.");
 			}else{
 				Player p = new Player(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
-				//Player.addUser(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
+				ClientThread.regPlayers.add(p);
 				ClientThread.sendToServer(new Game(p));
 				try{
 					//Weiterleitung in Lobby				
