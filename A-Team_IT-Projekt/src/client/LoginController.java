@@ -65,14 +65,15 @@ public class LoginController implements Initializable{
 	public void login(){
 		String eingabeName = tf_username.getText();
 		String eingabePW = pf_password.getText();
-
-		if(Player.checkUser(eingabeName)){ //Benutzer existiert
-			Player p = Player.getPlayerUser(eingabeName);
-			if(p.getPassword().equals(eingabePW)){// Benutzer existiert&Passwort korrekt
-				p.updatePCName();
-				text_Fehlermeldung.setText("Eingaben korrekt");
-				try{
-					if(setSocket){ //wenn Verbindung zum Server hergestellt wurde
+		if(!setSocket){ //besteht Verbindung zum Server?
+			text_Fehlermeldung.setText("Bitte wählen Sie einen Host aus.");
+		}else{
+			if(Player.checkUser(eingabeName)){ //Benutzer existiert
+				Player p = Player.getPlayerUser(eingabeName);
+				if(p.getPassword().equals(eingabePW)){// Benutzer existiert&Passwort korrekt
+					p.updatePCName();
+					text_Fehlermeldung.setText("Eingaben korrekt");
+					try{
 						//Weiterleitung in Lobby	
 						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
 						Pane rootPane = (Pane) fxmlloader.load();
@@ -84,19 +85,17 @@ public class LoginController implements Initializable{
 						//schliesst das alte GUI
 						Stage stage1 = (Stage)b_login.getScene().getWindow();
 						stage1.close();
-						
-					}else{
-						text_Fehlermeldung.setText("Bitte wählen Sie einen Host aus.");
+					}catch(Exception e){
+						System.out.println(e);
 					}
-				}catch(Exception e){
-					System.out.println(e);
+				}else{ //Benutzer existiert aber Passwort falsch
+					text_Fehlermeldung.setText("Das Passwort ist falsch.");
 				}
-			}else{ //Benutzer existiert aber Passwort falsch
-				text_Fehlermeldung.setText("Das Passwort ist falsch.");
+			}else{ //Benutzer existiert nicht
+				text_Fehlermeldung.setText("Diesen Benutzer gibt es noch nicht.\n Bitte registrieren Sie sich.");
 			}
-		}else{ //Benutzer existiert nicht
-			text_Fehlermeldung.setText("Diesen Benutzer gibt es noch nicht.\n Bitte registrieren Sie sich.");
 		}
+
 	}
 
 	public void switchToRegistration(){
