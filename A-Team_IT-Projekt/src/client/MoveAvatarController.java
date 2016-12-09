@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.sun.prism.paint.Color;
 
+import common.SCircle;
 import common.Card;
 import common.Player;
 import common.Tile;
@@ -23,7 +24,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 
@@ -39,7 +39,7 @@ public class MoveAvatarController implements Initializable {
 
 	//alle Instanzvariablen welche benötigt werden definieren
 	//so ziemlich alle aus der GameController Klasse welche hier aufgelistet sind
-	private Circle selectetAvatar;
+	private SCircle selectetAvatar;
 	private Card selectetCard;
 	private ImageView selectetCardImageView;
 	private ArrayList<Tile> startBoard;
@@ -51,7 +51,7 @@ public class MoveAvatarController implements Initializable {
 	private HBox currentAvatarPosition;
 	private static HBox[] ebPlayer;
 	private int currentPlayerPosition;
-	private ArrayList<Circle> playersAvatar;
+	private ArrayList<SCircle> playersAvatar;
 	private Player currentPlayer;
 	
 
