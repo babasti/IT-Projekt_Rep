@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import client.ClientThread;
 
 public class Player implements Serializable{
@@ -23,8 +25,11 @@ public class Player implements Serializable{
 	private String password;
 	public ArrayList<Card> cards;
 	private int score;
-	public ArrayList<Tile> tiles;
 	private String PCName;
+	private ArrayList<Circle> avatars;
+	private Circle avatar1 = new Circle();
+	private Circle avatar2 = new Circle();
+	private Circle avatar3 = new Circle();
 
 	public Player(String userName, String password, Date dateOfBirth, String PCName){
 		this.userName = userName;
@@ -32,8 +37,15 @@ public class Player implements Serializable{
 		this.password = password;
 		this.PCName = PCName;
 		cards = new ArrayList<Card>();
-		tiles = new ArrayList<Tile>();
 		score = 0;
+		avatars = new ArrayList<Circle>();
+		avatars.add(avatar1);
+		avatars.add(avatar2);
+		avatars.add(avatar3);
+		for(int i = 0; i < avatars.size(); i++){
+			avatars.get(i).setRadius(10);
+			avatars.get(i).setStroke(Color.BLACK);
+		}
 	}
 
 	public void setScore(int score){
@@ -101,6 +113,18 @@ public class Player implements Serializable{
 			}
 		}
 		return exist;
+	}
+	
+	public ArrayList<Circle> getAvatar(){
+		return this.avatars;
+	}
+	
+	public void addToScore(int points){
+		this.score += points;
+	}
+	
+	public void subFromScore(int points){
+		this.score -=points;
 	}
 
 	public String toString(){

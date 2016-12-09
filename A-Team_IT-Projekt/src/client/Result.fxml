@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ResultController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0">
+         <image>
+            <Image url="@../resource/bg_popup.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="169.0" layoutY="47.0" text="Game Over">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Label>
+      <Button fx:id="b_BackToLobby" layoutX="217.0" layoutY="290.0" mnemonicParsing="false" onAction="#backToLobby" text="zur Lobby">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Button>
+      <Label fx:id="l_winner" layoutX="109.0" layoutY="139.0" text="Label" />
+   </children>
+</Pane>

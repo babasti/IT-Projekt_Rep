@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GameController">
+   <children>
+    <HBox fx:id="tileBox1" layoutX="116.0" layoutY="164.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox2" layoutX="116.0" layoutY="234.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox3" layoutX="116.0" layoutY="304.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox4" layoutX="116.0" layoutY="374.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox5" layoutX="116.0" layoutY="444.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox6" layoutX="116.0" layoutY="514.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox7" layoutX="116.0" layoutY="584.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox8" layoutX="186.0" layoutY="584.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox9" layoutX="256.0" layoutY="584.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox10" layoutX="256.0" layoutY="514.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox11" layoutX="256.0" layoutY="444.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox12" layoutX="256.0" layoutY="374.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox13" layoutX="256.0" layoutY="304.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox14" layoutX="256.0" layoutY="234.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox15" layoutX="256.0" layoutY="164.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox16" layoutX="256.0" layoutY="94.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox17" layoutX="256.0" layoutY="15.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox18" layoutX="326.0" layoutY="15.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox19" layoutX="396.0" layoutY="15.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox20" layoutX="396.0" layoutY="85.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox21" layoutX="396.0" layoutY="155.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox22" layoutX="396.0" layoutY="225.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox23" layoutX="396.0" layoutY="295.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox24" layoutX="396.0" layoutY="364.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox25" layoutX="466.0" layoutY="364.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox26" layoutX="536.0" layoutY="364.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox27" layoutX="536.0" layoutY="292.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox28" layoutX="536.0" layoutY="222.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox29" layoutX="536.0" layoutY="152.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox30" layoutX="536.0" layoutY="84.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox31" layoutX="536.0" layoutY="14.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox32" layoutX="607.0" layoutY="14.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox33" layoutX="677.0" layoutY="14.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox34" layoutX="677.0" layoutY="84.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox35" layoutX="677.0" layoutY="152.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox36" layoutX="677.0" layoutY="222.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox37" layoutX="677.0" layoutY="292.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox38" layoutX="677.0" layoutY="364.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox39" layoutX="747.0" layoutY="364.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox40" layoutX="817.0" layoutY="364.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox41" layoutX="817.0" layoutY="292.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox42" layoutX="817.0" layoutY="222.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox43" layoutX="817.0" layoutY="152.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox44" layoutX="817.0" layoutY="84.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox45" layoutX="817.0" layoutY="14.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox46" layoutX="887.0" layoutY="14.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox47" layoutX="957.0" layoutY="14.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox48" layoutX="957.0" layoutY="84.0" prefHeight="70.0" prefWidth="70.0" />
+    <HBox fx:id="tileBox49" layoutX="957.0" layoutY="155.0" prefHeight="70.0" prefWidth="70.0" />
+    
+      <ImageView fitHeight="700.0" fitWidth="1200.0">
+         <image>
+            <Image url="@../resource/Atlantis%20colour.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile2" fitHeight="70.0" fitWidth="70.0" layoutX="116.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile3" fitHeight="70.0" fitWidth="70.0" layoutX="116.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/narcos.jpg" /> 
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile4" fitHeight="70.0" fitWidth="70.0" layoutX="116.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+           <Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile5" fitHeight="70.0" fitWidth="70.0" layoutX="116.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+         <Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile6" fitHeight="70.0" fitWidth="70.0" layoutX="116.0" layoutY="514.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+         <Image url="@../resource/narcos.jpg" />
+            
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile7" fitHeight="70.0" fitWidth="70.0" layoutX="116.0" layoutY="584.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+			<Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile8" fitHeight="70.0" fitWidth="70.0" layoutX="186.0" layoutY="584.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile9" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="584.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile10" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="514.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile11" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile12" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile13" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile14" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile15" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile16" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile17" fitHeight="70.0" fitWidth="70.0" layoutX="256.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile21" fitHeight="70.0" fitWidth="70.0" layoutX="396.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile22" fitHeight="70.0" fitWidth="70.0" layoutX="396.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile28" fitHeight="70.0" fitWidth="70.0" layoutX="536.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile29" fitHeight="70.0" fitWidth="70.0" layoutX="536.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile30" fitHeight="70.0" fitWidth="70.0" layoutX="536.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile24" fitHeight="70.0" fitWidth="70.0" layoutX="396.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile20" fitHeight="70.0" fitWidth="70.0" layoutX="396.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile23" fitHeight="70.0" fitWidth="70.0" layoutX="396.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile19" fitHeight="70.0" fitWidth="70.0" layoutX="396.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile18" fitHeight="70.0" fitWidth="70.0" layoutX="326.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile25" fitHeight="70.0" fitWidth="70.0" layoutX="466.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile26" fitHeight="70.0" fitWidth="70.0" layoutX="536.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile31" fitHeight="70.0" fitWidth="70.0" layoutX="536.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile32" fitHeight="70.0" fitWidth="70.0" layoutX="607.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile33" fitHeight="70.0" fitWidth="70.0" layoutX="677.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile34" fitHeight="70.0" fitWidth="70.0" layoutX="677.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile35" fitHeight="70.0" fitWidth="70.0" layoutX="677.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile36" fitHeight="70.0" fitWidth="70.0" layoutX="677.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile37" fitHeight="70.0" fitWidth="70.0" layoutX="677.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile38" fitHeight="70.0" fitWidth="70.0" layoutX="677.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile39" fitHeight="70.0" fitWidth="70.0" layoutX="747.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile40" fitHeight="70.0" fitWidth="70.0" layoutX="817.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile46" fitHeight="70.0" fitWidth="70.0" layoutX="887.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile45" fitHeight="70.0" fitWidth="70.0" layoutX="817.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile44" fitHeight="70.0" fitWidth="70.0" layoutX="817.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile43" fitHeight="70.0" fitWidth="70.0" layoutX="817.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile42" fitHeight="70.0" fitWidth="70.0" layoutX="817.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile27" fitHeight="70.0" fitWidth="70.0" layoutX="536.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile47" fitHeight="70.0" fitWidth="70.0" layoutX="957.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile48" fitHeight="70.0" fitWidth="70.0" layoutX="957.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="tile41" fitHeight="70.0" fitWidth="70.0" layoutX="817.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+<Image url="@../resource/narcos.jpg" />         </image>
+      </ImageView>
+      <ImageView fx:id="atlantis" fitHeight="178.0" fitWidth="200.0" layoutX="43.0" layoutY="30.0">
+         <image>
+            <Image url="@../resource/atlantis.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile1" fitHeight="70.0" fitWidth="70.0" layoutX="116.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+           <Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <StackPane fx:id="movementCards" layoutX="775.0" layoutY="461.0" prefHeight="105.0" prefWidth="70.0" style="-fx-background-color: white;">
+         <children>
+            <ImageView fitHeight="101.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resource/rückseite%20karte.jpg" />
+               </image>
+            </ImageView>
+         </children></StackPane>
+      <Button fx:id="finishButton" layoutX="942.0" layoutY="578.0" mnemonicParsing="false" onAction="#finishTurn" prefHeight="38.0" prefWidth="170.0" text="Spielzug beenden" />
+      <Button fx:id="b_BuyCard" layoutX="769.0" layoutY="572.0" mnemonicParsing="false" onAction="#switchToBuyCard" text="Karte kaufen" />
+      <VBox fx:id="startBox" layoutX="116.0" layoutY="44.0" prefHeight="120.0" prefWidth="70.0">
+         <children>
+            <HBox fx:id="sb_player1" prefHeight="30.0" prefWidth="96.0" />
+            <HBox fx:id="sb_player2" prefHeight="30.0" prefWidth="96.0" />
+            <HBox fx:id="sb_player3" prefHeight="30.0" prefWidth="96.0" />
+            <HBox fx:id="sb_player4" prefHeight="30.0" prefWidth="96.0" />
+         </children></VBox>
+      <VBox fx:id="vb_playerMoveCard" layoutX="376.0" layoutY="444.0" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox fx:id="moveCardsBox0" prefHeight="104.0" prefWidth="350.0" style="-fx-background-color: #8EFFFA;">
+               <children>
+                  <ImageView fx:id="moveCard1" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resource/lazio2.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="moveCard2" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true">
+                     <image>
+      <Image url="@../resource/lazio2.jpg" />               </image>
+                  </ImageView>
+                  <ImageView fx:id="moveCard3" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true">
+                     <image>
+      <Image url="@../resource/lazio2.jpg" />               </image>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </ImageView>
+                  <ImageView fx:id="moveCard4" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true">
+                     <image>
+      <Image url="@../resource/lazio2.jpg" />               </image>
+                  </ImageView>
+                  <ImageView fx:id="moveCard5" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true">
+                     <image>
+      <Image url="@../resource/lazio2.jpg" />               </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox fx:id="moveCardsBox1" prefHeight="104.0" prefWidth="350.0" style="-fx-background-color: #8EFFFA;">
+               <children>
+                  <ImageView fx:id="moveCard6" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resource/lazio2.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="moveCard7" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resource/lazio2.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="moveCard8" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <image>
+                        <Image url="@../resource/lazio2.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="moveCard9" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resource/lazio2.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="moveCard10" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resource/lazio2.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ImageView fx:id="land" fitHeight="158.0" fitWidth="200.0" layoutX="901.0" layoutY="190.0">
+         <image>
+            <Image url="@../resource/land.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tile49" fitHeight="70.0" fitWidth="70.0" layoutX="957.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/narcos.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="b_SpielzugTätigen" layoutX="756.0" layoutY="607.0" mnemonicParsing="false" onAction="#switchToMoveAvatar" text="Spielzug tätigen !" />
+      <Label fx:id="message" layoutX="803.0" layoutY="648.0" text="Label" />
+      <VBox fx:id="endBox" layoutX="957.0" layoutY="225.0" prefHeight="114.0" prefWidth="70.0">
+         <children>
+            <HBox fx:id="eb_player1" prefHeight="30.0" prefWidth="96.0" />
+            <HBox fx:id="eb_player2" prefHeight="30.0" prefWidth="96.0" />
+            <HBox fx:id="eb_player3" prefHeight="30.0" prefWidth="96.0" />
+            <HBox fx:id="eb_player4" prefHeight="30.0" prefWidth="96.0" />
+         </children></VBox>
+   </children>
+</Pane>
