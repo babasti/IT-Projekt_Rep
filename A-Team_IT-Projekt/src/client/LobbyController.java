@@ -24,8 +24,6 @@ import javafx.util.Callback;
 
 public class LobbyController implements Initializable {
 
-
-
 	@FXML
 	Label text_OffeneSitzungen;
 
@@ -62,7 +60,6 @@ public class LobbyController implements Initializable {
 	@FXML
 	ListView<String> offeneSitzungen;
 
-
 	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
 	//offeneSitzungenList ist notwendig für die Kontrolle ob eine Sitzung bereits existiert
 	private ArrayList<String> offeneSitzungenList = new ArrayList <String>();
@@ -78,8 +75,6 @@ public class LobbyController implements Initializable {
 		//Wertinitialisierung der Choicebox
 		cb_AnzahlSpieler.setItems(cb_AnzahlSpielerList);
 	}
-
-
 
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void createNewSession(){
@@ -104,7 +99,6 @@ public class LobbyController implements Initializable {
 					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
 				}
 			}
-
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -122,7 +116,6 @@ public class LobbyController implements Initializable {
 		}
 		return alreadyExist;
 	}
-
 
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void exitSession(){
@@ -164,9 +157,7 @@ public class LobbyController implements Initializable {
 									openSessions.remove(b);
 								}
 							}
-
-
-							//String aus ListView <String> offeneSitzungen löschen
+							//Item aus ListView <String> offeneSitzungen löschen
 							for (int c = 0; c < offeneSitzungen.getItems().size();c++){
 								if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
 									offeneSitzungen.getItems().remove(c);
@@ -180,12 +171,26 @@ public class LobbyController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//gibt den Index aus dem Playerarray zurück, wo das erste Platzhalter null ist, brauchen wir für die Methode joinSession
+	public int getIndexPlayerArray(Player[] p){
+		//index = -1, weil 0 geht nicht, da im Array an der Position 0 auch null sein kann, 
+		//so ist es sicher wenn -1, dass das erste null in der Array zurückgegeben wird
+		int index = -1;
+		for (int i=0; i < p.length;i++){
+			if(p[i] == null && index == -1){
+				index = i;
+			}
+		}
+		return index;
+	}
 
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void joinSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
-			selectedSession.getPlayers();
+			Player[] players = selectedSession.getPlayers();
+			int index = getIndexPlayerArray(players);
+			players[index] = Player.getPlayerPC(System.getProperty("user.name"));
 		}
 	}
 
@@ -200,31 +205,48 @@ public class LobbyController implements Initializable {
 				}
 			}
 			this.selectedSession = session;
-			System.out.println(selectedSession.toString());
-			Player[] players = selectedSession.getPlayers();
-			for(int i=0;i<players.length;i++){
-				System.out.println(players[i]);
-			}
 			return selectedSession;
 		}else{
 			return selectedSession = null;
 		}
 	}
 
+	//Array muss voll sein um spielen zu können
 	public void startSession(){
-//		Player[] players = selectedSession.getPlayers();
-//		boolean arrayNotFull = false;
-//		for(Player p:players){
-//			if(p == null){
-//				arrayNotFull = true;
-//			}
-//		}
-//		if(!arrayNotFull){
+		if (!offeneSitzungen.getSelectionModel().isEmpty()){
+			//		Player[] players = selectedSession.getPlayers();
+			//		boolean arrayNotFull = false;
+			//		for(Player p:players){
+			//			if(p == null){
+			//				arrayNotFull = true;
+			//			}
+			//		}
+			//		if(!arrayNotFull){
 			Game g = new Game(selectedSession, b_SpielStarten);
 			ClientThread.sendToServer(new Game(selectedSession));
-//		}else{
-//			fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
-//		}
+			
+			//String aus ArrayList <String> offeneSitzungenList löschen
+			for (int i = 0; i < offeneSitzungenList.size(); i++){
+				if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
+					offeneSitzungenList.remove(i);
+				}
+			}
+			//Session aus ArrayList <Session> openSessions löschen
+			for(int b = 0; b < openSessions.size(); b++){
+				if(openSessions.get(b).equals(selectedSession)){
+					openSessions.remove(b);
+				}
+			}
+			//Item aus ListView <String> offeneSitzungen löschen
+			for (int c = 0; c < offeneSitzungen.getItems().size();c++){
+				if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
+					offeneSitzungen.getItems().remove(c);
+				}
+			}
+			//		}else{
+			//			fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
+			//		}
+		}
 	}
 
 }
