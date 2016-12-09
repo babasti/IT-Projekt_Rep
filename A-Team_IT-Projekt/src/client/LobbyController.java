@@ -45,7 +45,7 @@ public class LobbyController implements Initializable {
 
 	@FXML
 	Label text_AnzahlSpieler;
-	
+
 	@FXML
 	Label fehlermeldung;
 
@@ -63,38 +63,49 @@ public class LobbyController implements Initializable {
 
 
 	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
+	//offeneSitzungenList ist notwendig für die Kontrolle ob eine Sitzung bereits existiert
 	private ArrayList<String> offeneSitzungenList = new ArrayList <String>();
+	//im openSession sind alle offenen Session Objekte
+	private ArrayList<Session> openSessions = new ArrayList <Session>();
+	//selectedSessionListView wird der Stringwert aus der selektierten Zeile der ListView gespeichert
+	private String selectedSessionListView;
+	//ist das in der ListView selektierte Sessionobjekt
+	private Session selectedSession;
 
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		//Wertinitialisierung der Choicebox
 		cb_AnzahlSpieler.setItems(cb_AnzahlSpielerList);
-		
-
 	}
-	
 
 
+
+	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void createNewSession(){
-		String sessionName = tf_Sitzungsname.getText();
-		Integer numOfPlayers = (Integer) cb_AnzahlSpieler.getValue();
-		//um den Player zu holen muss man auf die ArrayListe vom Server zugreifen --> mit Bäbsle am Samstag anschauen
-		//Player player = Player.getPlayerPC(System.getProperty("user.name"));
-		//players[0] = player;
-		if(tf_Sitzungsname.getText().isEmpty() || cb_AnzahlSpieler.getSelectionModel().isEmpty()){
-			fehlermeldung.setText("Bitte geben Sie einen Sitzungsnamen sowie die Anzahl der Spieler an");
-		}else{
-			//Player Array wird erst hier erstellt, weil es sonst eine Nullpointerexception wirft, wenn es gleich beim 
-			//Methodenanfang instanziert wird und der Spieler am Anfang ohne die Anzahlspieler zu wählen eine Sitzung 
-			//erstellen will, session kann erst danach instanziert werden da Player [] ein Parameter des Sessionobjekts ist
-			if (!sessionAlreadyExist(sessionName)){
-				Player[] players = new Player[numOfPlayers];
-				Session session = new Session(sessionName, numOfPlayers, players);
-				offeneSitzungen.getItems().addAll(sessionName);
-				offeneSitzungenList.add(sessionName);
+		try{
+			String sessionName = tf_Sitzungsname.getText();
+			Integer numOfPlayers = (Integer) cb_AnzahlSpieler.getValue();
+			Player player = Player.getPlayerPC(System.getProperty("user.name"));
+			if(tf_Sitzungsname.getText().isEmpty() || cb_AnzahlSpieler.getSelectionModel().isEmpty()){
+				fehlermeldung.setText("Bitte geben Sie einen Sitzungsnamen sowie die Anzahl der Spieler an.");
 			}else{
-				fehlermeldung.setText("Dieser Sitzungsname existiert bereits");
+				//Player Array wird erst hier erstellt, weil es sonst eine Nullpointerexception wirft, wenn es gleich beim 
+				//Methodenanfang instanziert wird und der Spieler am Anfang ohne die Anzahlspieler zu wählen eine Sitzung 
+				//erstellen will, session kann erst danach instanziert werden da Player [] ein Parameter des Sessionobjekts ist
+				if (!sessionAlreadyExist(sessionName)){
+					Player[] players = new Player[numOfPlayers];
+					players[0] = player;
+					Session session = new Session(sessionName, numOfPlayers, players);
+					offeneSitzungen.getItems().addAll(sessionName);
+					offeneSitzungenList.add(sessionName);
+					openSessions.add(session);
+				}else{
+					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
+				}
 			}
+
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
@@ -111,19 +122,86 @@ public class LobbyController implements Initializable {
 		return alreadyExist;
 	}
 
+	
+	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void exitSession(){
+		//Damit wenn ListView leer ist und darauf geklickt wird, das Programm nicht zusammenstürtzt
+		if(!offeneSitzungen.getSelectionModel().isEmpty()){
+			for (Session s: openSessions){
+				//löscht den Player aus der Session
+				if(s.equals(selectedSession)){
+					Player[] players = selectedSession.getPlayers();
+					for (int i = 0; i<players.length;i++){
+						//Zeile 136 wirft Exception
+						if(players[i].getUserName().equals(players[0].getUserName())){
+							players[i] = null;
+						}
+					}
+					//wenn der letzte Player aus der Session geht, sollte die Session gelöscht werden
+					//jedes Mal wenn ein Player im Array den Wert null hat, steigt der counter um 1, das heisst also wenn 
+					//counter gleich wie die Arraygrösse ist, sind keine Players in der Session vorhanden und sie kann gelöscht werden
+					int counter = 0;
 
+					for(int i = 0; i<players.length;i++){
+						if(players[i] == null){
+							counter++;
+						}
+					}
+
+					System.out.println(players);
+					//wenn counter gleichgross wie die Grösse des Arrays ist, dann:
+					if(counter == players.length){
+						//String aus ArrayList <String> offeneSitzungenList löschen
+						for (int i = 0; i < offeneSitzungenList.size(); i++){
+							if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
+								offeneSitzungenList.remove(i);
+							}
+						}
+						// Session aus ArrayList <Session> openSessions löschen
+						for(int b = 0; b < openSessions.size(); b++){
+							if(openSessions.get(b).equals(selectedSession)){
+								openSessions.remove(b);
+							}
+						}
+						//String aus ListView <String> offeneSitzungen löschen
+						if (offeneSitzungen.getItems().equals(selectedSessionListView)){
+							offeneSitzungen.getItems().clear();
+						}
+					}
+				}
+			}
+		}
 	}
 
+
+	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void joinSession(){
-		Player p;
+		if (!offeneSitzungen.getSelectionModel().isEmpty()){
+			selectedSession.getPlayers();
+		}
 	}
 
+	public Session selectSession(){
+		if(!offeneSitzungen.getSelectionModel().isEmpty()){
+			selectedSessionListView = offeneSitzungen.getSelectionModel().getSelectedItem();
+			Session session = null;
 
-	//als Parameter muss hier Session übergeben werden?
-	//	public Session selectSession(){
-	//
-	//	}
+			for (Session s:openSessions){
+				if	(s.getSessionName().equals(selectedSessionListView)){
+					session = s;
+				}
+			}
+			this.selectedSession = session;
+			System.out.println(selectedSession.toString());
+			Player[] players = selectedSession.getPlayers();
+			for(int i=0;i<players.length;i++){
+				System.out.println(players[i]);
+			}
+			return selectedSession;
+		}else{
+			return selectedSession = null;
+		}
+	}
 
 	public void startSession(){
 

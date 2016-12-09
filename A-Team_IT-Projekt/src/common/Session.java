@@ -41,7 +41,17 @@ public class Session {
 	public Player [] getPlayers(){
 		return this.players;
 	}
+	
+	public void addPlayerToPlayersArray(Player p){
+		for (int i = 0; i < players.length;i++){
+			if (players[i].equals(null)){
+				players[i] = p;
+			}
+		}
+	}
 
-
+	public String toString(){
+		return this.getSessionName()+", "+this.getNumOfPlayers()+", "+this.getPlayers();
+	}
 
 }

@@ -114,7 +114,7 @@
          <effect>
             <SepiaTone />
          </effect></Button>
-      <ListView fx:id="offeneSitzungen" layoutX="394.0" layoutY="123.0" prefHeight="200.0" prefWidth="388.0" />
+      <ListView fx:id="offeneSitzungen" layoutX="394.0" layoutY="123.0" onMouseClicked="#selectSession" prefHeight="200.0" prefWidth="388.0" />
       <Label fx:id="fehlermeldung" layoutX="325.0" layoutY="432.0" textFill="#e44317">
          <font>
             <Font name="Baskerville Bold" size="24.0" />
