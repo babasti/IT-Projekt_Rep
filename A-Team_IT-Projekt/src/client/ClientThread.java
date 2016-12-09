@@ -28,7 +28,7 @@ public class ClientThread extends Thread implements Serializable{
 			sendToServer(new Game("ich brauche die Arraylist"));
 
 			while((g = (Game)objectInputStream.readObject()) != null){
-				if(g.getWhat().equals("arrayList")){
+				if(g.getWhat().equals("arrayList regPlayers von Server")){
 					regPlayers = g.getAl();
 				}else if(true){
 					//andere nachrichten die client empfangen kann
