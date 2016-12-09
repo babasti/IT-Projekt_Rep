@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import client.ClientThread;
 
-public class Player implements Serializable{
+public class Player extends Circle implements Serializable{
 
 	/**
 	 * 
