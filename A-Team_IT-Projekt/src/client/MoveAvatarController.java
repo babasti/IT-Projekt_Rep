@@ -53,7 +53,7 @@ public class MoveAvatarController implements Initializable {
 	private int currentPlayerPosition;
 	private ArrayList<SCircle> playersAvatar;
 	private Player currentPlayer;
-	
+
 
 
 
@@ -83,12 +83,19 @@ public class MoveAvatarController implements Initializable {
 			//welches mit der ausgewählten Bewegungskarte übereinstimmt
 			for(int i = 0; i < startBoard.size(); i++){
 				if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
-					tileBox.get(i).getChildren().add(selectetAvatar);
-					tileBox.get(i).setVisible(true);
-					tileBox.get(i).toFront();
-					if(!(i == 0)){
-						GameController.collectTile(startBoard.get(i), i);
-						break;
+					if(tileBox.get(i).getChildren().isEmpty()){
+						tileBox.get(i).getChildren().add(selectetAvatar);
+						tileBox.get(i).setVisible(true);
+						tileBox.get(i).toFront();
+						if(i != 0){
+							GameController.collectTile(startBoard.get(i), i);
+							break;
+						}
+					}else{
+						tileBox.get(i).getChildren().add(selectetAvatar);
+						tileBox.get(i).setVisible(true);
+						tileBox.get(i).toFront();
+						GameController.setMessage("Spiel eine weitere Karte!");
 					}
 					break;
 				}
@@ -96,10 +103,18 @@ public class MoveAvatarController implements Initializable {
 		}else{
 			for(int i = Integer.parseInt(currentAvatarPosition.getId().substring(7)); i < startBoard.size(); i++){
 				if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
-					tileBox.get(i).getChildren().add(selectetAvatar);
-					tileBox.get(i).setVisible(true);
-					tileBox.get(i).toFront();
-					GameController.collectTile(startBoard.get(i), i);
+					if(tileBox.get(i).getChildren().isEmpty()){
+						tileBox.get(i).getChildren().add(selectetAvatar);
+						tileBox.get(i).setVisible(true);
+						tileBox.get(i).toFront();
+						GameController.collectTile(startBoard.get(i), i);
+						break;
+					}else{
+						tileBox.get(i).getChildren().add(selectetAvatar);
+						tileBox.get(i).setVisible(true);
+						tileBox.get(i).toFront();
+						GameController.setMessage("Spiel eine weitere Karte!");
+					}
 					break;
 				}
 				count = i;
@@ -114,7 +129,7 @@ public class MoveAvatarController implements Initializable {
 				}
 			}
 		}
-		
+
 
 		//sobald die Figur gesetzt wurde, werden sämtliche Effekte zurückgesetzt
 		tileShadowMove = GameController.getTileShadow();
@@ -135,31 +150,28 @@ public class MoveAvatarController implements Initializable {
 				handleMouseExit(event);		
 			}
 		});
-		
-		
+
+
 		//gespielte Bewegungskarte vom Player Array löschen und eine neue Karte aus dem Deck ziehen
 		//die neue Karte wird an der Position der gespielten Karte gesetzt
 		GameController.playerCards.set(Integer.parseInt(selectetCardImageView.getId().substring(8))-1, GameController.cards.get(0));
 		GameController.moveImages.get(Integer.parseInt(selectetCardImageView.getId().substring(8))-1).setImage(GameController.cards.get(0).getImage());
 		GameController.cards.remove(0);
-		
+
 		GameController.numOfDeck.setText(String.valueOf(GameController.cards.size()));
-		
-		
-		
+
+
+
 		//damit wir weitere aktionen durchführen können, müssen die selectetAvatar
 		//und selectetCard auf null gesetzt werden
 		//somit haben wir eine Sicherheit bei der Abfrage ob wir einen Spielzug
 		//tätigen können
-	
-		
+
+
 		GameController.setSelectetAvatar();
 		GameController.setSelectetCard();
-		//wird in der Methode finishTurn() ausgeführt hier nur zu testzwecken
-		GameController.setCurrentPlayerPosition();
-		GameController.setCurrentPlayer();
-		
-		
+
+
 		Stage stage = (Stage)b_SpielzugBestätigen.getScene().getWindow();
 		stage.close();
 	}
@@ -191,7 +203,7 @@ public class MoveAvatarController implements Initializable {
 		});
 		GameController.setSelectetAvatar();
 		GameController.setSelectetCard();
-		
+
 
 		Stage stage = (Stage)b_SpielzugAbbruch.getScene().getWindow();
 		stage.close();
@@ -210,7 +222,7 @@ public class MoveAvatarController implements Initializable {
 		tileShadow.setRadius(0);
 
 	}
-	
+
 	public void switchToResult(){
 		try{
 			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Result.fxml"));
@@ -223,7 +235,7 @@ public class MoveAvatarController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static HBox[] getEbPlayer(){
 		return ebPlayer;
 	}

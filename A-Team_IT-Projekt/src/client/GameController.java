@@ -151,8 +151,6 @@ public class GameController extends SCircle implements Initializable{
 	@FXML
 	Pane rootPane;
 	@FXML
-	Label message;
-	@FXML
 	VBox startBox;
 	@FXML
 	VBox endBox;
@@ -399,6 +397,7 @@ public class GameController extends SCircle implements Initializable{
 	static ObservableList<Player> playersData = FXCollections.observableArrayList();
 	static TableColumn<Player, String> userNameColumn = new TableColumn<Player, String>();
 	static TableColumn<Player, Integer> scoreColumn = new TableColumn<Player, Integer>();
+	private static Label message;
 
 
 
@@ -532,10 +531,11 @@ public class GameController extends SCircle implements Initializable{
 			}
 		}
 
+		message = new Label();
 		message.setLayoutX(800);
 		message.setLayoutY(650);
 		message.setVisible(false);
-
+		rootPane.getChildren().add(message);
 
 		scoreTable = new TableView<Player>();
 		scoreTable.setLayoutX(913);
@@ -544,20 +544,22 @@ public class GameController extends SCircle implements Initializable{
 		scoreTable.setPrefWidth(228);
 		scoreTable.toFront();
 		rootPane.getChildren().add(scoreTable);
-		
+
 		for(Player p : players){
 			playersData.add(p);
 		}
-		
+
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		
+
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().clear();
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
-		
+
+		setMessage(currentPlayer.getUserName()+" ist dran!");
+
 	}	
 
 	// ---------------------------------------------------------- bis hier
@@ -817,13 +819,15 @@ public class GameController extends SCircle implements Initializable{
 	// Player beendet seinen spielzug und das Game Objekt wird an den Server gesendet
 	// und vom Server zu den anderen Clients
 	public void finishTurn(){
-
+		setCurrentPlayerPosition();
+		setCurrentPlayer();
+		setMessage(currentPlayer.getUserName()+" ist dran!");
 
 	}	
 
 
-	//wird ausgel�st wenn der Spieler sein Avatar auf eine entsprechendes Tile setzen will
-	//die Methode ersetzt das vorherige Tile mit "Wasser" und gibt die Punktzahlt des Tiles zur�ck
+	//wird ausgelöst wenn der Spieler sein Avatar auf eine entsprechendes Tile setzen will
+	//die Methode ersetzt das vorherige Tile mit "Wasser" und gibt die Punktzahlt des Tiles zurück
 	//um die Punktzahl danach dem Score vom Spieler zu summieren
 	public static void collectTile(Tile selectetTile, int position){
 		Image water = proformaStartGameBoard.get(0).getImage();
@@ -833,16 +837,15 @@ public class GameController extends SCircle implements Initializable{
 		int countPosition = 1;
 
 		HBox collectBox = tileBox.get(position-countPosition);
-		int i = 0;
-		
-		while(collectBox.getChildren().contains(players.get(i).getAvatar())){
-			countPosition++;
-			collectBox = tileBox.get(position-countPosition);
+
+		while(!(collectBox.getChildren().isEmpty())){
+				countPosition++;
+				collectBox = tileBox.get(position-countPosition);
 		}
-		
+
 		Tile collectTile = startBoard.get(position-countPosition);
 		points = collectTile.getPoints();
-	
+
 		if(points > 0){
 			currentPlayer.addToScore(points);
 			startBoard.set(position-countPosition, Water);
@@ -853,6 +856,11 @@ public class GameController extends SCircle implements Initializable{
 				if(position - countPosition == -1){
 					break;
 				}
+				collectBox = tileBox.get(position-countPosition);
+				while(!(collectBox.getChildren().isEmpty())){
+					countPosition++;
+					collectBox = tileBox.get(position-countPosition);
+				}
 				Tile selectTile1 = startBoard.get(position-countPosition);
 				points = selectTile1.getPoints();
 				currentPlayer.addToScore(points);
@@ -860,16 +868,16 @@ public class GameController extends SCircle implements Initializable{
 				tileImages[position-countPosition].setImage(startBoard.get(position-countPosition).getImage());
 			}while(points == 0);
 		}
-		
+
 		scoreTable.getColumns().clear();
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		
+
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
-		
+
 
 		System.out.println(points);
 		System.out.println(selectetTile.getColor());
@@ -908,7 +916,7 @@ public class GameController extends SCircle implements Initializable{
 		scoreColumn.setText("Score");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		
+
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
 
@@ -1278,7 +1286,7 @@ public class GameController extends SCircle implements Initializable{
 
 	//wird ausgeführt momentan beim MoveAvatar
 	//sollte aber beim Spielzug beenden ausgeführt werden
-	//damit der currentPlayer nach Spielzug auf den n�chsten Player in der Liste
+	//damit der currentPlayer nach Spielzug auf den nächsten Player in der Liste
 	//gesetzt wird
 	public static void setCurrentPlayerPosition(){
 		if(currentPlayerPosition == players.size()-1){
@@ -1291,10 +1299,17 @@ public class GameController extends SCircle implements Initializable{
 	public static int getCurrentPlayerPosition(){
 		return GameController.currentPlayerPosition;
 	}
-	
+
 	public ObservableList<Player> getPlayersData(){
 		return playersData;
 	}
 
+	public static void setMessage(String message){
+		GameController.message.setText(message);
+		GameController.message.setVisible(true);
+		GameController.message.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+		GameController.message.setTextFill(Color.RED);
+		GameController.message.toFront();
+	}
 
 }
