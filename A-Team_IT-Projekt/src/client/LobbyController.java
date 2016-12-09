@@ -126,52 +126,58 @@ public class LobbyController implements Initializable {
 
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void exitSession(){
-		//Damit wenn ListView leer ist und darauf geklickt wird, das Programm nicht zusammenstürtzt
-		if(!offeneSitzungen.getSelectionModel().isEmpty()){
-			for (Session s: openSessions){
-				//löscht den Player aus der Session
-				if(s.equals(selectedSession)){
-					Player[] players = selectedSession.getPlayers();
-					for (int i = 0; i<players.length;i++){
-						if(!(players[i] == null)){
-							if(players[i].getUserName().equals(players[0].getUserName())){
-								players[i] = null;
-								selectedSession.setPlayers(players);
+		try{
+			//Damit wenn ListView leer ist und darauf geklickt wird, das Programm nicht zusammenstürtzt
+			if(!offeneSitzungen.getSelectionModel().isEmpty()){
+				for (Session s: openSessions){
+					//löscht den Player aus der Session
+					if(s.equals(selectedSession)){
+						Player[] players = selectedSession.getPlayers();
+						for (int i = 0; i<players.length;i++){
+							if(!(players[i] == null)){
+								if(players[i].getUserName().equals(players[0].getUserName())){
+									players[i] = null;
+									selectedSession.setPlayers(players);
+								}
 							}
 						}
-					}
-					//wenn der letzte Player aus der Session geht, sollte die Session gelöscht werden
-					//jedes Mal wenn ein Player im Array den Wert null hat, steigt der counter um 1, das heisst also wenn 
-					//counter gleich wie die Arraygrösse ist, sind keine Players in der Session vorhanden und sie kann gelöscht werden
-					int counter = 0;
-					for(int i = 0; i<players.length;i++){
-						if(players[i] == null){
-							counter++;
-						}
-					}
-					//wenn counter gleichgross wie die Grösse des Arrays ist, dann:
-					if(counter == players.length){
-						//String aus ArrayList <String> offeneSitzungenList löschen
-						for (int i = 0; i < offeneSitzungenList.size(); i++){
-							if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
-								offeneSitzungenList.remove(i);
+						//wenn der letzte Player aus der Session geht, sollte die Session gelöscht werden
+						//jedes Mal wenn ein Player im Array den Wert null hat, steigt der counter um 1, das heisst also wenn 
+						//counter gleich wie die Arraygrösse ist, sind keine Players in der Session vorhanden und sie kann gelöscht werden
+						int counter = 0;
+						for(int i = 0; i<players.length;i++){
+							if(players[i] == null){
+								counter++;
 							}
 						}
-						// Session aus ArrayList <Session> openSessions löschen
-						for(int b = 0; b < openSessions.size(); b++){
-							if(openSessions.get(b).equals(selectedSession)){
-								openSessions.remove(b);
+						//wenn counter gleichgross wie die Grösse des Arrays ist, dann:
+						if(counter == players.length){
+							//String aus ArrayList <String> offeneSitzungenList löschen
+							for (int i = 0; i < offeneSitzungenList.size(); i++){
+								if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
+									offeneSitzungenList.remove(i);
+								}
 							}
-						}
-						
-						
-						//String aus ListView <String> offeneSitzungen löschen
-						if (offeneSitzungen.getItems().equals(selectedSessionListView)){
-							offeneSitzungen.getItems().clear();
+							// Session aus ArrayList <Session> openSessions löschen
+							for(int b = 0; b < openSessions.size(); b++){
+								if(openSessions.get(b).equals(selectedSession)){
+									openSessions.remove(b);
+								}
+							}
+
+
+							//String aus ListView <String> offeneSitzungen löschen
+							for (int c = 0; c < offeneSitzungen.getItems().size();c++){
+								if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
+									offeneSitzungen.getItems().remove(c);
+								}
+							}
 						}
 					}
 				}
 			}
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 
@@ -206,7 +212,8 @@ public class LobbyController implements Initializable {
 	}
 
 	public void startSession(){
-	
+
+
 
 	}
 
