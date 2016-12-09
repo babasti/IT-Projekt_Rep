@@ -834,10 +834,17 @@ public class GameController extends Circle implements Initializable{
 		int points;
 		int countPosition = 1;
 
-		Tile collectTile = startBoard.get(position-countPosition);
 		HBox collectBox = tileBox.get(position-countPosition);
-		points = collectTile.getPoints();
+		int i = 0;
+		while(collectBox.getChildren().contains(players.get(i).getAvatar())){
+			countPosition++;
+			collectBox = tileBox.get(position-countPosition);
+			
+		}
 		
+		Tile collectTile = startBoard.get(position-countPosition);
+		points = collectTile.getPoints();
+	
 		if(points > 0){
 			currentPlayer.addToScore(points);
 			startBoard.set(position-countPosition, Water);

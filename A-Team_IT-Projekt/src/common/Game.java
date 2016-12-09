@@ -5,11 +5,21 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2361871497549590976L;
 	private String s;
 	private ArrayList<Player> al;
 	private Player p;
 	private String[] a;
 	private String what;
+	private int numOfPlayers;
+	
+	public Game (Session session){
+//		this.al = session.getPlayers();
+		this.numOfPlayers = session.getNumOfPlayers();
+	}
 	
 	public Game(String s){
 		this.s = s;
