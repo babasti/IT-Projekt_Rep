@@ -122,9 +122,9 @@ public class LobbyController implements Initializable {
 		try{
 			//Damit wenn ListView leer ist und darauf geklickt wird, das Programm nicht zusammenstürtzt
 			if(!offeneSitzungen.getSelectionModel().isEmpty()){
-				for (Session s: openSessions){
+				for (int z = 0; z < openSessions.size();z++){
 					//löscht den Player aus der Session
-					if(s.equals(selectedSession)){
+					if(openSessions.get(z).equals(selectedSession)){
 						Player[] players = selectedSession.getPlayers();
 						for (int i = 0; i<players.length;i++){
 							if(!(players[i] == null)){
@@ -154,7 +154,7 @@ public class LobbyController implements Initializable {
 							// Session aus ArrayList <Session> openSessions löschen
 							for(int b = 0; b < openSessions.size(); b++){
 								if(openSessions.get(b).equals(selectedSession)){
-									openSessions.remove(b);
+									//openSessions.remove(b);
 								}
 							}
 							//Item aus ListView <String> offeneSitzungen löschen
