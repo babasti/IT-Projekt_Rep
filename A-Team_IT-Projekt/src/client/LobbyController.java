@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import common.Game;
 import common.Player;
 import common.Session;
 import javafx.beans.value.ChangeListener;
@@ -122,7 +123,7 @@ public class LobbyController implements Initializable {
 		return alreadyExist;
 	}
 
-	
+
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void exitSession(){
 		//Damit wenn ListView leer ist und darauf geklickt wird, das Programm nicht zusammenstürtzt
@@ -132,23 +133,22 @@ public class LobbyController implements Initializable {
 				if(s.equals(selectedSession)){
 					Player[] players = selectedSession.getPlayers();
 					for (int i = 0; i<players.length;i++){
-						//Zeile 136 wirft Exception
-						if(players[i].getUserName().equals(players[0].getUserName())){
-							players[i] = null;
+						if(!(players[i] == null)){
+							if(players[i].getUserName().equals(players[0].getUserName())){
+								players[i] = null;
+								selectedSession.setPlayers(players);
+							}
 						}
 					}
 					//wenn der letzte Player aus der Session geht, sollte die Session gelöscht werden
 					//jedes Mal wenn ein Player im Array den Wert null hat, steigt der counter um 1, das heisst also wenn 
 					//counter gleich wie die Arraygrösse ist, sind keine Players in der Session vorhanden und sie kann gelöscht werden
 					int counter = 0;
-
 					for(int i = 0; i<players.length;i++){
 						if(players[i] == null){
 							counter++;
 						}
 					}
-
-					System.out.println(players);
 					//wenn counter gleichgross wie die Grösse des Arrays ist, dann:
 					if(counter == players.length){
 						//String aus ArrayList <String> offeneSitzungenList löschen
@@ -163,6 +163,8 @@ public class LobbyController implements Initializable {
 								openSessions.remove(b);
 							}
 						}
+						
+						
 						//String aus ListView <String> offeneSitzungen löschen
 						if (offeneSitzungen.getItems().equals(selectedSessionListView)){
 							offeneSitzungen.getItems().clear();
@@ -204,6 +206,7 @@ public class LobbyController implements Initializable {
 	}
 
 	public void startSession(){
+	
 
 	}
 
