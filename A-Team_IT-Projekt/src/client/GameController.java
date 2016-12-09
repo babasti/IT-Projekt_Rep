@@ -40,12 +40,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import common.SCircle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class GameController extends Circle implements Initializable{
+public class GameController extends SCircle implements Initializable{
 
 
 	// Elemente vom GUI definieren
@@ -371,8 +371,6 @@ public class GameController extends Circle implements Initializable{
 	private Image moveCardYellow = new Image(getClass().getResourceAsStream("/resource/card_Yellow.jpg"));
 
 
-
-
 	//Instanzvariablen ArrayListe welche alle Tile Objekte beinhaltet
 	//und ImageView Array welche alle ImageView mit ID beinhaltet
 
@@ -386,10 +384,10 @@ public class GameController extends Circle implements Initializable{
 	Tile Water = new Tile(water, 0, "water");
 	private static Color[] avatarColors = new Color[4];
 	private static ArrayList<Player> players = new ArrayList<Player>(); 
-	private static ArrayList<Circle> avatars;
+	private static ArrayList<SCircle> avatars;
 	private static Card selectetCard;
 	private static ImageView selectetCardImageView;
-	private static Circle selectetAvatar;
+	private static SCircle selectetAvatar;
 	private static ArrayList<HBox> tileBox;
 	private static ArrayList<Tile> proformaStartGameBoard;
 	private static ArrayList<ImageView> possibleTilesArray;
@@ -496,11 +494,11 @@ public class GameController extends Circle implements Initializable{
 
 		//avatar Listen von den Player holen und in eine arrayListe speichern und diese Listen in eine gesamt Liste speichern
 		//vielleicht geht es auch direkt noch nicht probiert
-		ArrayList<Circle> avatarsPlayer1 = player1.getAvatar();
-		ArrayList<Circle> avatarsPlayer2 = player2.getAvatar();
-		ArrayList<Circle> avatarsPlayer3 = player3.getAvatar();
-		ArrayList<Circle> avatarsPlayer4 = player4.getAvatar();
-		ArrayList<Circle> totalAvatars = new ArrayList<Circle>();
+		ArrayList<SCircle> avatarsPlayer1 = player1.getAvatar();
+		ArrayList<SCircle> avatarsPlayer2 = player2.getAvatar();
+		ArrayList<SCircle> avatarsPlayer3 = player3.getAvatar();
+		ArrayList<SCircle> avatarsPlayer4 = player4.getAvatar();
+		ArrayList<SCircle> totalAvatars = new ArrayList<SCircle>();
 		totalAvatars.addAll(avatarsPlayer1);
 		totalAvatars.addAll(avatarsPlayer2);
 		totalAvatars.addAll(avatarsPlayer3);
@@ -836,10 +834,10 @@ public class GameController extends Circle implements Initializable{
 
 		HBox collectBox = tileBox.get(position-countPosition);
 		int i = 0;
+		
 		while(collectBox.getChildren().contains(players.get(i).getAvatar())){
 			countPosition++;
 			collectBox = tileBox.get(position-countPosition);
-			
 		}
 		
 		Tile collectTile = startBoard.get(position-countPosition);
@@ -1199,7 +1197,7 @@ public class GameController extends Circle implements Initializable{
 	//der Effekt wird nur bei einem gesetzt
 	//Um während dem Spiel nur ein Avatar zu wählen muss noch ein Code geschrieben werden
 	public static void handleSelectetAvatar(MouseEvent event){
-		Circle selectetAvatar = (Circle) event.getSource();
+		SCircle selectetAvatar = (SCircle) event.getSource();
 		InnerShadow avatarShadow = new InnerShadow();
 		avatarShadow.setChoke(0.5);
 		avatarShadow.setColor(Color.web("F7FF00"));
@@ -1219,7 +1217,7 @@ public class GameController extends Circle implements Initializable{
 		return GameController.selectetCard;
 	}
 
-	public static Circle getSelectetAvatar(){
+	public static SCircle getSelectetAvatar(){
 		return GameController.selectetAvatar;
 	}
 
