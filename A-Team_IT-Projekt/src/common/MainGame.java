@@ -1,4 +1,4 @@
-package client;
+package common;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ public class MainGame extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try{
-			Pane root = (Pane)FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
+			Pane root = (Pane)FXMLLoader.load(getClass().getResource("./GameBoard.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
