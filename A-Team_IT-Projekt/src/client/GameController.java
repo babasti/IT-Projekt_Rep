@@ -838,28 +838,49 @@ public class GameController extends SCircle implements Initializable{
 
 		HBox collectBox = tileBox.get(position-countPosition);
 
+		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
+		//darauf steht
 		while(!(collectBox.getChildren().isEmpty())){
 				countPosition++;
 				collectBox = tileBox.get(position-countPosition);
 		}
 
+		
 		Tile collectTile = startBoard.get(position-countPosition);
 		points = collectTile.getPoints();
 
+		//wenn das Tile Punkte hat wird es ersetzt durch "Wasser"
+		//und dem Player werden die entsprechenden Punkte zum Score summiert
 		if(points > 0){
 			currentPlayer.addToScore(points);
 			startBoard.set(position-countPosition, Water);
 			tileImages[position-countPosition].setImage(startBoard.get(position-countPosition).getImage());
 		}else{
 			do{
+				//falls das Tile keine Punkte hat, also "Wasser" ist
+				//möchten wir natürlich, dass der Player ein Tile weiter hinten auf dem Board erhält mit Punkte
 				countPosition++;
+				//falls wir mit der Iteration am Start des Boards gelangen
+				//hat es keine Tiles mehr mit Punkte, dann wird der Loop gebrochen und der Player 
+				//kann keine Punkte sammeln
 				if(position - countPosition == -1){
 					break;
 				}
+				//hier wird wieder kontrolliert ob eine andere Figur auf dem entsprechendem Tile
+				//drauf ist
 				collectBox = tileBox.get(position-countPosition);
 				while(!(collectBox.getChildren().isEmpty())){
 					countPosition++;
+					//falls wir wiederum am Start des Boards gelangen, dann wird der Loop gebrochen
+					if(position-countPosition == -1){
+						break;
+					}
 					collectBox = tileBox.get(position-countPosition);
+				}
+				//und der Player kann keine Punkte sammeln, da es keine freie Tiles gibt
+				//mit Punkte
+				if(position-countPosition == -1){
+					break;
 				}
 				Tile selectTile1 = startBoard.get(position-countPosition);
 				points = selectTile1.getPoints();
@@ -869,6 +890,7 @@ public class GameController extends SCircle implements Initializable{
 			}while(points == 0);
 		}
 
+		//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
 		scoreTable.getColumns().clear();
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
@@ -884,6 +906,8 @@ public class GameController extends SCircle implements Initializable{
 
 	}
 
+	//collectLastTile() wird aufgerufen falls der Player aufs Land gelangt,
+	//ihm wird das entsprechende letzte verfügbare Tile zugewiesen
 	public static void collectLastTile(){
 		Image water = proformaStartGameBoard.get(0).getImage();
 		Tile Water = new Tile (water, 0, "water");
@@ -891,17 +915,42 @@ public class GameController extends SCircle implements Initializable{
 
 		int points;
 		int countPosition = 0;
+		
+		HBox collectBox = tileBox.get(lastTilePosition);
 
-		Tile collectTile = startBoard.get(lastTilePosition);
+		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
+		//darauf steht
+		while(!(collectBox.getChildren().isEmpty())){
+				countPosition++;
+				collectBox = tileBox.get(lastTilePosition-countPosition);
+		}
+
+		Tile collectTile = startBoard.get(lastTilePosition-countPosition);
 		points = collectTile.getPoints();
 
 		if(points > 0){	
 			currentPlayer.addToScore(points);
-			startBoard.set(lastTilePosition, Water);
-			tileImages[lastTilePosition].setImage(startBoard.get(lastTilePosition).getImage());
+			startBoard.set(lastTilePosition-countPosition, Water);
+			tileImages[lastTilePosition-countPosition].setImage(startBoard.get(lastTilePosition-countPosition).getImage());
 		}else{
 			do{
 				countPosition++;
+				if(lastTilePosition - countPosition == -1){
+					break;
+				}
+				collectBox = tileBox.get(lastTilePosition-countPosition);
+				while(!(collectBox.getChildren().isEmpty())){
+					countPosition++;
+					if(lastTilePosition-countPosition == -1){
+						break;
+					}
+					collectBox = tileBox.get(lastTilePosition-countPosition);
+				}
+				
+				if(lastTilePosition-countPosition == -1){
+					break;
+				}
+				
 				Tile selectTile1 = startBoard.get(lastTilePosition-countPosition);
 				points = selectTile1.getPoints();
 				currentPlayer.addToScore(points);

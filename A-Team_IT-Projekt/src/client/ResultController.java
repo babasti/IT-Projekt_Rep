@@ -47,7 +47,7 @@ public class ResultController implements Initializable {
 			}
 		}
 
-		l_winner.setText(winner.getUserName() +" ist der Sieger mit\n"+ winner.getScore()+" Punkte\nGl�ckwunsch Brate!");
+		l_winner.setText(winner.getUserName() +" ist der Sieger mit\n"+ winner.getScore()+" Punkte\nGlückwunsch Brate!");
 		l_winner.setTextFill(Color.RED);
 		l_winner.setFont(Font.font(25));
 
