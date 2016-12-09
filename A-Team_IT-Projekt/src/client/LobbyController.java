@@ -212,9 +212,19 @@ public class LobbyController implements Initializable {
 	}
 
 	public void startSession(){
-		Session s = this.selectSession();
-        Game g = new Game(s, b_SpielStarten);
-        ClientThread.sendToServer(g);
+//		Player[] players = selectedSession.getPlayers();
+//		boolean arrayNotFull = false;
+//		for(Player p:players){
+//			if(p == null){
+//				arrayNotFull = true;
+//			}
+//		}
+//		if(!arrayNotFull){
+			Game g = new Game(selectedSession, b_SpielStarten);
+			ClientThread.sendToServer(new Game(selectedSession));
+//		}else{
+//			fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
+//		}
 	}
 
 }
