@@ -15,10 +15,10 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import common.SCircle;
 import client.ClientThread;
 
-public class Player implements Serializable{
+public class Player extends SCircle implements Serializable{
 
 	/**
 	 * 
@@ -30,10 +30,10 @@ public class Player implements Serializable{
 	public ArrayList<Card> cards;
 	private int score;
 	private String PCName;
-	private ArrayList<Circle> avatars;
-	private Circle avatar1 = new Circle();
-	private Circle avatar2 = new Circle();
-	private Circle avatar3 = new Circle();
+	private ArrayList<SCircle> avatars;
+	private SCircle avatar1 = new SCircle();
+	private SCircle avatar2 = new SCircle();
+	private SCircle avatar3 = new SCircle();
 
 	public Player(String userName, String password, Date dateOfBirth, String PCName){
 		this.userName = userName;
@@ -42,7 +42,7 @@ public class Player implements Serializable{
 		this.PCName = PCName;
 		cards = new ArrayList<Card>();
 		score = 0;
-		avatars = new ArrayList<Circle>();
+		avatars = new ArrayList<SCircle>();
 		avatars.add(avatar1);
 		avatars.add(avatar2);
 		avatars.add(avatar3);
@@ -118,7 +118,7 @@ public class Player implements Serializable{
 		return exist;
 	}
 	
-	public ArrayList<Circle> getAvatar(){
+	public ArrayList<SCircle> getAvatar(){
 		return this.avatars;
 	}
 	
