@@ -19,7 +19,7 @@ import javafx.stage.WindowEvent;
 import common.Game;
 import common.Player;
 
-public class ClientNew extends Application implements Serializable{
+public class Client extends Application implements Serializable{
 
 
 	public static void main(String[] args) throws Exception{	

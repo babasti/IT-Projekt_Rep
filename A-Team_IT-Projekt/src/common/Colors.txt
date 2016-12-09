@@ -1,7 +1,0 @@
-brown
-green
-blue
-grey
-pink
-white
-yellow
