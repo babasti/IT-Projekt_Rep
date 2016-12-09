@@ -211,6 +211,7 @@ public class LobbyController implements Initializable {
 		}
 	}
 
+	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	//Array muss voll sein um spielen zu können
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
