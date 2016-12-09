@@ -107,7 +107,6 @@ public class Player extends SCircle implements Serializable{
 		return searchedPlayer;
 	}
 
-
 	//prüft, ob Player mit diesem UserName bereits erstellt
 	public static boolean checkUser(String userName){
 		boolean exist = false;

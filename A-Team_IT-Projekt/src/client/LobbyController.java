@@ -212,9 +212,9 @@ public class LobbyController implements Initializable {
 	}
 
 	public void startSession(){
-
-
-
+		Session s = this.selectSession();
+        Game g = new Game(s, b_SpielStarten);
+        ClientThread.sendToServer(g);
 	}
 
 }
