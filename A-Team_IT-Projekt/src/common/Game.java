@@ -13,12 +13,12 @@ public class Game implements Serializable {
 	
 	public Game(String s){
 		this.s = s;
-		what = "string";
+		what = "arrayList regPlayers an Client";
 	}
 	
 	public Game(ArrayList<Player> al){
 		this.al = al;
-		what = "arrayList";
+		what = "arrayList regPlayers von Server";
 	}
 	
 	public ArrayList<Player> getAl(){
@@ -27,7 +27,7 @@ public class Game implements Serializable {
 	
 	public Game(Player p){
 		this.p = p;
-		what = "player";
+		what = "Player an Server";
 	}
 	
 	public Player getP(){
@@ -36,7 +36,7 @@ public class Game implements Serializable {
 	
 	public Game(String[] a){
 		this.a = a;
-		what = "array";
+		what = "PC Name und User an Server";
 	}
 	
 	public String[] getA(){
