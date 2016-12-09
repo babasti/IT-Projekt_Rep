@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import common.Game;
 import common.Player;
 import common.Session;
 import javafx.beans.value.ChangeListener;
@@ -204,7 +205,7 @@ public class LobbyController implements Initializable {
 	}
 
 	public void startSession(){
-
+	
 	}
 
 }
