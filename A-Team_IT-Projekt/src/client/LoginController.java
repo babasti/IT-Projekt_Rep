@@ -86,7 +86,7 @@ public class LoginController implements Initializable{
 						Stage stage1 = (Stage)b_login.getScene().getWindow();
 						stage1.close();
 					}catch(Exception e){
-						System.out.println(e);
+						e.printStackTrace();
 					}
 				}else{ //Benutzer existiert aber Passwort falsch
 					text_Fehlermeldung.setText("Das Passwort ist falsch.");

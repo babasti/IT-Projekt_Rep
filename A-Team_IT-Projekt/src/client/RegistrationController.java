@@ -105,7 +105,7 @@ public class RegistrationController implements Initializable {
 					Stage stage1 = (Stage)b_register.getScene().getWindow();
 					stage1.close();
 				}catch(Exception e){
-					System.out.println(e);
+					e.printStackTrace();
 				}
 			}
 		}
