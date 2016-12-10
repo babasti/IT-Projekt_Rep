@@ -31,9 +31,11 @@ public class ClientThread extends Thread implements Serializable{
 				if(g.getWhat().equals("arrayList regPlayers von Server")){
 					regPlayers = g.getAl();
 				}else if(g.getWhat().equals("sitzung erstellt")){
-					//LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
-					LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
-					LobbyController.openSessions.add(g.getSession());
+					if(!LobbyController.sessionAlreadyExist(g.getSession().getSessionName())){
+						LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
+						LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
+						LobbyController.openSessions.add(g.getSession());
+					}
 				}
 			}
 			socket.close();

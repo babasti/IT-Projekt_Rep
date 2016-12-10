@@ -20,8 +20,8 @@ import java.io.ObjectOutputStream;
 
 public class ServerThread extends Thread implements Serializable{
 	private static Socket socket = null;
-	private static ObjectOutputStream objectOutputStream;
-	private static ObjectInputStream objectInputStream;
+	public static ObjectOutputStream objectOutputStream;
+	public static ObjectInputStream objectInputStream;
 	ServerThread(Socket socket){
 		this.socket = socket;
 	}
@@ -31,6 +31,7 @@ public class ServerThread extends Thread implements Serializable{
 		try{
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			Server.openOutputStreams.add(objectOutputStream);
 			while((g = (Game)objectInputStream.readObject()) != null){
 				//wenn ein client arrayList der Player anfragt
 				if(g.getWhat().equals("arrayList regPlayers an Client")){
@@ -48,6 +49,8 @@ public class ServerThread extends Thread implements Serializable{
 					Server.arrayListToFile();
 				}else if(g.getWhat().equals("game gestartet")){
 					
+				}else if(g.getWhat().equals("sitzung erstellt")){
+					sendToAllClients(new Game(g.getSession(),"sitzung erstellt"));
 				}
 			}
 			Server.arrayListToFile();
@@ -65,6 +68,18 @@ public class ServerThread extends Thread implements Serializable{
 			objectOutputStream.writeObject(g);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void sendToAllClients(Game g){
+		for(ObjectOutputStream oos:Server.openOutputStreams){
+			try {
+				oos.writeObject(g);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 }

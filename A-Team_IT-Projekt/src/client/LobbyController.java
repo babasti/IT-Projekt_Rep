@@ -20,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 public class LobbyController implements Initializable {
@@ -57,24 +58,35 @@ public class LobbyController implements Initializable {
 	@FXML
 	Button b_SitzungErstellen;
 
-//	@FXML
-//	ListView<String> offeneSitzungen;
-	
+	@FXML
+	Pane rootPane;
+
+	//	@FXML
+	//	ListView<String> offeneSitzungen;
+
 	public static ListView<String> offeneSitzungen;
 	//offeneSitzungenList ist notwendig für die Kontrolle ob eine Sitzung bereits existiert
 	public static ArrayList<String> offeneSitzungenList = new ArrayList <String>();
 	//im openSession sind alle offenen Session Objekte
 	public static ArrayList<Session> openSessions = new ArrayList <Session>();
 	//selectedSessionListView wird der Stringwert aus der selektierten Zeile der ListView gespeichert
-	private String selectedSessionListView;
+	public static String selectedSessionListView;
 	//ist das in der ListView selektierte Sessionobjekt
-	private Session selectedSession;
+	public static Session selectedSession;
 	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
 
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		//Wertinitialisierung der Choicebox
 		cb_AnzahlSpieler.setItems(cb_AnzahlSpielerList);
+		offeneSitzungen = new ListView<String>();
+		offeneSitzungen.setLayoutX(394);
+		offeneSitzungen.setLayoutY(123);
+		offeneSitzungen.setPrefWidth(388);
+		offeneSitzungen.setPrefHeight(200);
+		offeneSitzungen.toFront();
+		rootPane.getChildren().add(offeneSitzungen);
+
 	}
 
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
@@ -107,7 +119,7 @@ public class LobbyController implements Initializable {
 	}
 
 	//Diese Methode vergleicht ob der eingegebene Sitzungsname bereits existiert
-	private boolean sessionAlreadyExist(String sessionName){
+	public static boolean sessionAlreadyExist(String sessionName){
 		boolean alreadyExist = false;
 		if(offeneSitzungenList.size()>0){
 			for(String s : offeneSitzungenList){
@@ -196,7 +208,7 @@ public class LobbyController implements Initializable {
 		}
 	}
 
-	public Session selectSession(){
+	public static Session selectSession(){
 		if(!offeneSitzungen.getSelectionModel().isEmpty()){
 			selectedSessionListView = offeneSitzungen.getSelectionModel().getSelectedItem();
 			Session session = null;
@@ -206,7 +218,7 @@ public class LobbyController implements Initializable {
 					session = s;
 				}
 			}
-			this.selectedSession = session;
+			selectedSession = session;
 			return selectedSession;
 		}else{
 			return selectedSession = null;
@@ -218,7 +230,8 @@ public class LobbyController implements Initializable {
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
-			if(selectedSession.getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
+
+			if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
 				//		Player[] players = selectedSession.getPlayers();
 				//		boolean arrayNotFull = false;
 				//		for(Player p:players){

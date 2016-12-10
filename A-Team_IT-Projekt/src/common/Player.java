@@ -30,6 +30,7 @@ public class Player extends SCircle implements Serializable{
 	public ArrayList<Card> cards;
 	private int score;
 	private String PCName;
+	private boolean alreadyLoggedIn = false;
 	private ArrayList<SCircle> avatars;
 	private SCircle avatar1 = new SCircle();
 	private SCircle avatar2 = new SCircle();
@@ -133,6 +134,14 @@ public class Player extends SCircle implements Serializable{
 	public String toString(){
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		return "Name: "+this.userName+"\n"+"Passwort: "+this.password+"\n"+"Geburtsdatum: "+dateFormat.format(this.dateOfBirth);
+	}
+	
+	public boolean getAlreadyLoggedIn(){
+		return this.alreadyLoggedIn;
+	}
+	
+	public void setAlreadyLoggedIn(boolean b){
+		this.alreadyLoggedIn = b;
 	}
 
 }
