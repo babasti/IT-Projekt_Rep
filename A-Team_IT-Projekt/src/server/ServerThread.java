@@ -47,7 +47,9 @@ public class ServerThread extends Thread implements Serializable{
 					p.setPCName(g.getA()[1]);
 					Server.arrayListToFile();
 				}else if(g.getWhat().equals("game gestartet")){
-					
+					for(Player p:g.getSession().getPlayers()){
+						System.out.println(p);
+					}
 				}
 			}
 			Server.arrayListToFile();

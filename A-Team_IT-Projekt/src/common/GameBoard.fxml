@@ -367,7 +367,7 @@
          </image>
       </ImageView>
       <Button fx:id="b_SpielzugTätigen" layoutX="756.0" layoutY="607.0" mnemonicParsing="false" onAction="#switchToMoveAvatar" text="Spielzug tätigen !" />
-      <Label fx:id="message" layoutX="803.0" layoutY="648.0" text="Label" />
+
       <VBox fx:id="endBox" layoutX="957.0" layoutY="225.0" prefHeight="114.0" prefWidth="70.0">
          <children>
             <HBox fx:id="eb_player1" prefHeight="30.0" prefWidth="96.0" />

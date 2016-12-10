@@ -1,7 +1,9 @@
 package common;
 
+import java.io.Serializable;
 
-public class Session {
+
+public class Session implements Serializable{
 
 
 	private int numOfPlayers;

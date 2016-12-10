@@ -19,7 +19,7 @@ public class Game implements Serializable {
 	private static final long serialVersionUID = -2361871497549590976L;
 	private String s;
 	private ArrayList<Player> al;
-	private Player[] player;
+	private Player[] players;
 	private Player p;
 	private String[] a;
 	private String what;
@@ -31,9 +31,6 @@ public class Game implements Serializable {
 	public Game (Session session, Button b){
 		this.b_SpielStarten = b;
 		this.session = session;
-		this.player = session.getPlayers();
-		this.numOfPlayers = session.getNumOfPlayers();
-		what = "game gestartet";
 
 		//Game wird gestartet				
 		try {
@@ -51,6 +48,17 @@ public class Game implements Serializable {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public Game(Session session){
+		this.session = session;
+		this.players = session.getPlayers();
+		this.numOfPlayers = session.getNumOfPlayers();
+		what = "game gestartet";
+	}
+	
+	public Session getSession(){
+		return this.session;
 	}
 
 	public Game(String s){
