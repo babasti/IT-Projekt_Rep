@@ -60,7 +60,7 @@ public class Game implements Serializable {
 	public Game(Session session, String s){
 		this.session = session;
 		this.s = s;
-		what = "neue Sitzung";
+		what = "sitzung erstellt";
 	}
 	
 	public Session getSession(){

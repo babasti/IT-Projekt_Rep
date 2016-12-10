@@ -57,10 +57,10 @@ public class LobbyController implements Initializable {
 	@FXML
 	Button b_SitzungErstellen;
 
-	@FXML
-	static ListView<String> offeneSitzungen;
-
-	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
+//	@FXML
+//	ListView<String> offeneSitzungen;
+	
+	public static ListView<String> offeneSitzungen;
 	//offeneSitzungenList ist notwendig für die Kontrolle ob eine Sitzung bereits existiert
 	public static ArrayList<String> offeneSitzungenList = new ArrayList <String>();
 	//im openSession sind alle offenen Session Objekte
@@ -69,6 +69,7 @@ public class LobbyController implements Initializable {
 	private String selectedSessionListView;
 	//ist das in der ListView selektierte Sessionobjekt
 	private Session selectedSession;
+	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
 
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
@@ -95,7 +96,7 @@ public class LobbyController implements Initializable {
 					offeneSitzungen.getItems().addAll(sessionName);
 					offeneSitzungenList.add(sessionName);
 					openSessions.add(session);
-					ClientThread.sendToServer(new Game(session,"sitzung gestartet"));
+					ClientThread.sendToServer(new Game(session,"sitzung erstellt"));
 				}else{
 					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
 				}
@@ -217,7 +218,7 @@ public class LobbyController implements Initializable {
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
-			if(selectedSession.getPlayers()[0].getUserName().equals(System.getProperty("user.name"))){
+			if(selectedSession.getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
 				//		Player[] players = selectedSession.getPlayers();
 				//		boolean arrayNotFull = false;
 				//		for(Player p:players){
