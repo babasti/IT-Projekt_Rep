@@ -30,8 +30,10 @@ public class ClientThread extends Thread implements Serializable{
 			while((g = (Game)objectInputStream.readObject()) != null){
 				if(g.getWhat().equals("arrayList regPlayers von Server")){
 					regPlayers = g.getAl();
-				}else if(true){
-					//andere nachrichten die client empfangen kann
+				}else if(g.getWhat().equals("neue Sitzung")){
+					LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
+					LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
+					LobbyController.openSessions.add(g.getSession());
 				}
 			}
 			socket.close();

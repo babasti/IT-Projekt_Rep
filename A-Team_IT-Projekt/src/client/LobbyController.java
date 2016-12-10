@@ -58,13 +58,13 @@ public class LobbyController implements Initializable {
 	Button b_SitzungErstellen;
 
 	@FXML
-	ListView<String> offeneSitzungen;
+	static ListView<String> offeneSitzungen;
 
 	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
 	//offeneSitzungenList ist notwendig für die Kontrolle ob eine Sitzung bereits existiert
-	private ArrayList<String> offeneSitzungenList = new ArrayList <String>();
+	public static ArrayList<String> offeneSitzungenList = new ArrayList <String>();
 	//im openSession sind alle offenen Session Objekte
-	private ArrayList<Session> openSessions = new ArrayList <Session>();
+	public static ArrayList<Session> openSessions = new ArrayList <Session>();
 	//selectedSessionListView wird der Stringwert aus der selektierten Zeile der ListView gespeichert
 	private String selectedSessionListView;
 	//ist das in der ListView selektierte Sessionobjekt
@@ -95,6 +95,7 @@ public class LobbyController implements Initializable {
 					offeneSitzungen.getItems().addAll(sessionName);
 					offeneSitzungenList.add(sessionName);
 					openSessions.add(session);
+					ClientThread.sendToServer(new Game(session,"sitzung gestartet"));
 				}else{
 					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
 				}
@@ -171,7 +172,7 @@ public class LobbyController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//gibt den Index aus dem Playerarray zurück, wo das erste Platzhalter null ist, brauchen wir für die Methode joinSession
 	public int getIndexPlayerArray(Player[] p){
 		//index = -1, weil 0 geht nicht, da im Array an der Position 0 auch null sein kann, 
@@ -215,38 +216,44 @@ public class LobbyController implements Initializable {
 	//Array muss voll sein um spielen zu können
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
-			//		Player[] players = selectedSession.getPlayers();
-			//		boolean arrayNotFull = false;
-			//		for(Player p:players){
-			//			if(p == null){
-			//				arrayNotFull = true;
-			//			}
-			//		}
-			//		if(!arrayNotFull){
-			Game g = new Game(selectedSession, b_SpielStarten);
-			ClientThread.sendToServer(new Game(selectedSession));
-			
-			//String aus ArrayList <String> offeneSitzungenList löschen
-			for (int i = 0; i < offeneSitzungenList.size(); i++){
-				if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
-					offeneSitzungenList.remove(i);
+			//nur der Sitzungsersteller darf die Sitzung starten
+			if(selectedSession.getPlayers()[0].getUserName().equals(System.getProperty("user.name"))){
+				//		Player[] players = selectedSession.getPlayers();
+				//		boolean arrayNotFull = false;
+				//		for(Player p:players){
+				//			if(p == null){
+				//				arrayNotFull = true;
+				//			}
+				//		}
+				//		if(!arrayNotFull){
+				Game g = new Game(selectedSession, b_SpielStarten);
+				ClientThread.sendToServer(new Game(selectedSession));
+
+				//String aus ArrayList <String> offeneSitzungenList löschen
+				for (int i = 0; i < offeneSitzungenList.size(); i++){
+					if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
+						offeneSitzungenList.remove(i);
+					}
 				}
-			}
-			//Session aus ArrayList <Session> openSessions löschen
-			for(int b = 0; b < openSessions.size(); b++){
-				if(openSessions.get(b).equals(selectedSession)){
-					openSessions.remove(b);
+				//Session aus ArrayList <Session> openSessions löschen
+				for(int b = 0; b < openSessions.size(); b++){
+					if(openSessions.get(b).equals(selectedSession)){
+						openSessions.remove(b);
+					}
 				}
-			}
-			//Item aus ListView <String> offeneSitzungen löschen
-			for (int c = 0; c < offeneSitzungen.getItems().size();c++){
-				if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
-					offeneSitzungen.getItems().remove(c);
+				//Item aus ListView <String> offeneSitzungen löschen
+				for (int c = 0; c < offeneSitzungen.getItems().size();c++){
+					if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
+						offeneSitzungen.getItems().remove(c);
+					}
 				}
+				//		}else{
+				//			fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
+				//		}
 			}
-			//		}else{
-			//			fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
-			//		}
+			else{
+				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
+			}
 		}
 	}
 

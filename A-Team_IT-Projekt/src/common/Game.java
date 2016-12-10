@@ -47,14 +47,20 @@ public class Game implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 	
+	//Nachricht, dass Game gestartet wurde vom Sitzungsersteller
 	public Game(Session session){
 		this.session = session;
 		this.players = session.getPlayers();
 		this.numOfPlayers = session.getNumOfPlayers();
 		what = "game gestartet";
+	}
+	
+	public Game(Session session, String s){
+		this.session = session;
+		this.s = s;
+		what = "neue Sitzung";
 	}
 	
 	public Session getSession(){
