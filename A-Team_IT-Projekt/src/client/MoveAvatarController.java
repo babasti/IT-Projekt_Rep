@@ -101,31 +101,42 @@ public class MoveAvatarController implements Initializable {
 				}
 			}
 		}else{
-			for(int i = Integer.parseInt(currentAvatarPosition.getId().substring(7)); i < startBoard.size(); i++){
-				if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
-					if(tileBox.get(i).getChildren().isEmpty()){
-						tileBox.get(i).getChildren().add(selectetAvatar);
-						tileBox.get(i).setVisible(true);
-						tileBox.get(i).toFront();
-						GameController.collectTile(startBoard.get(i), i);
-						break;
-					}else{
-						tileBox.get(i).getChildren().add(selectetAvatar);
-						tileBox.get(i).setVisible(true);
-						tileBox.get(i).toFront();
-						GameController.setMessage("Spiel eine weitere Karte!");
-					}
-					break;
-				}
-				count = i;
-			}
-			if(count == 48){
+			int x = Integer.parseInt(currentAvatarPosition.getId().substring(7));
+			if(x == 49){
 				ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
 				ebPlayer[currentPlayerPosition].setVisible(true);
 				ebPlayer[currentPlayerPosition].toFront();
 				GameController.collectLastTile();
 				if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
 					switchToResult();
+				}
+			}else{
+				for(int i = Integer.parseInt(currentAvatarPosition.getId().substring(7)); i <= startBoard.size(); i++){
+					if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
+						if(tileBox.get(i).getChildren().isEmpty()){
+							tileBox.get(i).getChildren().add(selectetAvatar);
+							tileBox.get(i).setVisible(true);
+							tileBox.get(i).toFront();
+							GameController.collectTile(startBoard.get(i), i);
+							break;
+						}else{
+							tileBox.get(i).getChildren().add(selectetAvatar);
+							tileBox.get(i).setVisible(true);
+							tileBox.get(i).toFront();
+							GameController.setMessage("Spiel eine weitere Karte!");
+						}
+						break;
+					}
+					count = i;
+				}
+				if(count == 49){
+					ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
+					ebPlayer[currentPlayerPosition].setVisible(true);
+					ebPlayer[currentPlayerPosition].toFront();
+					GameController.collectLastTile();
+					if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
+						switchToResult();
+					}
 				}
 			}
 		}

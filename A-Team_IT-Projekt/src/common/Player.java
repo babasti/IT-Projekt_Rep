@@ -35,6 +35,7 @@ public class Player extends SCircle implements Serializable{
 	private SCircle avatar1 = new SCircle();
 	private SCircle avatar2 = new SCircle();
 	private SCircle avatar3 = new SCircle();
+	private SCircle avatarColor = new SCircle();
 
 	public Player(String userName, String password, Date dateOfBirth, String PCName){
 		this.userName = userName;
@@ -143,5 +144,15 @@ public class Player extends SCircle implements Serializable{
 	public void setAlreadyLoggedIn(boolean b){
 		this.alreadyLoggedIn = b;
 	}
+	
+	public void setAvatarColor(Color avatarColor){
+		this.avatarColor.setFill(avatarColor);
+		this.avatarColor.setRadius(10);
+		this.avatarColor.setStroke(Color.BLACK);
+		this.avatarColor.setVisible(true);
+	}
 
+	public SCircle getAvatarColor(){
+		return this.avatarColor;
+	}
 }

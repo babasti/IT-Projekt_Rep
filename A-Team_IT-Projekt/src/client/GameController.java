@@ -358,7 +358,7 @@ public class GameController extends SCircle implements Initializable{
 	private Image yellow5 = new Image(getClass().getResourceAsStream("/resource/yellow_5.jpg"));
 	private Image yellow6 = new Image(getClass().getResourceAsStream("/resource/yellow_6.jpg"));
 	private Image yellow7 = new Image(getClass().getResourceAsStream("/resource/yellow_7.jpg"));
-	private Image water = new Image(getClass().getResourceAsStream("/resource/bg_popup.png"));
+	private Image water = new Image(getClass().getResourceAsStream("/resource/wasser.JPG"));
 
 	private Image moveCardBlue = new Image(getClass().getResourceAsStream("/resource/card_Blue.jpg"));
 	private Image moveCardBrown = new Image(getClass().getResourceAsStream("/resource/card_Brown.jpg"));
@@ -397,7 +397,9 @@ public class GameController extends SCircle implements Initializable{
 	static ObservableList<Player> playersData = FXCollections.observableArrayList();
 	static TableColumn<Player, String> userNameColumn = new TableColumn<Player, String>();
 	static TableColumn<Player, Integer> scoreColumn = new TableColumn<Player, Integer>();
+	static TableColumn<Player, SCircle> avatarColorColumn = new TableColumn<Player, SCircle>();
 	private static Label message;
+	private static ArrayList<ImageView> playerCardsNotVisible = new ArrayList<ImageView>();
 
 
 
@@ -449,8 +451,6 @@ public class GameController extends SCircle implements Initializable{
 		//Anzahl Bewegungskarten im Deck anzeigen
 		String numberOfDeck = String.valueOf(cards.size());
 		numOfDeck.setText(numberOfDeck);
-
-		System.out.println(cards);
 
 
 		// ------------------------------------------- provisorisch ab hier
@@ -507,12 +507,13 @@ public class GameController extends SCircle implements Initializable{
 		int count2 = 0;
 
 		//den avatars die zuständige farbe zuteilen und in die entsprechenden Boxen zuteilen
-		for(int x = 0; x < 4; x++){	
-			for(int i = 0; i < 3; i++){
+		for(int x = 0; x < players.size(); x++){	
+			for(int i = 0; i < players.get(x).getAvatar().size(); i++){
 				totalAvatars.get(count2).setFill(avatarColors[count]);
 				sbPlayer[count].getChildren().add(totalAvatars.get(count2));
 				count2++;
 			}
+			players.get(x).setAvatarColor(avatarColors[count]);
 			count++;
 		}
 
@@ -551,14 +552,22 @@ public class GameController extends SCircle implements Initializable{
 
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
+		avatarColorColumn.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, SCircle>("avatarColor"));
 
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().clear();
-		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
+		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 
 		setMessage(currentPlayer.getUserName()+" ist dran!");
+		for(ImageView notVisible : moveImages){
+			if(!notVisible.isVisible()){
+				playerCardsNotVisible.add(notVisible);
+			}
+		}
+
 
 	}	
 
@@ -823,6 +832,8 @@ public class GameController extends SCircle implements Initializable{
 		setCurrentPlayer();
 		setMessage(currentPlayer.getUserName()+" ist dran!");
 
+		//hier wird die methode sendToServer aufgerufen
+
 	}	
 
 
@@ -841,69 +852,71 @@ public class GameController extends SCircle implements Initializable{
 		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
 		//darauf steht
 		while(!(collectBox.getChildren().isEmpty())){
-				countPosition++;
+			countPosition++;
+			if(position-countPosition == -1){
+				break;
+			}else{
 				collectBox = tileBox.get(position-countPosition);
+			}
 		}
-
-		
-		Tile collectTile = startBoard.get(position-countPosition);
-		points = collectTile.getPoints();
-
-		//wenn das Tile Punkte hat wird es ersetzt durch "Wasser"
-		//und dem Player werden die entsprechenden Punkte zum Score summiert
-		if(points > 0){
-			currentPlayer.addToScore(points);
-			startBoard.set(position-countPosition, Water);
-			tileImages[position-countPosition].setImage(startBoard.get(position-countPosition).getImage());
+		if(position-countPosition == -1){
 		}else{
-			do{
-				//falls das Tile keine Punkte hat, also "Wasser" ist
-				//möchten wir natürlich, dass der Player ein Tile weiter hinten auf dem Board erhält mit Punkte
-				countPosition++;
-				//falls wir mit der Iteration am Start des Boards gelangen
-				//hat es keine Tiles mehr mit Punkte, dann wird der Loop gebrochen und der Player 
-				//kann keine Punkte sammeln
-				if(position - countPosition == -1){
-					break;
-				}
-				//hier wird wieder kontrolliert ob eine andere Figur auf dem entsprechendem Tile
-				//drauf ist
-				collectBox = tileBox.get(position-countPosition);
-				while(!(collectBox.getChildren().isEmpty())){
-					countPosition++;
-					//falls wir wiederum am Start des Boards gelangen, dann wird der Loop gebrochen
-					if(position-countPosition == -1){
-						break;
-					}
-					collectBox = tileBox.get(position-countPosition);
-				}
-				//und der Player kann keine Punkte sammeln, da es keine freie Tiles gibt
-				//mit Punkte
-				if(position-countPosition == -1){
-					break;
-				}
-				Tile selectTile1 = startBoard.get(position-countPosition);
-				points = selectTile1.getPoints();
+			Tile collectTile = startBoard.get(position-countPosition);
+			points = collectTile.getPoints();
+
+			//wenn das Tile Punkte hat wird es ersetzt durch "Wasser"
+			//und dem Player werden die entsprechenden Punkte zum Score summiert
+			if(points > 0){
 				currentPlayer.addToScore(points);
 				startBoard.set(position-countPosition, Water);
 				tileImages[position-countPosition].setImage(startBoard.get(position-countPosition).getImage());
-			}while(points == 0);
+			}else{
+				do{
+					//falls das Tile keine Punkte hat, also "Wasser" ist
+					//möchten wir natürlich, dass der Player ein Tile weiter hinten auf dem Board erhält mit Punkte
+					countPosition++;
+					//falls wir mit der Iteration am Start des Boards gelangen
+					//hat es keine Tiles mehr mit Punkte, dann wird der Loop gebrochen und der Player 
+					//kann keine Punkte sammeln
+					if(position - countPosition == -1){
+						break;
+					}
+					//hier wird wieder kontrolliert ob eine andere Figur auf dem entsprechendem Tile
+					//drauf ist
+					collectBox = tileBox.get(position-countPosition);
+					while(!(collectBox.getChildren().isEmpty())){
+						countPosition++;
+						//falls wir wiederum am Start des Boards gelangen, dann wird der Loop gebrochen
+						if(position-countPosition == -1){
+							break;
+						}
+						collectBox = tileBox.get(position-countPosition);
+					}
+					//und der Player kann keine Punkte sammeln, da es keine freie Tiles gibt
+					//mit Punkte
+					if(position-countPosition == -1){
+						break;
+					}
+					Tile selectTile1 = startBoard.get(position-countPosition);
+					points = selectTile1.getPoints();
+					currentPlayer.addToScore(points);
+					startBoard.set(position-countPosition, Water);
+					tileImages[position-countPosition].setImage(startBoard.get(position-countPosition).getImage());
+				}while(points == 0);
+			}
 		}
 
 		//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
 		scoreTable.getColumns().clear();
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
+		avatarColorColumn.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, SCircle>("avatarColor"));
 
 		scoreTable.setItems(playersData);
-		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
-
-
-		System.out.println(points);
-		System.out.println(selectetTile.getColor());
-
+		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 	}
 
 	//collectLastTile() wird aufgerufen falls der Player aufs Land gelangt,
@@ -915,14 +928,14 @@ public class GameController extends SCircle implements Initializable{
 
 		int points;
 		int countPosition = 0;
-		
+
 		HBox collectBox = tileBox.get(lastTilePosition);
 
 		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
 		//darauf steht
 		while(!(collectBox.getChildren().isEmpty())){
-				countPosition++;
-				collectBox = tileBox.get(lastTilePosition-countPosition);
+			countPosition++;
+			collectBox = tileBox.get(lastTilePosition-countPosition);
 		}
 
 		Tile collectTile = startBoard.get(lastTilePosition-countPosition);
@@ -946,11 +959,11 @@ public class GameController extends SCircle implements Initializable{
 					}
 					collectBox = tileBox.get(lastTilePosition-countPosition);
 				}
-				
+
 				if(lastTilePosition-countPosition == -1){
 					break;
 				}
-				
+
 				Tile selectTile1 = startBoard.get(lastTilePosition-countPosition);
 				points = selectTile1.getPoints();
 				currentPlayer.addToScore(points);
@@ -963,14 +976,13 @@ public class GameController extends SCircle implements Initializable{
 		scoreTable.getColumns().clear();
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
+		avatarColorColumn.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, SCircle>("avatarColor"));
 
 		scoreTable.setItems(playersData);
-		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
-
-		System.out.println(points);
-		System.out.println(collectTile.getColor());
+		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 
 	}
 
@@ -1054,6 +1066,15 @@ public class GameController extends SCircle implements Initializable{
 
 	//zusätzliche Bewegungskarten anzeigen in der zweiten moveCardBox
 	public static void addMoveImage(int count){
+
+
+		for(int i = count; i <= count; i++){
+			if(moveImages.get(count).isVisible()){
+				count++;
+			}
+		}
+
+
 		moveImages.get(count).setVisible(true);
 		int countCards = 0;
 
@@ -1064,6 +1085,15 @@ public class GameController extends SCircle implements Initializable{
 		//Anzahl Bewegungskarten im Deck anzeigen
 		String numberOfDeck = String.valueOf(cards.size());
 		numOfDeck.setText(numberOfDeck);
+
+		playerCardsNotVisible.clear();
+
+		for(ImageView notVisible : moveImages){
+			if(!notVisible.isVisible()){
+				playerCardsNotVisible.add(notVisible);
+			}
+		}
+
 
 	}
 
@@ -1089,11 +1119,7 @@ public class GameController extends SCircle implements Initializable{
 				possibleTilesArray.add(tileImages[i]);
 			}
 		}
-
 		showPossibleTiles(possibleTilesArray);
-		System.out.println(selectMoveCard.getColor());
-
-
 	}
 
 	//handle MouseEvent Methode welche die anvisierte Bewegungskarte Highlightet (onmouseentered) noch nicht
@@ -1124,7 +1150,6 @@ public class GameController extends SCircle implements Initializable{
 		tileShadow.setHeight(0);
 		tileShadow.setWidth(0);
 		tileShadow.setRadius(0);
-
 	}
 
 	//methode welche ausgeführt wird bei einem Click auf der Bewegungskarte
@@ -1203,21 +1228,22 @@ public class GameController extends SCircle implements Initializable{
 
 	//öffnet das GUI um Karte zu kaufen
 	public void switchToBuyCard(){
-		if(currentPlayer.getScore() < 2){
-			message.setVisible(true);
-			message.setText("Du hast zu wenig Punkte um Karte zu kaufen");
-			message.setTextFill(Color.RED);
-			message.setFont(Font.font(20));
+		if(moveImages.get(moveImages.size()-1).isVisible()){
+			setMessage("Du hast das Maximum an Karten!");
 		}else{
-			try{
-				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("BuyCard.fxml"));
-				Pane rootPane = (Pane) fxmlloader.load();
-				Stage stage = new Stage();
-				stage.setResizable(false);
-				stage.setScene(new Scene(rootPane));
-				stage.show();
-			}catch (Exception e){
-				e.printStackTrace();
+			if(currentPlayer.getScore() < 2){
+				setMessage("Du hast zu wenig Punkte \num Karten zu kaufen!");
+			}else{
+				try{
+					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("BuyCard.fxml"));
+					Pane rootPane = (Pane) fxmlloader.load();
+					Stage stage = new Stage();
+					stage.setResizable(false);
+					stage.setScene(new Scene(rootPane));
+					stage.show();
+				}catch (Exception e){
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -1226,10 +1252,7 @@ public class GameController extends SCircle implements Initializable{
 	//vorher wird geprüft ob ein Avatar und eine Karte gewählte wurde
 	public void switchToMoveAvatar(){
 		if(GameController.selectetAvatar == null || GameController.selectetCard == null){
-			message.setText("Bitte Karte und Avatar w�hlen");
-			message.setTextFill(Color.RED);
-			message.setFont(Font.font(20));
-			message.setVisible(true);
+			setMessage("Bitte Karte und Avatar wählen!");
 
 		}else{
 			if(message.isVisible() == true){
@@ -1361,4 +1384,16 @@ public class GameController extends SCircle implements Initializable{
 		GameController.message.toFront();
 	}
 
+	public static ArrayList<ImageView> getPlayerCardsNotVisible() {
+		return GameController.playerCardsNotVisible;
+	}
+
+	public static void setPlayerCardsNotVisible(){
+		playerCardsNotVisible.clear();
+		for(ImageView notVisible : moveImages){
+			if(!notVisible.isVisible()){
+				playerCardsNotVisible.add(notVisible);
+			}
+		}
+	}
 }
