@@ -128,22 +128,20 @@ public class LoginController implements Initializable{
 	//diese Methode schreibt die eigene IP-Adresse in das Textfeld im Login
 	//die IP-Adresse im Textfeld wird benötigt um eine Verbindung mit dem Server herzustellen
 	public void setSocket(){
-		Socket socket = null;
 		try {
 			InetAddress ip = InetAddress.getLocalHost();
 			ipAdresse.setText(ip.getHostAddress());
-		}catch(Exception e){
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	//mit dieser Methode wird die Verbindung zwischen Client und Server hergestellt
 	public void setServerSocket(){
-		Socket socket = null;
 		try{
 			System.out.println("Connecting...");
-			socket = new Socket(ipAdresse.getText(), server.Server.PORT);
+			Socket socket = new Socket(ipAdresse.getText(), server.Server.PORT);
 			System.out.println("Connection successful...");
 			setSocket = true;
 			new ClientThread(socket).start();
