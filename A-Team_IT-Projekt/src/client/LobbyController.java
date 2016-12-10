@@ -59,10 +59,7 @@ public class LobbyController implements Initializable {
 	Button b_SitzungErstellen;
 
 	@FXML
-	Pane rootPane;
-
-	//	@FXML
-	//	ListView<String> offeneSitzungen;
+	Pane lobbyPane;
 
 	public static ListView<String> offeneSitzungen;
 	//offeneSitzungenList ist notwendig für die Kontrolle ob eine Sitzung bereits existiert
@@ -85,7 +82,7 @@ public class LobbyController implements Initializable {
 		offeneSitzungen.setPrefWidth(388);
 		offeneSitzungen.setPrefHeight(200);
 		offeneSitzungen.toFront();
-		rootPane.getChildren().add(offeneSitzungen);
+		lobbyPane.getChildren().add(offeneSitzungen);
 
 	}
 
@@ -187,7 +184,7 @@ public class LobbyController implements Initializable {
 	}
 
 	//gibt den Index aus dem Playerarray zurück, wo das erste Platzhalter null ist, brauchen wir für die Methode joinSession
-	public int getIndexPlayerArray(Player[] p){
+	public static int getIndexPlayerArray(Player[] p){
 		//index = -1, weil 0 geht nicht, da im Array an der Position 0 auch null sein kann, 
 		//so ist es sicher wenn -1, dass das erste null in der Array zurückgegeben wird
 		int index = -1;
@@ -202,9 +199,11 @@ public class LobbyController implements Initializable {
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void joinSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
-			Player[] players = selectedSession.getPlayers();
+			Player[] players = selectSession().getPlayers();
 			int index = getIndexPlayerArray(players);
-			players[index] = Player.getPlayerPC(System.getProperty("user.name"));
+			Player p = Player.getPlayerPC(System.getProperty("user.name"));
+			players[index] = p;
+			ClientThread.sendToServer(new Game(selectSession(),p));
 		}
 	}
 
@@ -230,40 +229,41 @@ public class LobbyController implements Initializable {
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
-
 			if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
-				//		Player[] players = selectedSession.getPlayers();
-				//		boolean arrayNotFull = false;
-				//		for(Player p:players){
-				//			if(p == null){
-				//				arrayNotFull = true;
-				//			}
-				//		}
-				//		if(!arrayNotFull){
-				Game g = new Game(selectedSession, b_SpielStarten);
-				ClientThread.sendToServer(new Game(selectedSession));
+				//prüft, ob Sitzung voll ist
+				Player[] players = selectSession().getPlayers();
+				boolean arrayNotFull = false;
+				for(Player p:players){
+					if(p == null){
+						arrayNotFull = true;
+					}
+				}
+				if(!arrayNotFull){
+					Game g = new Game(selectSession(), b_SpielStarten);
+					ClientThread.sendToServer(new Game(selectSession()));
 
-				//String aus ArrayList <String> offeneSitzungenList löschen
-				for (int i = 0; i < offeneSitzungenList.size(); i++){
-					if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
-						offeneSitzungenList.remove(i);
+					//String aus ArrayList <String> offeneSitzungenList löschen
+					for (int i = 0; i < offeneSitzungenList.size(); i++){
+						if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
+							offeneSitzungenList.remove(i);
+						}
 					}
-				}
-				//Session aus ArrayList <Session> openSessions löschen
-				for(int b = 0; b < openSessions.size(); b++){
-					if(openSessions.get(b).equals(selectedSession)){
-						openSessions.remove(b);
+					//Session aus ArrayList <Session> openSessions löschen
+					for(int b = 0; b < openSessions.size(); b++){
+						if(openSessions.get(b).equals(selectedSession)){
+							openSessions.remove(b);
+						}
 					}
-				}
-				//Item aus ListView <String> offeneSitzungen löschen
-				for (int c = 0; c < offeneSitzungen.getItems().size();c++){
-					if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
-						offeneSitzungen.getItems().remove(c);
+					//Item aus ListView <String> offeneSitzungen löschen
+					for (int c = 0; c < offeneSitzungen.getItems().size();c++){
+						if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
+							offeneSitzungen.getItems().remove(c);
+						}
 					}
+					ClientThread.sendToServer(new Game(selectedSession));
+				}else{
+					fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
 				}
-				//		}else{
-				//			fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
-				//		}
 			}
 			else{
 				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");

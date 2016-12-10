@@ -57,16 +57,22 @@ public class Game implements Serializable {
 		what = "game gestartet";
 	}
 	
+	public Session getSession(){
+		return this.session;
+	}
+	
 	public Game(Session session, String s){
 		this.session = session;
 		this.s = s;
 		what = "sitzung erstellt";
 	}
 	
-	public Session getSession(){
-		return this.session;
+	public Game(Session session, Player p){
+		this.session = session;
+		this.p = p;
+		what = "Player ist Sitzung beigetreten";
 	}
-
+	
 	public Game(String s){
 		this.s = s;
 		what = "arrayList regPlayers an Client";

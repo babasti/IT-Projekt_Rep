@@ -7,6 +7,10 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import common.Game;
 import common.Player;
 
@@ -35,6 +39,31 @@ public class ClientThread extends Thread implements Serializable{
 						LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
 						LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
 						LobbyController.openSessions.add(g.getSession());
+					}
+				}else if(g.getWhat().equals("Player ist Sitzung beigetreten")){
+					boolean alreadyInSession = false;
+					Player[] playersInSession = g.getSession().getPlayers();
+					for(Player p:playersInSession){
+						if(g.getP().getUserName().equals(p.getUserName())){
+							alreadyInSession = true;
+						}
+					}
+					if(!alreadyInSession){
+						int index = LobbyController.getIndexPlayerArray(playersInSession);
+						playersInSession[index] = g.getP();
+						g.getSession().setPlayers(playersInSession);
+					}	
+				}else if(g.getWhat().equals("game gestartet")){
+					if(!(g.getSession().getPlayers()[0].getUserName()).equals(System.getProperty("user.name"))){
+						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+						Pane rootPane = (Pane) fxmlloader.load();
+						Stage stage = new Stage();
+						stage.setScene(new Scene(rootPane));
+						stage.show();
+
+						//schliesst das alte GUI
+						Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
+						stage1.close();
 					}
 				}
 			}

@@ -54,7 +54,6 @@ public class LoginController implements Initializable{
 	@FXML
 	TextField ipAdresse;
 
-
 	private boolean setSocket = false;
 
 	@Override
@@ -80,10 +79,10 @@ public class LoginController implements Initializable{
 						try{
 							//Weiterleitung in Lobby	
 							FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
-							Pane rootPane = (Pane) fxmlloader.load();
+							Pane lobbyPane = (Pane)fxmlloader.load();
 							Stage stage = new Stage();
 							stage.setResizable(false);
-							stage.setScene(new Scene(rootPane));
+							stage.setScene(new Scene(lobbyPane));
 							stage.show();
 
 							//schliesst das alte GUI
