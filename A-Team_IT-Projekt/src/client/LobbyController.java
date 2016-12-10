@@ -101,6 +101,7 @@ public class LobbyController implements Initializable {
 				if (!sessionAlreadyExist(sessionName)){
 					Player[] players = new Player[numOfPlayers];
 					players[0] = player;
+					System.out.println(player);
 					Session session = new Session(sessionName, numOfPlayers, players);
 					offeneSitzungen.getItems().addAll(sessionName);
 					offeneSitzungenList.add(sessionName);
@@ -202,7 +203,17 @@ public class LobbyController implements Initializable {
 			Player[] players = selectSession().getPlayers();
 			int index = getIndexPlayerArray(players);
 			Player p = Player.getPlayerPC(System.getProperty("user.name"));
-			players[index] = p;
+			boolean alreadyInSession = false;
+			for(Player player:players){
+				if(player.getUserName().equals(p.getUserName())){
+					alreadyInSession = true;
+				}
+			}
+			if(!alreadyInSession){
+				players[index] = p;
+			}else{
+				fehlermeldung.setText("Sie sind der Sitzung bereits beigetreten.");
+			}
 			ClientThread.sendToServer(new Game(selectSession(),p));
 		}
 	}
@@ -260,7 +271,7 @@ public class LobbyController implements Initializable {
 							offeneSitzungen.getItems().remove(c);
 						}
 					}
-					ClientThread.sendToServer(new Game(selectedSession));
+					ClientThread.sendToServer(new Game(selectedSession,"spiel gestartet"));
 				}else{
 					fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
 				}
@@ -270,5 +281,4 @@ public class LobbyController implements Initializable {
 			}
 		}
 	}
-
 }

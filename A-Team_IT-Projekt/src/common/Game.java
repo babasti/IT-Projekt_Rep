@@ -48,7 +48,7 @@ public class Game implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//Nachricht, dass Game gestartet wurde vom Sitzungsersteller
 	public Game(Session session){
 		this.session = session;
@@ -56,23 +56,28 @@ public class Game implements Serializable {
 		this.numOfPlayers = session.getNumOfPlayers();
 		what = "game gestartet";
 	}
-	
+
 	public Session getSession(){
 		return this.session;
 	}
-	
+
 	public Game(Session session, String s){
 		this.session = session;
 		this.s = s;
-		what = "sitzung erstellt";
+		if(s.equals("sitzung erstellt")){
+			what = "sitzung erstellt";
+		}
+		if(s.equals("spiel gestartet")){
+			what = "spiel gestartet";
+		}
 	}
-	
+
 	public Game(Session session, Player p){
 		this.session = session;
 		this.p = p;
 		what = "Player ist Sitzung beigetreten";
 	}
-	
+
 	public Game(String s){
 		this.s = s;
 		what = "arrayList regPlayers an Client";

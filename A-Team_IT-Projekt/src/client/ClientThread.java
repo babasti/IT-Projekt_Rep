@@ -54,17 +54,15 @@ public class ClientThread extends Thread implements Serializable{
 						g.getSession().setPlayers(playersInSession);
 					}	
 				}else if(g.getWhat().equals("game gestartet")){
-					if(!(g.getSession().getPlayers()[0].getUserName()).equals(System.getProperty("user.name"))){
-						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-						Pane rootPane = (Pane) fxmlloader.load();
-						Stage stage = new Stage();
-						stage.setScene(new Scene(rootPane));
-						stage.show();
+					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+					Pane rootPane = (Pane) fxmlloader.load();
+					Stage stage = new Stage();
+					stage.setScene(new Scene(rootPane));
+					stage.show();
 
-						//schliesst das alte GUI
-						Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
-						stage1.close();
-					}
+					//schliesst das alte GUI
+					Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
+					stage1.close();
 				}
 			}
 			socket.close();
