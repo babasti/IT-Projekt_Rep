@@ -112,6 +112,17 @@ public class MoveAvatarController implements Initializable {
 				}
 			}else{
 				for(int i = Integer.parseInt(currentAvatarPosition.getId().substring(7)); i <= startBoard.size(); i++){
+					count = i;
+					if(count == 49){
+						ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
+						ebPlayer[currentPlayerPosition].setVisible(true);
+						ebPlayer[currentPlayerPosition].toFront();
+						GameController.collectLastTile();
+						if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
+							switchToResult();
+						}
+						break;
+					}
 					if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
 						if(tileBox.get(i).getChildren().isEmpty()){
 							tileBox.get(i).getChildren().add(selectetAvatar);
@@ -124,18 +135,8 @@ public class MoveAvatarController implements Initializable {
 							tileBox.get(i).setVisible(true);
 							tileBox.get(i).toFront();
 							GameController.setMessage("Spiel eine weitere Karte!");
+							break;
 						}
-						break;
-					}
-					count = i;
-				}
-				if(count == 49){
-					ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
-					ebPlayer[currentPlayerPosition].setVisible(true);
-					ebPlayer[currentPlayerPosition].toFront();
-					GameController.collectLastTile();
-					if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
-						switchToResult();
 					}
 				}
 			}

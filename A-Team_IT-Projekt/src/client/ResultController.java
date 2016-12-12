@@ -6,12 +6,16 @@ import java.util.ResourceBundle;
 
 import common.Player;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 public class ResultController implements Initializable {
 
@@ -55,6 +59,22 @@ public class ResultController implements Initializable {
 
 	public void backToLobby(){
 		
+		try{
+			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+			Pane rootPane = (Pane) fxmlloader.load();
+			Stage stage = new Stage();
+			stage.setResizable(false);
+			stage.setScene(new Scene(rootPane));
+			stage.show();
+			
+		
+			Stage result = (Stage)b_BackToLobby.getScene().getWindow();
+			result.close();
+			Stage game = (Stage) GameController.scoreTable.getScene().getWindow();
+			game.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
