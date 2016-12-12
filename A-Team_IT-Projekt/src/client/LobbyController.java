@@ -101,7 +101,6 @@ public class LobbyController implements Initializable {
 				if (!sessionAlreadyExist(sessionName)){
 					Player[] players = new Player[numOfPlayers];
 					players[0] = player;
-					System.out.println(player);
 					Session session = new Session(sessionName, numOfPlayers, players);
 					offeneSitzungen.getItems().addAll(sessionName);
 					offeneSitzungenList.add(sessionName);
