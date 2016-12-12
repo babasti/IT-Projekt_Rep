@@ -27,7 +27,7 @@ public class Player extends SCircle implements Serializable{
 	private String userName;
 	private Date dateOfBirth;
 	private String password;
-	public ArrayList<Card> cards;
+	public ArrayList<Card> playerCards;
 	private int score;
 	private String PCName;
 	private boolean alreadyLoggedIn = false;
@@ -42,7 +42,7 @@ public class Player extends SCircle implements Serializable{
 		this.dateOfBirth= dateOfBirth;
 		this.password = password;
 		this.PCName = PCName;
-		cards = new ArrayList<Card>();
+		playerCards = new ArrayList<Card>();
 		score = 0;
 		avatars = new ArrayList<SCircle>();
 		avatars.add(avatar1);

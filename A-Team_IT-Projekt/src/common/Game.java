@@ -19,11 +19,11 @@ public class Game implements Serializable {
 	private static final long serialVersionUID = -2361871497549590976L;
 	private String s;
 	private ArrayList<Player> al;
-	private Player[] players;
+	private static Player[] players;
 	private Player p;
 	private String[] a;
 	private String what;
-	private int numOfPlayers;
+	private static int numOfPlayers;
 	private Session session;
 	@FXML
 	private Button b_SpielStarten;
@@ -114,5 +114,11 @@ public class Game implements Serializable {
 		return this.what;
 	}
 
-
+	public static Player[] getPlayers(){
+		return players;
+	}
+	
+	public static int getNumOfPlayers(){
+		return numOfPlayers;
+	}
 }

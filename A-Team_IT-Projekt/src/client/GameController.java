@@ -13,11 +13,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout.Alignment;
 
 import common.Card;
+import common.Game;
 import common.Player;
 import common.Tile;
 import javafx.application.Application;
@@ -376,7 +378,6 @@ public class GameController extends SCircle implements Initializable{
 	private static ImageView[] tileImages;
 	public static ArrayList<ImageView> moveImages;
 	public static ArrayList<Card> cards;
-	public static ArrayList<Card> playerCards;
 	private static InnerShadow tileShadow;
 	public static Label numOfDeck = new Label();
 	Tile Water = new Tile(water, 0, "water");
@@ -391,7 +392,7 @@ public class GameController extends SCircle implements Initializable{
 	private static ArrayList<ImageView> possibleTilesArray;
 	private static HBox currentAvatarPosition;
 	private static HBox[] ebPlayer;
-	private static Player currentPlayer;
+	public static Player currentPlayer;
 	private static int currentPlayerPosition = 0;
 	static TableView<Player> scoreTable;
 	static ObservableList<Player> playersData = FXCollections.observableArrayList();
@@ -414,6 +415,10 @@ public class GameController extends SCircle implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 
 
+		for(Player player : Game.getPlayers()){
+			players.add(player);
+		}
+
 
 		//Label mit folgende Eigenschaften zur StackPane hinzufügen
 		numOfDeck.setFont(Font.font("System", FontWeight.BOLD, 40));
@@ -434,17 +439,19 @@ public class GameController extends SCircle implements Initializable{
 		cards = new ArrayList<Card>(setStartMoveCards());
 		//proforma, playerCards muss beim Player Objekt instanziert werden
 		//hier nur zu test Zwecken
-		playerCards = new ArrayList<Card>();
-		for(int i = 0; i < 5; i++){
-			playerCards.add(cards.get(0));
-			cards.remove(0);
+
+		for(int x = 0; x < players.size(); x++){
+			for(int i = 0; i < 5; i++){
+				players.get(x).playerCards.add(cards.get(0));
+				cards.remove(0);
+			}
 		}
 
 		initMoveCardArray();
 		int countMoveCard = 0;
 
-		for(int i = 0; i < playerCards.size(); i++){
-			moveImages.get(countMoveCard).setImage(playerCards.get(i).getImage());
+		for(int i = 0; i < currentPlayer.playerCards.size(); i++){
+			moveImages.get(countMoveCard).setImage(currentPlayer.playerCards.get(i).getImage());
 			countMoveCard++;
 		}
 
@@ -462,17 +469,17 @@ public class GameController extends SCircle implements Initializable{
 		avatarColors[3] = Color.ORANGE;
 
 		//proforma 4 Spieler instanziert und diese zur ArrayListe des Spiels hinzugefügt
-		Date date = new Date(1992, 12, 26);
-		Player player1 = new Player("muetter", "hallo", date, "muetter");
-		Player player2 = new Player("nanen", "hallo", date, "muetter");
-		Player player3 = new Player("hueresohn", "hallo", date, "muetter");
-		Player player4 = new Player("picka", "hallo", date, "muetter");
-
-
-		players.add(player1);
-		players.add(player2);
-		players.add(player3);
-		players.add(player4);
+//		Date date = new Date(1992, 12, 26);
+//		Player player1 = new Player("muetter", "hallo", date, "muetter");
+//		Player player2 = new Player("nanen", "hallo", date, "muetter");
+//		Player player3 = new Player("hueresohn", "hallo", date, "muetter");
+//		Player player4 = new Player("picka", "hallo", date, "muetter");
+//
+//
+//		players.add(player1);
+//		players.add(player2);
+//		players.add(player3);
+//		players.add(player4);
 
 
 		currentPlayer = players.get(0);
@@ -493,15 +500,10 @@ public class GameController extends SCircle implements Initializable{
 
 		//avatar Listen von den Player holen und in eine arrayListe speichern und diese Listen in eine gesamt Liste speichern
 		//vielleicht geht es auch direkt noch nicht probiert
-		ArrayList<SCircle> avatarsPlayer1 = player1.getAvatar();
-		ArrayList<SCircle> avatarsPlayer2 = player2.getAvatar();
-		ArrayList<SCircle> avatarsPlayer3 = player3.getAvatar();
-		ArrayList<SCircle> avatarsPlayer4 = player4.getAvatar();
 		ArrayList<SCircle> totalAvatars = new ArrayList<SCircle>();
-		totalAvatars.addAll(avatarsPlayer1);
-		totalAvatars.addAll(avatarsPlayer2);
-		totalAvatars.addAll(avatarsPlayer3);
-		totalAvatars.addAll(avatarsPlayer4);
+		for(int i = 0; i <players.size(); i++){
+			totalAvatars.addAll(players.get(i).getAvatar());
+		}
 
 		int count = 0;
 		int count2 = 0;
@@ -521,7 +523,7 @@ public class GameController extends SCircle implements Initializable{
 		//der Player kann jeweils nur einen Avatar wählen in der StartBox
 
 		for(int x = 0; x < players.size();x++){
-			for(int i = 0; i < player1.getAvatar().size(); i++){
+			for(int i = 0; i < players.get(x).getAvatar().size(); i++){
 				players.get(x).getAvatar().get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
 
 					@Override
@@ -1078,7 +1080,7 @@ public class GameController extends SCircle implements Initializable{
 		moveImages.get(count).setVisible(true);
 		int countCards = 0;
 
-		playerCards.add(cards.get(countCards));
+		currentPlayer.playerCards.add(cards.get(countCards));
 		moveImages.get(count).setImage(cards.get(countCards).getImage());
 		cards.remove(countCards);
 
@@ -1108,7 +1110,7 @@ public class GameController extends SCircle implements Initializable{
 		String subString = selectetMoveCard.substring(8);
 		int moveCardPosition = Integer.parseInt(subString);
 
-		Card selectMoveCard = playerCards.get(moveCardPosition-1);
+		Card selectMoveCard = currentPlayer.playerCards.get(moveCardPosition-1);
 
 		ArrayList<Tile> possibleTiles = new ArrayList<Tile>();
 		ArrayList<ImageView>possibleTilesArray = new ArrayList<ImageView>();
@@ -1201,7 +1203,7 @@ public class GameController extends SCircle implements Initializable{
 			}
 		}
 		moveCard.setEffect(iShadow);
-		selectetCard = playerCards.get(Integer.parseInt(moveCardId.substring(8))-1);
+		selectetCard = currentPlayer.playerCards.get(Integer.parseInt(moveCardId.substring(8))-1);
 		selectetCardImageView = moveCard;
 		possibleTilesArray = new ArrayList<ImageView>();
 		for(int i = 0; i < startBoard.size(); i++){
