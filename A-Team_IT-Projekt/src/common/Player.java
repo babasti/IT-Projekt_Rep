@@ -23,7 +23,6 @@ public class Player extends SCircle implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2853507843070301083L;
 	private String userName;
 	private Date dateOfBirth;
 	private String password;

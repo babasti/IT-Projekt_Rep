@@ -16,7 +16,6 @@ public class Game implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2361871497549590976L;
 	private String s;
 	private ArrayList<Player> al;
 	private static Player[] players;

@@ -9,7 +9,6 @@ public class Tile implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3430502307470301817L;
 	
 	
 	
