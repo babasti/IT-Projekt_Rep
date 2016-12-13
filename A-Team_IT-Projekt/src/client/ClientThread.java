@@ -54,10 +54,13 @@ public class ClientThread extends Thread implements Serializable{
 //							}
 //						}
 //						if(!alreadyInSession){
-						System.out.println(LobbyController.getIndexPlayerArray(playersInSession));
-							int index = LobbyController.getIndexPlayerArray(playersInSession);
-							playersInSession[index] = g.getP();
-							g.getSession().setPlayers(playersInSession);
+						for(Player p:playersInSession){
+							System.out.println(p);
+						}
+//						System.out.println(LobbyController.getIndexPlayerArray(playersInSession));
+//							int index = LobbyController.getIndexPlayerArray(playersInSession);
+//							playersInSession[index] = g.getP();
+//							g.getSession().setPlayers(playersInSession);
 //						}	
 					}if(g.getWhat().equals("game gestartet")){
 						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
