@@ -103,9 +103,9 @@ public class LobbyController implements Initializable {
 					Player[] players = new Player[numOfPlayers];
 					players[0] = player;
 					Session session = new Session(sessionName, numOfPlayers, players);
-					offeneSitzungen.getItems().addAll(sessionName);
-					offeneSitzungenList.add(sessionName);
-					openSessions.add(session);
+//					offeneSitzungen.getItems().addAll(sessionName);
+//					offeneSitzungenList.add(sessionName);
+//					openSessions.add(session);
 					ClientThread.sendToServer(new Game(session,"sitzung erstellt"));
 				}else{
 					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
@@ -244,7 +244,7 @@ public class LobbyController implements Initializable {
 			//nur der Sitzungsersteller darf die Sitzung starten
 			if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
 				//prüft, ob Sitzung voll ist
-				Player[] players = selectSession().getPlayers();
+				Player[] players = selectedSession.getPlayers();
 				boolean arrayNotFull = false;
 				for(Player p:players){
 					System.out.println(p);

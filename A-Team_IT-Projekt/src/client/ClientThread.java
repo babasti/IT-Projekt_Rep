@@ -43,7 +43,13 @@ public class ClientThread extends Thread implements Serializable{
 									LobbyController.openSessions.add(g.getSession());
 								}
 							}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
-								boolean alreadyInSession = false;
+								for(Session s:LobbyController.openSessions){
+									if(s.getSessionName().equals(g.getSession().getSessionName())){
+										s.setPlayers(g.getSession().getPlayers());
+									}
+								}
+								g.getSession().getSessionName();
+								LobbyController.offeneSitzungen.getItems();
 								Player[] playersInSession = g.getSession().getPlayers();
 								g.getSession().setPlayers(playersInSession);
 							}if(g.getWhat().equals("spiel gestartet")){
