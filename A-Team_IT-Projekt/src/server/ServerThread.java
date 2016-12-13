@@ -103,6 +103,7 @@ public class ServerThread extends Thread{
 				sendToAllClients(new Game(g.getSession(),"sitzung erstellt"));
 			}else if(g.getWhat().equals("Player ist Sitzung beigetreten")){
 				System.out.println(g.getP().getUserName());
+				System.out.println(g.getSession().getSessionName());
 				sendToAllClients(new Game(g.getSession(), "Player ist Sitzung beigetreten"));
 			}
 			Server.arrayListToFile();

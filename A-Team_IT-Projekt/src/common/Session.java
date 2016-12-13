@@ -1,6 +1,7 @@
 package common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class Session implements Serializable{
@@ -9,6 +10,7 @@ public class Session implements Serializable{
 	private int numOfPlayers;
 	private Player[] players;
 	private String sessionName;
+	private ArrayList<Player> playersList;
 
 
 	
@@ -16,6 +18,9 @@ public class Session implements Serializable{
 		this.sessionName = sessionName;
 		this.numOfPlayers = numOfPlayers;
 		this.players =players;
+		for(Player player : players){
+			playersList.add(player);
+		}
 		
 	}
 		
@@ -38,6 +43,13 @@ public class Session implements Serializable{
 	
 	public void setPlayers(Player [] players){
 		this.players = players;
+	}
+	public ArrayList<Player> getPlayersList(){
+		return this.playersList;
+	}
+	
+	public void setPlayersList(ArrayList<Player> playersList){
+		this.playersList = playersList;
 	}
 	
 	public Player [] getPlayers(){
