@@ -38,7 +38,7 @@ public class ClientThread extends Thread implements Serializable{
 								regPlayers = g.getAl();
 							}if(g.getWhat().equals("sitzung erstellt")){
 								if(!LobbyController.sessionAlreadyExist(g.getSession().getSessionName())){
-									//LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
+									LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
 									LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
 									LobbyController.openSessions.add(g.getSession());
 								}
