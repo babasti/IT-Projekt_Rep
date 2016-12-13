@@ -29,13 +29,10 @@ public class ClientThread extends Thread implements Serializable{
 	public void run(){
 		Game g;
 		try{
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			sendToServer(new Game("arrayList regPlayers an Client"));
-
-			while(true){
-				synchronized(objectInputStream){
-					synchronized(objectOutputStream){
+			synchronized(objectOutputStream = new ObjectOutputStream(socket.getOutputStream())){
+				synchronized(objectInputStream = new ObjectInputStream(socket.getInputStream())){
+					sendToServer(new Game("arrayList regPlayers an Client"));
+					while(true){
 						while((g = (Game)objectInputStream.readObject()) != null){
 							if(g.getWhat().equals("arrayList regPlayers von Server")){
 								regPlayers = g.getAl();
@@ -84,12 +81,14 @@ public class ClientThread extends Thread implements Serializable{
 							}
 							objectOutputStream.flush();
 						}
+						socket.close();
+						objectInputStream.close();
+						objectOutputStream.close();
 					}
+
 				}
 
-				socket.close();
-				objectInputStream.close();
-				objectOutputStream.close();
+
 			}
 
 		}catch(Exception e){

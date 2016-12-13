@@ -29,12 +29,10 @@ public class ServerThread extends Thread implements Serializable{
 	public void run(){
 		Game g;
 		try{
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			Server.openOutputStreams.add(objectOutputStream);
-			while(true){
-				synchronized(objectInputStream){
-					synchronized(objectOutputStream){
+			synchronized(objectInputStream = new ObjectInputStream(socket.getInputStream())){
+				synchronized (objectOutputStream = new ObjectOutputStream(socket.getOutputStream())){
+					Server.openOutputStreams.add(objectOutputStream);
+					while(true){	
 						while((g = (Game)objectInputStream.readObject()) != null){
 							//wenn ein client arrayList der Player anfragt
 							if(g.getWhat().equals("arrayList regPlayers an Client")){
@@ -78,11 +76,12 @@ public class ServerThread extends Thread implements Serializable{
 							}
 							objectOutputStream.flush();
 						}
+						Server.arrayListToFile();
+						socket.close();
+						objectInputStream.close();
+						objectOutputStream.close();
 					}
-					Server.arrayListToFile();
-					socket.close();
-					objectInputStream.close();
-					objectOutputStream.close();
+
 				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
