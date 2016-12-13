@@ -33,50 +33,57 @@ public class ClientThread extends Thread implements Serializable{
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
 			sendToServer(new Game("arrayList regPlayers an Client"));
 
-			while((g = (Game)objectInputStream.readObject()) != null){
-				if(g.getWhat().equals("arrayList regPlayers von Server")){
-					regPlayers = g.getAl();
-				}if(g.getWhat().equals("sitzung erstellt")){
-					if(!LobbyController.sessionAlreadyExist(g.getSession().getSessionName())){
-						//LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
-						LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
-						LobbyController.openSessions.add(g.getSession());
-					}
-				}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
-					boolean alreadyInSession = false;
-					Player[] playersInSession = g.getSession().getPlayers();
-					for(Player p:playersInSession){
-						if(g.getP().getUserName().equals(p.getUserName())){
-							alreadyInSession = true;
+			while(true){
+				while((g = (Game)objectInputStream.readObject()) != null){
+					if(g.getWhat().equals("arrayList regPlayers von Server")){
+						regPlayers = g.getAl();
+					}if(g.getWhat().equals("sitzung erstellt")){
+						if(!LobbyController.sessionAlreadyExist(g.getSession().getSessionName())){
+							//LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
+							LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
+							LobbyController.openSessions.add(g.getSession());
+						}
+					}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
+						boolean alreadyInSession = false;
+						Player[] playersInSession = g.getSession().getPlayers();
+						for(Player p:playersInSession){
+							if(p !=null){
+								if(g.getP().getUserName().equals(p.getUserName())){
+									alreadyInSession = true;
+								}
+							}
+						}
+						if(!alreadyInSession){
+							int index = LobbyController.getIndexPlayerArray(playersInSession);
+							playersInSession[index] = g.getP();
+							g.getSession().setPlayers(playersInSession);
+						}	
+					}if(g.getWhat().equals("game gestartet")){
+						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+						Pane rootPane = (Pane) fxmlloader.load();
+						Stage stage = new Stage();
+						stage.setScene(new Scene(rootPane));
+						stage.show();
+
+						//schliesst das alte GUI
+						Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
+						stage1.close();
+					}if(g.getWhat().equals("arrayList openSessions an Client")){
+						sessionList = g.getSessionList();
+						for(Session s:sessionList){
+							LobbyController.offeneSitzungen.getItems().addAll(s.getSessionName());
+							LobbyController.offeneSitzungenList.add(s.getSessionName());
+							LobbyController.openSessions.add(s);
 						}
 					}
-					if(!alreadyInSession){
-						int index = LobbyController.getIndexPlayerArray(playersInSession);
-						playersInSession[index] = g.getP();
-						g.getSession().setPlayers(playersInSession);
-					}	
-				}if(g.getWhat().equals("game gestartet")){
-					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-					Pane rootPane = (Pane) fxmlloader.load();
-					Stage stage = new Stage();
-					stage.setScene(new Scene(rootPane));
-					stage.show();
-
-					//schliesst das alte GUI
-					Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
-					stage1.close();
-				}if(g.getWhat().equals("arrayList openSessions an Client")){
-					sessionList = g.getSessionList();
-					for(Session s:sessionList){
-						LobbyController.offeneSitzungen.getItems().addAll(s.getSessionName());
-						LobbyController.offeneSitzungenList.add(s.getSessionName());
-						LobbyController.openSessions.add(s);
-					}
+					objectOutputStream.flush();
 				}
+
+				socket.close();
+				objectInputStream.close();
+				objectOutputStream.close();
 			}
-			socket.close();
-			objectInputStream.close();
-			objectOutputStream.close();
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -83,7 +83,7 @@ public class LobbyController implements Initializable {
 		offeneSitzungen.setPrefHeight(200);
 		offeneSitzungen.toFront();
 		lobbyPane.getChildren().add(offeneSitzungen);
-		
+
 		ClientThread.sendToServer(new Game("arrayList openSessions an Client"));
 	}
 
@@ -205,8 +205,11 @@ public class LobbyController implements Initializable {
 			Player p = Player.getPlayerPC(System.getProperty("user.name"));
 			boolean alreadyInSession = false;
 			for(Player player:players){
-				if(player.getUserName().equals(p.getUserName())){
-					alreadyInSession = true;
+				if(player != null){
+
+					if(player.getUserName().equals(p.getUserName())){
+						alreadyInSession = true;
+					}
 				}
 			}
 			if(!alreadyInSession){
