@@ -206,7 +206,6 @@ public class LobbyController implements Initializable {
 			boolean alreadyInSession = false;
 			for(Player player:players){
 				if(player != null){
-
 					if(player.getUserName().equals(p.getUserName())){
 						alreadyInSession = true;
 					}
