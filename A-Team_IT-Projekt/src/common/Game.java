@@ -70,6 +70,10 @@ public class Game implements Serializable {
 		if(s.equals("spiel gestartet")){
 			what = "spiel gestartet";
 		}
+		if(s.equals("Player ist Sitzung beigetreten")){
+			what = "Player ist Sitzung beigetreten";
+			
+		}
 	}
 
 	public Game(Session session, Player p){
@@ -97,6 +101,9 @@ public class Game implements Serializable {
 		what = "Player an Server";
 	}
 
+	public void setP(Player p){
+		this.p = p;
+	}
 	public Player getP(){
 		return this.p;
 	}
@@ -120,5 +127,14 @@ public class Game implements Serializable {
 	
 	public static int getNumOfPlayers(){
 		return numOfPlayers;
+	}
+	
+	public static void writeObject(java.io.ObjectOutputStream stream, Game game) throws IOException{
+		stream.writeObject((Game) game);
+	}
+	
+	public static Game readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException{
+		Game g = (Game) stream.readObject();
+		return g;
 	}
 }

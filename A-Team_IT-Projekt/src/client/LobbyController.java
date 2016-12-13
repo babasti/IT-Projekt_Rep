@@ -204,8 +204,12 @@ public class LobbyController implements Initializable {
 			int index = getIndexPlayerArray(players);
 			Player p = Player.getPlayerPC(System.getProperty("user.name"));
 			boolean alreadyInSession = false;
-			for(Player player:players){
-				if(player.getUserName().equals(p.getUserName())){
+
+			for(int i = 0; i < players.length; i++){
+				if(players[i] == null){
+					break;
+				}
+				if(players[i].getUserName().equals(p.getUserName())){
 					alreadyInSession = true;
 				}
 			}
@@ -214,13 +218,15 @@ public class LobbyController implements Initializable {
 			}else{
 				fehlermeldung.setText("Sie sind der Sitzung bereits beigetreten.");
 			}
-			ClientThread.sendToServer(new Game(selectSession(),p));
+			Game sendGame = new Game((Session) selectSession(), "Player ist Sitzung beigetreten");
+			sendGame.setP(p);
+			ClientThread.sendToServer(sendGame);
 		}
 	}
 
 	public static Session selectSession(){
 		if(!offeneSitzungen.getSelectionModel().isEmpty()){
-			selectedSessionListView = offeneSitzungen.getSelectionModel().getSelectedItem();
+			selectedSessionListView = (String) offeneSitzungen.getSelectionModel().getSelectedItem();
 			Session session = null;
 
 			for (Session s:openSessions){
