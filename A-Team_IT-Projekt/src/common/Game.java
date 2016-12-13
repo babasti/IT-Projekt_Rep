@@ -19,6 +19,7 @@ public class Game implements Serializable {
 	private static final long serialVersionUID = -2361871497549590976L;
 	private String s;
 	private ArrayList<Player> al;
+	private ArrayList<Session> sessionList;
 	private Player[] players;
 	private Player p;
 	private String[] a;
@@ -80,7 +81,11 @@ public class Game implements Serializable {
 
 	public Game(String s){
 		this.s = s;
-		what = "arrayList regPlayers an Client";
+		if(s.equals("arrayList regPlayers an Client")){
+			what = "arrayList regPlayers an Client";
+		}if(s.equals("arrayList openSessions an Client")){
+			what = "arrayList openSessions an Client";
+		}
 	}
 
 	public Game(ArrayList<Player> al){
@@ -90,6 +95,15 @@ public class Game implements Serializable {
 
 	public ArrayList<Player> getAl(){
 		return this.al;
+	}
+	
+	public Game(ArrayList<Session> sessionList, String s){
+		this.sessionList = sessionList;
+		what = "arrayList openSessions an Client";
+	}
+	
+	public ArrayList<Session> getSessionList(){
+		return this.sessionList;
 	}
 
 	public Game(Player p){

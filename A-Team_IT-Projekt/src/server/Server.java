@@ -1,6 +1,7 @@
 package server;
 
 import java.io.*;
+import common.Session;
 import java.net.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ public class Server {
 	public static ArrayList<ObjectOutputStream> openOutputStreams;
 	public static final int PORT = 1234;
 	public static int counter = 0;
+	public static ArrayList<Session> openSessions;
 	private ServerSocket serverSocket;
 
 	public static void main(String[] args) throws Exception{
@@ -31,6 +33,9 @@ public class Server {
 		//Singleton
 		if(regPlayers == null){
 			regPlayers = new ArrayList<Player>();
+		}
+		if(openSessions == null){
+			openSessions = new ArrayList<Session>();
 		}
 		//alle User aus dem File werden in eine ArrayList geschrieben
 		try{

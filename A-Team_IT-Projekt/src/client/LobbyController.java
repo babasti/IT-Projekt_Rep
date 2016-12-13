@@ -83,7 +83,8 @@ public class LobbyController implements Initializable {
 		offeneSitzungen.setPrefHeight(200);
 		offeneSitzungen.toFront();
 		lobbyPane.getChildren().add(offeneSitzungen);
-
+		
+		ClientThread.sendToServer(new Game("arrayList openSessions an Client"));
 	}
 
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
@@ -198,7 +199,7 @@ public class LobbyController implements Initializable {
 
 	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void joinSession(){
-		if (!offeneSitzungen.getSelectionModel().isEmpty()){
+		if(!offeneSitzungen.getSelectionModel().isEmpty()){
 			Player[] players = selectSession().getPlayers();
 			int index = getIndexPlayerArray(players);
 			Player p = Player.getPlayerPC(System.getProperty("user.name"));

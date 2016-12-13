@@ -13,12 +13,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import common.Game;
 import common.Player;
+import common.Session;
 
 public class ClientThread extends Thread implements Serializable{
 	private static Socket socket;
 	private static ObjectOutputStream objectOutputStream;
 	private static ObjectInputStream objectInputStream;
 	public static ArrayList<Player> regPlayers;
+	public static ArrayList<Session> sessionList;
 
 	ClientThread(Socket socket){
 		this.socket = socket;
@@ -29,18 +31,18 @@ public class ClientThread extends Thread implements Serializable{
 		try{
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			sendToServer(new Game("ich brauche die Arraylist"));
+			sendToServer(new Game("arrayList regPlayers an Client"));
 
 			while((g = (Game)objectInputStream.readObject()) != null){
 				if(g.getWhat().equals("arrayList regPlayers von Server")){
 					regPlayers = g.getAl();
-				}else if(g.getWhat().equals("sitzung erstellt")){
+				}if(g.getWhat().equals("sitzung erstellt")){
 					if(!LobbyController.sessionAlreadyExist(g.getSession().getSessionName())){
 						//LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
 						LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
 						LobbyController.openSessions.add(g.getSession());
 					}
-				}else if(g.getWhat().equals("Player ist Sitzung beigetreten")){
+				}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
 					boolean alreadyInSession = false;
 					Player[] playersInSession = g.getSession().getPlayers();
 					for(Player p:playersInSession){
@@ -53,7 +55,7 @@ public class ClientThread extends Thread implements Serializable{
 						playersInSession[index] = g.getP();
 						g.getSession().setPlayers(playersInSession);
 					}	
-				}else if(g.getWhat().equals("game gestartet")){
+				}if(g.getWhat().equals("game gestartet")){
 					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
 					Pane rootPane = (Pane) fxmlloader.load();
 					Stage stage = new Stage();
@@ -63,6 +65,13 @@ public class ClientThread extends Thread implements Serializable{
 					//schliesst das alte GUI
 					Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
 					stage1.close();
+				}if(g.getWhat().equals("arrayList openSessions an Client")){
+					sessionList = g.getSessionList();
+					for(Session s:sessionList){
+						LobbyController.offeneSitzungen.getItems().addAll(s.getSessionName());
+						LobbyController.offeneSitzungenList.add(s.getSessionName());
+						LobbyController.openSessions.add(s);
+					}
 				}
 			}
 			socket.close();

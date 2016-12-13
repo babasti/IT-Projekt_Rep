@@ -37,6 +37,9 @@ public class ServerThread extends Thread implements Serializable{
 				if(g.getWhat().equals("arrayList regPlayers an Client")){
 					sendToAllClients(new Game(Server.regPlayers));
 				}
+				if(g.getWhat().equals("arrayList openSessions an Client")){
+					sendToClient(new Game(Server.openSessions, "arrayList openSessions an Client"));
+				}
 				//wenn gesendetes Game-Objekt player enthält, wird er der arraylist hinzugefügt	
 				else if(g.getWhat().equals("Player an Server")){
 					//wenn Benutzer sich einlogged, wird alreadyLoggedIn auf true gesetzt
@@ -66,6 +69,7 @@ public class ServerThread extends Thread implements Serializable{
 					sendToAllClients(new Game(g.getSession()));
 				}else if(g.getWhat().equals("sitzung erstellt")){
 					sendToAllClients(new Game(g.getSession(),"sitzung erstellt"));
+					Server.openSessions.add(g.getSession());
 				}else if(g.getWhat().equals("Player ist Sitzung beigetreten")){
 					sendToAllClients(new Game(g.getSession(),g.getP()));
 				}
