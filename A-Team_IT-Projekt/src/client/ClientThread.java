@@ -45,24 +45,8 @@ public class ClientThread extends Thread implements Serializable{
 							}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
 								boolean alreadyInSession = false;
 								Player[] playersInSession = g.getSession().getPlayers();
-								//						for(Player p:playersInSession){
-								//							if(p !=null){
-								//								if(g.getP().getUserName().equals(p.getUserName())){
-								//									alreadyInSession = true;
-								//								}
-								//							}
-								//						}
-								//						if(!alreadyInSession){
-								for(Player p:playersInSession){
-									System.out.println(p);
-								}
 								g.getSession().setPlayers(playersInSession);
-								//						System.out.println(LobbyController.getIndexPlayerArray(playersInSession));
-								//							int index = LobbyController.getIndexPlayerArray(playersInSession);
-								//							playersInSession[index] = g.getP();
-								//							g.getSession().setPlayers(playersInSession);
-								//						}	
-							}if(g.getWhat().equals("game gestartet")){
+							}if(g.getWhat().equals("spiel gestartet")){
 								FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
 								Pane rootPane = (Pane) fxmlloader.load();
 								Stage stage = new Stage();

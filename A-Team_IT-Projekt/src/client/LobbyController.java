@@ -247,6 +247,9 @@ public class LobbyController implements Initializable {
 				Player[] players = selectSession().getPlayers();
 				boolean arrayNotFull = false;
 				for(Player p:players){
+					System.out.println(p);
+				}
+				for(Player p:players){
 					if(p == null){
 						arrayNotFull = true;
 					}
