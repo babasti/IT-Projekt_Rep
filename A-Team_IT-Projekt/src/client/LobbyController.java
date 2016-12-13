@@ -253,7 +253,7 @@ public class LobbyController implements Initializable {
 				}
 				if(!arrayNotFull){
 					Game g = new Game(selectSession(), b_SpielStarten);
-					ClientThread.sendToServer(new Game(selectSession()));
+					ClientThread.sendToServer(new Game(selectedSession,"spiel gestartet"));
 
 					//String aus ArrayList <String> offeneSitzungenList löschen
 					for (int i = 0; i < offeneSitzungenList.size(); i++){
@@ -273,7 +273,6 @@ public class LobbyController implements Initializable {
 							offeneSitzungen.getItems().remove(c);
 						}
 					}
-					ClientThread.sendToServer(new Game(selectedSession,"spiel gestartet"));
 				}else{
 					fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
 				}

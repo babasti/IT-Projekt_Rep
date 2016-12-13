@@ -56,6 +56,7 @@ public class ClientThread extends Thread implements Serializable{
 								for(Player p:playersInSession){
 									System.out.println(p);
 								}
+								g.getSession().setPlayers(playersInSession);
 								//						System.out.println(LobbyController.getIndexPlayerArray(playersInSession));
 								//							int index = LobbyController.getIndexPlayerArray(playersInSession);
 								//							playersInSession[index] = g.getP();
