@@ -15,7 +15,7 @@ import common.Game;
 import common.Player;
 import common.Session;
 
-public class ClientThread extends Thread{
+public class ClientThread extends Thread implements Serializable{
 	private static Socket socket;
 	private static ObjectOutputStream objectOutputStream;
 	private static ObjectInputStream objectInputStream;

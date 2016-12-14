@@ -52,6 +52,12 @@ public class Game implements Serializable {
 		}
 	}
 	
+	public Game(Session session, Stage stage){
+		this.session = session;
+		this.stage = stage;
+		what = "spiel gestartet";
+	}
+	
 	public Button getButton(){
 		return this.b_SpielStarten;
 	}
