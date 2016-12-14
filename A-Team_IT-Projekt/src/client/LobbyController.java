@@ -262,7 +262,7 @@ public class LobbyController implements Initializable {
 				if(!arrayNotFull){
 					Stage stage = (Stage)b_SpielStarten.getScene().getWindow();
 					Game g = new Game(selectSession(), stage, "ich bin der erste" );
-					ClientThread.sendToServer(new Game(g.getSession(), g.getStage()));
+					ClientThread.sendToServer(g);
 
 					//String aus ArrayList <String> offeneSitzungenList löschen
 					for (int i = 0; i < offeneSitzungenList.size(); i++){
