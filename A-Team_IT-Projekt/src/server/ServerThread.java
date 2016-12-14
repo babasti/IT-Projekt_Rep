@@ -68,7 +68,7 @@ public class ServerThread implements Serializable, Runnable{
 								p.setPCName(g.getA()[1]);
 								Server.arrayListToFile();
 							}if(g.getWhat().equals("spiel gestartet")){
-								sendToAllClients(new Game(g.getSession(), g.getStage()));
+								sendToAllClients(g);
 							}if(g.getWhat().equals("sitzung erstellt")){
 								sendToAllClients(new Game(g.getSession(),"sitzung erstellt"));
 								Server.openSessions.add(g.getSession());
