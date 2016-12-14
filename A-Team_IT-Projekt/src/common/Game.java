@@ -44,7 +44,7 @@ public class Game implements Serializable {
 			stage.setScene(new Scene(rootPane));
 
 			//schliesst das alte GUI
-			SStage stage1 = (SStage)b_SpielStarten.getScene().getWindow();
+			Stage stage1 = (Stage)b_SpielStarten.getScene().getWindow();
 			stage1.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
