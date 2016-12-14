@@ -51,6 +51,8 @@ public class Player extends SCircle implements Serializable{
 		for(int i = 0; i < avatars.size(); i++){
 			avatars.get(i).setRadius(10);
 			avatars.get(i).setStroke(Color.BLACK);
+			avatars.get(i).toFront();
+			avatars.get(i).setVisible(true);
 		}
 	}
 

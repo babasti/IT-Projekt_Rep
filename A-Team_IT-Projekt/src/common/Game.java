@@ -32,6 +32,7 @@ public class Game implements Serializable {
 	public Game (Session session, Button b){
 		this.b_SpielStarten = b;
 		this.session = session;
+		players = session.getPlayers();
 
 		//Game wird gestartet				
 		try {

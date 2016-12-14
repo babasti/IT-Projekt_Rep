@@ -3,6 +3,7 @@ package client;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -47,7 +48,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class GameController extends SCircle implements Initializable{
+public class GameController extends SCircle implements Initializable, Serializable{
 
 
 	// Elemente vom GUI definieren
@@ -392,6 +393,7 @@ public class GameController extends SCircle implements Initializable{
 	private static ArrayList<ImageView> possibleTilesArray;
 	private static HBox currentAvatarPosition;
 	private static HBox[] ebPlayer;
+	private static HBox[] sbPlayer;
 	public static Player currentPlayer;
 	private static int currentPlayerPosition = 0;
 	static TableView<Player> scoreTable;
@@ -401,6 +403,7 @@ public class GameController extends SCircle implements Initializable{
 	static TableColumn<Player, SCircle> avatarColorColumn = new TableColumn<Player, SCircle>();
 	private static Label message;
 	private static ArrayList<ImageView> playerCardsNotVisible = new ArrayList<ImageView>();
+	private static ArrayList<SCircle> totalAvatars;
 
 
 
@@ -419,6 +422,7 @@ public class GameController extends SCircle implements Initializable{
 			players.add(player);
 		}
 
+		currentPlayer = players.get(0);
 
 		//Label mit folgende Eigenschaften zur StackPane hinzufügen
 		numOfDeck.setFont(Font.font("System", FontWeight.BOLD, 40));
@@ -468,51 +472,19 @@ public class GameController extends SCircle implements Initializable{
 		avatarColors[2] = Color.GREEN;
 		avatarColors[3] = Color.ORANGE;
 
-		//proforma 4 Spieler instanziert und diese zur ArrayListe des Spiels hinzugefügt
-//		Date date = new Date(1992, 12, 26);
-//		Player player1 = new Player("muetter", "hallo", date, "muetter");
-//		Player player2 = new Player("nanen", "hallo", date, "muetter");
-//		Player player3 = new Player("hueresohn", "hallo", date, "muetter");
-//		Player player4 = new Player("picka", "hallo", date, "muetter");
-//
-//
-//		players.add(player1);
-//		players.add(player2);
-//		players.add(player3);
-//		players.add(player4);
-
-
-		currentPlayer = players.get(0);
-
-		//die HBoxen der verschiedenen Player in einem Array gespeichert
-		HBox[] sbPlayer = new HBox[4];
-		sbPlayer[0] = sb_player1;
-		sbPlayer[1] = sb_player2;
-		sbPlayer[2] = sb_player3;
-		sbPlayer[3] = sb_player4;
-
-		ebPlayer = new HBox[4];
-		ebPlayer[0] = eb_player1;
-		ebPlayer[1] = eb_player2;
-		ebPlayer[2] = eb_player3;
-		ebPlayer[3] = eb_player4;
-
-
-		//avatar Listen von den Player holen und in eine arrayListe speichern und diese Listen in eine gesamt Liste speichern
-		//vielleicht geht es auch direkt noch nicht probiert
-		ArrayList<SCircle> totalAvatars = new ArrayList<SCircle>();
-		for(int i = 0; i <players.size(); i++){
-			totalAvatars.addAll(players.get(i).getAvatar());
-		}
+		//Initialisierung der StartBoxen
+		initStartBox(players.size());
 
 		int count = 0;
 		int count2 = 0;
 
 		//den avatars die zuständige farbe zuteilen und in die entsprechenden Boxen zuteilen
 		for(int x = 0; x < players.size(); x++){	
-			for(int i = 0; i < players.get(x).getAvatar().size(); i++){
+			for(int i = 0; i < 3; i++){
 				totalAvatars.get(count2).setFill(avatarColors[count]);
 				sbPlayer[count].getChildren().add(totalAvatars.get(count2));
+				sbPlayer[count].setVisible(true);
+				sbPlayer[count].toFront();
 				count2++;
 			}
 			players.get(x).setAvatarColor(avatarColors[count]);
@@ -564,6 +536,8 @@ public class GameController extends SCircle implements Initializable{
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 
 		setMessage(currentPlayer.getUserName()+" ist dran!");
+		
+		
 		for(ImageView notVisible : moveImages){
 			if(!notVisible.isVisible()){
 				playerCardsNotVisible.add(notVisible);
@@ -575,6 +549,40 @@ public class GameController extends SCircle implements Initializable{
 
 	// ---------------------------------------------------------- bis hier
 
+	private void initStartBox(int numOfPlayers){
+		
+		HBox[] allBox = new HBox[4];
+		allBox[0] = sb_player1;
+		allBox[1] = sb_player2;
+		allBox[2] = sb_player3;
+		allBox[3] = sb_player4;
+
+		sbPlayer = new HBox[numOfPlayers];
+		for(int i = 0; i < numOfPlayers;i++){
+			sbPlayer[i] = allBox[i];
+		}
+		HBox[] allBoxEB = new HBox[4];
+		allBoxEB[0] = eb_player1;
+		allBoxEB[1] = eb_player2;
+		allBoxEB[2] = eb_player3;
+		allBoxEB[3] = eb_player4;
+
+		ebPlayer = new HBox[numOfPlayers];
+		for(int i = 0; i < numOfPlayers; i++){
+			ebPlayer[i] = allBoxEB[i];
+		}
+		
+		//avatar Listen von den Player holen und in eine arrayListe speichern und diese Listen in eine gesamt Liste speichern
+		//vielleicht geht es auch direkt noch nicht probiert
+		totalAvatars = new ArrayList<SCircle>();
+		for(int i = 0; i < numOfPlayers; i++){
+			totalAvatars.addAll(players.get(i).getAvatar());
+		}
+		
+		
+		
+	}
+	
 
 	//initialisiert die Instanzvariable tileImages um ein Array mit allen ImageViews zu haben
 	//damit wir darauf zugreiffen können um ein Bild zu setzen
@@ -1358,8 +1366,7 @@ public class GameController extends SCircle implements Initializable{
 		GameController.currentPlayer = players.get(currentPlayerPosition);
 	}
 
-	//wird ausgeführt momentan beim MoveAvatar
-	//sollte aber beim Spielzug beenden ausgeführt werden
+
 	//damit der currentPlayer nach Spielzug auf den nächsten Player in der Liste
 	//gesetzt wird
 	public static void setCurrentPlayerPosition(){

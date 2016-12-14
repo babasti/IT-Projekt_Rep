@@ -1,5 +1,6 @@
 package client;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ import javafx.stage.Stage;
 //Diese Klasse wird benötigt um eine Spielfigur zu bewegen oder die Aktion
 //abzubrechen damit der Spieler nochmals eine figur und eine Karte wählen kann
 
-public class MoveAvatarController implements Initializable {
+public class MoveAvatarController implements Initializable, Serializable {
 
 	@FXML
 	Button b_SpielzugBestätigen;
