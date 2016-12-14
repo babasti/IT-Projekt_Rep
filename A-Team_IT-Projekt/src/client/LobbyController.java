@@ -47,9 +47,6 @@ public class LobbyController implements Initializable {
 	Label text_AnzahlSpieler;
 
 	@FXML
-	Label fehlermeldung;
-
-	@FXML
 	TextField tf_Sitzungsname;
 
 	@FXML
@@ -71,7 +68,8 @@ public class LobbyController implements Initializable {
 	//ist das in der ListView selektierte Sessionobjekt
 	public static Session selectedSession;
 	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
-
+	public static Label fehlermeldung;
+	
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		//Wertinitialisierung der Choicebox
@@ -83,6 +81,9 @@ public class LobbyController implements Initializable {
 		offeneSitzungen.setPrefHeight(200);
 		offeneSitzungen.toFront();
 		lobbyPane.getChildren().add(offeneSitzungen);
+		Label fehlermeldung = new Label();
+		fehlermeldung.setLayoutX(325);
+		fehlermeldung.setLayoutY(432);
 
 		ClientThread.sendToServer(new Game("arrayList openSessions an Client"));
 	}

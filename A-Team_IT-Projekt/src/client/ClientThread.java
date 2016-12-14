@@ -52,6 +52,7 @@ public class ClientThread extends Thread implements Serializable{
 								LobbyController.offeneSitzungen.getItems();
 								Player[] playersInSession = g.getSession().getPlayers();
 								g.getSession().setPlayers(playersInSession);
+								LobbyController.fehlermeldung.setText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
 							}if(g.getWhat().equals("spiel gestartet")){
 								FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
 								Pane rootPane = (Pane) fxmlloader.load();
@@ -62,7 +63,9 @@ public class ClientThread extends Thread implements Serializable{
 								//schliesst das alte GUI
 								Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
 								stage1.close();
-							}if(g.getWhat().equals("arrayList openSessions an Client")){
+							}//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
+							 //um diese in der ListView anzuzeigen
+							if(g.getWhat().equals("arrayList openSessions an Client")){
 								sessionList = g.getSessionList();
 								for(Session s:sessionList){
 									LobbyController.offeneSitzungen.getItems().addAll(s.getSessionName());

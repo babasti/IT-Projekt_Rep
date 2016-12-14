@@ -114,20 +114,5 @@
          <effect>
             <SepiaTone />
          </effect></Button>
-      <Label fx:id="fehlermeldung" layoutX="325.0" layoutY="432.0" textFill="#e44317">
-         <font>
-            <Font name="Baskerville Bold" size="24.0" />
-         </font>
-         <effect>
-            <Lighting>
-               <bumpInput>
-                  <Blend />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
-      </Label>
    </children>
 </Pane>
