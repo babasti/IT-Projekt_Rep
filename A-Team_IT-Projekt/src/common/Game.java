@@ -42,7 +42,6 @@ public class Game implements Serializable {
 			Pane rootPane = (Pane) fxmlloader.load();
 			stage = new Stage();
 			stage.setScene(new Scene(rootPane));
-			stage.show();
 
 			//schliesst das alte GUI
 			Stage stage1 = (Stage)b_SpielStarten.getScene().getWindow();
@@ -51,6 +50,10 @@ public class Game implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Button getButton(){
+		return this.b_SpielStarten;
 	}
 
 	public Session getSession(){

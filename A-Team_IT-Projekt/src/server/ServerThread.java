@@ -2,6 +2,7 @@ package server;
 
 import java.io.*;
 
+import client.LobbyController;
 import common.Game;
 import common.Player;
 
@@ -67,7 +68,7 @@ public class ServerThread extends Thread implements Serializable{
 								p.setPCName(g.getA()[1]);
 								Server.arrayListToFile();
 							}if(g.getWhat().equals("spiel gestartet")){
-								sendToAllClients(new Game(g.getSession()));
+								sendToAllClients(new Game(g.getSession(), g.getButton()));
 							}if(g.getWhat().equals("sitzung erstellt")){
 								sendToAllClients(new Game(g.getSession(),"sitzung erstellt"));
 								Server.openSessions.add(g.getSession());
