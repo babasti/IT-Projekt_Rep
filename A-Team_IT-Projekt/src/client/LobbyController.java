@@ -260,7 +260,7 @@ public class LobbyController implements Initializable {
 					}
 				}
 				if(!arrayNotFull){
-					SStage stage = (SStage)b_SpielStarten.getScene().getWindow();
+					Stage stage = (Stage)b_SpielStarten.getScene().getWindow();
 					Game g = new Game(selectSession(), stage, "ich bin der erste" );
 					ClientThread.sendToServer(new Game(g.getSession(), g.getStage()));
 

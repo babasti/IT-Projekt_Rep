@@ -30,7 +30,7 @@ public class Game implements Serializable {
 	private Button b_SpielStarten;
 	private SStage stage;
 
-	public Game (Session session, SStage stage1, String s){
+	public Game (Session session, Stage stage1, String s){
 		this.session = session;
 		players = session.getPlayers();
 		what = "spiel gestartet";
