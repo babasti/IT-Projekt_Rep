@@ -16,7 +16,7 @@ import common.Player;
 import common.SStage;
 import common.Session;
 
-public class ClientThread extends Thread implements Serializable{
+public class ClientThread extends Thread{
 	private static Socket socket;
 	private static ObjectOutputStream objectOutputStream;
 	private static ObjectInputStream objectInputStream;
