@@ -81,7 +81,7 @@ public class LobbyController implements Initializable {
 		offeneSitzungen.setPrefHeight(200);
 		offeneSitzungen.toFront();
 		lobbyPane.getChildren().add(offeneSitzungen);
-		Label fehlermeldung = new Label();
+		fehlermeldung = new Label();
 		fehlermeldung.setLayoutX(325);
 		fehlermeldung.setLayoutY(432);
 
