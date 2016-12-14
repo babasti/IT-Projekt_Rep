@@ -34,6 +34,7 @@ public class Game implements Serializable {
 		this.b_SpielStarten = b;
 		this.session = session;
 		players = session.getPlayers();
+		what = "game gestartet";
 
 		//Game wird gestartet				
 		try {
@@ -50,14 +51,6 @@ public class Game implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	//Nachricht, dass Game gestartet wurde vom Sitzungsersteller
-	public Game(Session session){
-		this.session = session;
-		this.players = session.getPlayers();
-		this.numOfPlayers = session.getNumOfPlayers();
-		what = "game gestartet";
 	}
 
 	public Session getSession(){

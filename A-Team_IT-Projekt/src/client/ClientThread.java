@@ -54,10 +54,7 @@ public class ClientThread extends Thread{
 								g.getSession().setPlayers(playersInSession);
 								LobbyController.fehlermeldung.setText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
 							}if(g.getWhat().equals("spiel gestartet")){
-								FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-								Pane rootPane = (Pane) fxmlloader.load();
-								Stage stage = new Stage();
-								stage.setScene(new Scene(rootPane));
+								Stage stage = g.getStage();
 								stage.show();
 								//schliesst das alte GUI
 								Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
