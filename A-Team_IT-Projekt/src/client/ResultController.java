@@ -1,5 +1,6 @@
 package client;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -12,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class ResultController implements Initializable {
+public class ResultController implements Initializable, Serializable {
 
 	@FXML
 	Label l_winner;

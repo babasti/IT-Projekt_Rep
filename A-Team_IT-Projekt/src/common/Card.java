@@ -1,8 +1,10 @@
 package common;
 
+import java.io.Serializable;
+
 import javafx.scene.image.Image;
 
-public class Card{
+public class Card implements Serializable{
 	
 	private String color;
 	private Image img;

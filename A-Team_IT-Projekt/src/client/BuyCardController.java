@@ -1,5 +1,6 @@
 package client;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -18,7 +19,7 @@ import javafx.geometry.Pos;
 
 
 //Klasse um zusätzliche Karten zu kaufen
-public class BuyCardController implements Initializable {
+public class BuyCardController implements Initializable, Serializable {
 
 	@FXML
 	Label message;

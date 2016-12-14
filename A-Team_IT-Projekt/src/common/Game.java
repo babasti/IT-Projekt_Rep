@@ -20,7 +20,7 @@ public class Game implements Serializable {
 	private String s;
 	private ArrayList<Player> al;
 	private ArrayList<Session> sessionList;
-	private Player[] players;
+	private static Player[] players;
 	private Player p;
 	private String[] a;
 	private String what;
@@ -32,6 +32,7 @@ public class Game implements Serializable {
 	public Game (Session session, Button b){
 		this.b_SpielStarten = b;
 		this.session = session;
+		players = session.getPlayers();
 
 		//Game wird gestartet				
 		try {
@@ -126,6 +127,10 @@ public class Game implements Serializable {
 
 	public String getWhat(){
 		return this.what;
+	}
+	
+	public static Player[] getPlayers(){
+		return players;
 	}
 
 

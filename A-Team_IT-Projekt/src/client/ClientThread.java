@@ -15,7 +15,7 @@ import common.Game;
 import common.Player;
 import common.Session;
 
-public class ClientThread extends Thread implements Serializable{
+public class ClientThread extends Thread{
 	private static Socket socket;
 	private static ObjectOutputStream objectOutputStream;
 	private static ObjectInputStream objectInputStream;
@@ -59,7 +59,6 @@ public class ClientThread extends Thread implements Serializable{
 								Stage stage = new Stage();
 								stage.setScene(new Scene(rootPane));
 								stage.show();
-
 								//schliesst das alte GUI
 								Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
 								stage1.close();
@@ -78,24 +77,25 @@ public class ClientThread extends Thread implements Serializable{
 						socket.close();
 						objectInputStream.close();
 						objectOutputStream.close();
+
 					}
-
 				}
-
-
 			}
-
 		}catch(Exception e){
 			e.printStackTrace();
+
 		}
 	}
+
 
 	//sendet Objekt an Server
 	public static void sendToServer(Game g){
 		try {
-			objectOutputStream.writeObject(g);
+			ClientThread.objectOutputStream.writeObject(g);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
+
+

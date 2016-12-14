@@ -1,5 +1,6 @@
 package client;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ import javafx.stage.Stage;
 //Diese Klasse wird benötigt um eine Spielfigur zu bewegen oder die Aktion
 //abzubrechen damit der Spieler nochmals eine figur und eine Karte wählen kann
 
-public class MoveAvatarController implements Initializable {
+public class MoveAvatarController implements Initializable, Serializable {
 
 	@FXML
 	Button b_SpielzugBestätigen;
@@ -101,31 +102,43 @@ public class MoveAvatarController implements Initializable {
 				}
 			}
 		}else{
-			for(int i = Integer.parseInt(currentAvatarPosition.getId().substring(7)); i < startBoard.size(); i++){
-				if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
-					if(tileBox.get(i).getChildren().isEmpty()){
-						tileBox.get(i).getChildren().add(selectetAvatar);
-						tileBox.get(i).setVisible(true);
-						tileBox.get(i).toFront();
-						GameController.collectTile(startBoard.get(i), i);
-						break;
-					}else{
-						tileBox.get(i).getChildren().add(selectetAvatar);
-						tileBox.get(i).setVisible(true);
-						tileBox.get(i).toFront();
-						GameController.setMessage("Spiel eine weitere Karte!");
-					}
-					break;
-				}
-				count = i;
-			}
-			if(count == 48){
+			int x = Integer.parseInt(currentAvatarPosition.getId().substring(7));
+			if(x == 49){
 				ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
 				ebPlayer[currentPlayerPosition].setVisible(true);
 				ebPlayer[currentPlayerPosition].toFront();
 				GameController.collectLastTile();
 				if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
 					switchToResult();
+				}
+			}else{
+				for(int i = Integer.parseInt(currentAvatarPosition.getId().substring(7)); i <= startBoard.size(); i++){
+					count = i;
+					if(count == 49){
+						ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
+						ebPlayer[currentPlayerPosition].setVisible(true);
+						ebPlayer[currentPlayerPosition].toFront();
+						GameController.collectLastTile();
+						if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
+							switchToResult();
+						}
+						break;
+					}
+					if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
+						if(tileBox.get(i).getChildren().isEmpty()){
+							tileBox.get(i).getChildren().add(selectetAvatar);
+							tileBox.get(i).setVisible(true);
+							tileBox.get(i).toFront();
+							GameController.collectTile(startBoard.get(i), i);
+							break;
+						}else{
+							tileBox.get(i).getChildren().add(selectetAvatar);
+							tileBox.get(i).setVisible(true);
+							tileBox.get(i).toFront();
+							GameController.setMessage("Spiel eine weitere Karte!");
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -154,7 +167,7 @@ public class MoveAvatarController implements Initializable {
 
 		//gespielte Bewegungskarte vom Player Array löschen und eine neue Karte aus dem Deck ziehen
 		//die neue Karte wird an der Position der gespielten Karte gesetzt
-		GameController.playerCards.set(Integer.parseInt(selectetCardImageView.getId().substring(8))-1, GameController.cards.get(0));
+		GameController.currentPlayer.playerCards.set(Integer.parseInt(selectetCardImageView.getId().substring(8))-1, GameController.cards.get(0));
 		GameController.moveImages.get(Integer.parseInt(selectetCardImageView.getId().substring(8))-1).setImage(GameController.cards.get(0).getImage());
 		GameController.cards.remove(0);
 
