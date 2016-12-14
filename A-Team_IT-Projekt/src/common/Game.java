@@ -20,7 +20,7 @@ public class Game implements Serializable {
 	private String s;
 	private ArrayList<Player> al;
 	private ArrayList<Session> sessionList;
-	private Player[] players;
+	private static Player[] players;
 	private Player p;
 	private String[] a;
 	private String what;
@@ -126,6 +126,10 @@ public class Game implements Serializable {
 
 	public String getWhat(){
 		return this.what;
+	}
+	
+	public static Player[] getPlayers(){
+		return players;
 	}
 
 
