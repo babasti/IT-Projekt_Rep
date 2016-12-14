@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import common.Game;
 import common.Player;
+import common.SStage;
 import common.Session;
 
 public class ClientThread extends Thread implements Serializable{
@@ -54,7 +55,7 @@ public class ClientThread extends Thread implements Serializable{
 								g.getSession().setPlayers(playersInSession);
 								LobbyController.fehlermeldung.setText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
 							}if(g.getWhat().equals("spiel gestartet")){
-								Stage stage = g.getStage();
+								SStage stage = g.getStage();
 								stage.show();
 								//schliesst das alte GUI
 								Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();

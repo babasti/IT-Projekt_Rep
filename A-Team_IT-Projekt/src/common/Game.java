@@ -28,7 +28,7 @@ public class Game implements Serializable {
 	private Session session;
 	@FXML
 	private Button b_SpielStarten;
-	private Stage stage;
+	private SStage stage;
 
 	public Game (Session session, Button b){
 		this.b_SpielStarten = b;
@@ -40,11 +40,11 @@ public class Game implements Serializable {
 		try {
 			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
 			Pane rootPane = (Pane) fxmlloader.load();
-			stage = new Stage();
+			stage = new SStage();
 			stage.setScene(new Scene(rootPane));
 
 			//schliesst das alte GUI
-			Stage stage1 = (Stage)b_SpielStarten.getScene().getWindow();
+			SStage stage1 = (SStage)b_SpielStarten.getScene().getWindow();
 			stage1.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -52,7 +52,7 @@ public class Game implements Serializable {
 		}
 	}
 	
-	public Game(Session session, Stage stage){
+	public Game(Session session, SStage stage){
 		this.session = session;
 		this.stage = stage;
 		what = "spiel gestartet";
@@ -136,7 +136,7 @@ public class Game implements Serializable {
 		return players;
 	}
 	
-	public Stage getStage(){
+	public SStage getStage(){
 		return stage;
 	}
 
