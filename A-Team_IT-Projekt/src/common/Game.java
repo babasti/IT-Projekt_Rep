@@ -28,6 +28,7 @@ public class Game implements Serializable {
 	private Session session;
 	@FXML
 	private Button b_SpielStarten;
+	private Stage stage;
 
 	public Game (Session session, Button b){
 		this.b_SpielStarten = b;
@@ -38,7 +39,7 @@ public class Game implements Serializable {
 		try {
 			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
 			Pane rootPane = (Pane) fxmlloader.load();
-			Stage stage = new Stage();
+			stage = new Stage();
 			stage.setScene(new Scene(rootPane));
 			stage.show();
 
@@ -131,6 +132,10 @@ public class Game implements Serializable {
 	
 	public static Player[] getPlayers(){
 		return players;
+	}
+	
+	public Stage getStage(){
+		return stage;
 	}
 
 
