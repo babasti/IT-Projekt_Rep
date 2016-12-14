@@ -17,6 +17,7 @@ import common.SStage;
 import common.Session;
 
 public class ClientThread implements Runnable{
+
 	private static Socket socket;
 	private static ObjectOutputStream objectOutputStream;
 	private static ObjectInputStream objectInputStream;
@@ -61,7 +62,7 @@ public class ClientThread implements Runnable{
 								Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
 								stage1.close();
 							}//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
-							 //um diese in der ListView anzuzeigen
+							//um diese in der ListView anzuzeigen
 							if(g.getWhat().equals("arrayList openSessions an Client")){
 								sessionList = g.getSessionList();
 								for(Session s:sessionList){
@@ -95,5 +96,7 @@ public class ClientThread implements Runnable{
 		}
 	}
 }
+
+
 
 
