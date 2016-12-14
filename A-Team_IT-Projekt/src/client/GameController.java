@@ -1,31 +1,14 @@
 package client;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URL;
-import java.time.Year;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
-
-import javax.imageio.ImageIO;
-import javax.swing.GroupLayout.Alignment;
-
 import common.Card;
 import common.Game;
 import common.Player;
 import common.Tile;
-import javafx.application.Application;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -33,12 +16,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.image.Image;
+import javafx.scene.image.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -47,6 +29,7 @@ import common.SCircle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import common.SImage;
 
 public class GameController extends SCircle implements Initializable, Serializable{
 
@@ -312,64 +295,64 @@ public class GameController extends SCircle implements Initializable, Serializab
 
 	//Bilder welche im Ordner resource abgelget sind instanziert als Image
 
-	private Image blue1 = new Image(getClass().getResourceAsStream("/resource/blue_1.jpg"));
-	private Image blue2 = new Image(getClass().getResourceAsStream("/resource/blue_2.jpg"));
-	private Image blue3 = new Image(getClass().getResourceAsStream("/resource/blue_3.jpg"));
-	private Image blue4 = new Image(getClass().getResourceAsStream("/resource/blue_4.jpg"));
-	private Image blue5 = new Image(getClass().getResourceAsStream("/resource/blue_5.jpg"));
-	private Image blue6 = new Image(getClass().getResourceAsStream("/resource/blue_6.jpg"));
-	private Image blue7 = new Image(getClass().getResourceAsStream("/resource/blue_7.jpg"));
-	private Image brown1 = new Image(getClass().getResourceAsStream("/resource/brown_1.jpg"));
-	private Image brown2 = new Image(getClass().getResourceAsStream("/resource/brown_2.jpg"));
-	private Image brown3 = new Image(getClass().getResourceAsStream("/resource/brown_3.jpg"));
-	private Image brown4 = new Image(getClass().getResourceAsStream("/resource/brown_4.jpg"));
-	private Image brown5 = new Image(getClass().getResourceAsStream("/resource/brown_5.jpg"));
-	private Image brown6 = new Image(getClass().getResourceAsStream("/resource/brown_6.jpg"));
-	private Image brown7 = new Image(getClass().getResourceAsStream("/resource/brown_7.jpg"));
-	private Image green1 = new Image(getClass().getResourceAsStream("/resource/green_1.jpg"));
-	private Image green2 = new Image(getClass().getResourceAsStream("/resource/green_2.jpg"));
-	private Image green3 = new Image(getClass().getResourceAsStream("/resource/green_3.jpg"));
-	private Image green4 = new Image(getClass().getResourceAsStream("/resource/green_4.jpg"));
-	private Image green5 = new Image(getClass().getResourceAsStream("/resource/green_5.jpg"));
-	private Image green6 = new Image(getClass().getResourceAsStream("/resource/green_6.jpg"));
-	private Image green7 = new Image(getClass().getResourceAsStream("/resource/green_7.jpg"));
-	private Image grey1 = new Image(getClass().getResourceAsStream("/resource/grey_1.jpg"));
-	private Image grey2 = new Image(getClass().getResourceAsStream("/resource/grey_2.jpg"));
-	private Image grey3 = new Image(getClass().getResourceAsStream("/resource/grey_3.jpg"));
-	private Image grey4 = new Image(getClass().getResourceAsStream("/resource/grey_4.jpg"));
-	private Image grey5 = new Image(getClass().getResourceAsStream("/resource/grey_5.jpg"));
-	private Image grey6 = new Image(getClass().getResourceAsStream("/resource/grey_6.jpg"));
-	private Image grey7 = new Image(getClass().getResourceAsStream("/resource/grey_7.jpg"));
-	private Image pink1 = new Image(getClass().getResourceAsStream("/resource/pink_1.jpg"));
-	private Image pink2 = new Image(getClass().getResourceAsStream("/resource/pink_2.jpg"));
-	private Image pink3 = new Image(getClass().getResourceAsStream("/resource/pink_3.jpg"));
-	private Image pink4 = new Image(getClass().getResourceAsStream("/resource/pink_4.jpg"));
-	private Image pink5 = new Image(getClass().getResourceAsStream("/resource/pink_5.jpg"));
-	private Image pink6 = new Image(getClass().getResourceAsStream("/resource/pink_6.jpg"));
-	private Image pink7 = new Image(getClass().getResourceAsStream("/resource/pink_7.jpg"));
-	private Image white1 = new Image(getClass().getResourceAsStream("/resource/white_1.jpg"));
-	private Image white2 = new Image(getClass().getResourceAsStream("/resource/white_2.jpg"));
-	private Image white3 = new Image(getClass().getResourceAsStream("/resource/white_3.jpg"));
-	private Image white4 = new Image(getClass().getResourceAsStream("/resource/white_4.jpg"));
-	private Image white5 = new Image(getClass().getResourceAsStream("/resource/white_5.jpg"));
-	private Image white6 = new Image(getClass().getResourceAsStream("/resource/white_6.jpg"));
-	private Image white7 = new Image(getClass().getResourceAsStream("/resource/white_7.jpg"));
-	private Image yellow1 = new Image(getClass().getResourceAsStream("/resource/yellow_1.jpg"));
-	private Image yellow2 = new Image(getClass().getResourceAsStream("/resource/yellow_2.jpg"));
-	private Image yellow3 = new Image(getClass().getResourceAsStream("/resource/yellow_3.jpg"));
-	private Image yellow4 = new Image(getClass().getResourceAsStream("/resource/yellow_4.jpg"));
-	private Image yellow5 = new Image(getClass().getResourceAsStream("/resource/yellow_5.jpg"));
-	private Image yellow6 = new Image(getClass().getResourceAsStream("/resource/yellow_6.jpg"));
-	private Image yellow7 = new Image(getClass().getResourceAsStream("/resource/yellow_7.jpg"));
-	private Image water = new Image(getClass().getResourceAsStream("/resource/wasser.JPG"));
+	private SImage blue1 = new SImage(getClass().getResourceAsStream("/resource/blue_1.jpg"));
+	private SImage blue2 = new SImage(getClass().getResourceAsStream("/resource/blue_2.jpg"));
+	private SImage blue3 = new SImage(getClass().getResourceAsStream("/resource/blue_3.jpg"));
+	private SImage blue4 = new SImage(getClass().getResourceAsStream("/resource/blue_4.jpg"));
+	private SImage blue5 = new SImage(getClass().getResourceAsStream("/resource/blue_5.jpg"));
+	private SImage blue6 = new SImage(getClass().getResourceAsStream("/resource/blue_6.jpg"));
+	private SImage blue7 = new SImage(getClass().getResourceAsStream("/resource/blue_7.jpg"));
+	private SImage brown1 = new SImage(getClass().getResourceAsStream("/resource/brown_1.jpg"));
+	private SImage brown2 = new SImage(getClass().getResourceAsStream("/resource/brown_2.jpg"));
+	private SImage brown3 = new SImage(getClass().getResourceAsStream("/resource/brown_3.jpg"));
+	private SImage brown4 = new SImage(getClass().getResourceAsStream("/resource/brown_4.jpg"));
+	private SImage brown5 = new SImage(getClass().getResourceAsStream("/resource/brown_5.jpg"));
+	private SImage brown6 = new SImage(getClass().getResourceAsStream("/resource/brown_6.jpg"));
+	private SImage brown7 = new SImage(getClass().getResourceAsStream("/resource/brown_7.jpg"));
+	private SImage green1 = new SImage(getClass().getResourceAsStream("/resource/green_1.jpg"));
+	private SImage green2 = new SImage(getClass().getResourceAsStream("/resource/green_2.jpg"));
+	private SImage green3 = new SImage(getClass().getResourceAsStream("/resource/green_3.jpg"));
+	private SImage green4 = new SImage(getClass().getResourceAsStream("/resource/green_4.jpg"));
+	private SImage green5 = new SImage(getClass().getResourceAsStream("/resource/green_5.jpg"));
+	private SImage green6 = new SImage(getClass().getResourceAsStream("/resource/green_6.jpg"));
+	private SImage green7 = new SImage(getClass().getResourceAsStream("/resource/green_7.jpg"));
+	private SImage grey1 = new SImage(getClass().getResourceAsStream("/resource/grey_1.jpg"));
+	private SImage grey2 = new SImage(getClass().getResourceAsStream("/resource/grey_2.jpg"));
+	private SImage grey3 = new SImage(getClass().getResourceAsStream("/resource/grey_3.jpg"));
+	private SImage grey4 = new SImage(getClass().getResourceAsStream("/resource/grey_4.jpg"));
+	private SImage grey5 = new SImage(getClass().getResourceAsStream("/resource/grey_5.jpg"));
+	private SImage grey6 = new SImage(getClass().getResourceAsStream("/resource/grey_6.jpg"));
+	private SImage grey7 = new SImage(getClass().getResourceAsStream("/resource/grey_7.jpg"));
+	private SImage pink1 = new SImage(getClass().getResourceAsStream("/resource/pink_1.jpg"));
+	private SImage pink2 = new SImage(getClass().getResourceAsStream("/resource/pink_2.jpg"));
+	private SImage pink3 = new SImage(getClass().getResourceAsStream("/resource/pink_3.jpg"));
+	private SImage pink4 = new SImage(getClass().getResourceAsStream("/resource/pink_4.jpg"));
+	private SImage pink5 = new SImage(getClass().getResourceAsStream("/resource/pink_5.jpg"));
+	private SImage pink6 = new SImage(getClass().getResourceAsStream("/resource/pink_6.jpg"));
+	private SImage pink7 = new SImage(getClass().getResourceAsStream("/resource/pink_7.jpg"));
+	private SImage white1 = new SImage(getClass().getResourceAsStream("/resource/white_1.jpg"));
+	private SImage white2 = new SImage(getClass().getResourceAsStream("/resource/white_2.jpg"));
+	private SImage white3 = new SImage(getClass().getResourceAsStream("/resource/white_3.jpg"));
+	private SImage white4 = new SImage(getClass().getResourceAsStream("/resource/white_4.jpg"));
+	private SImage white5 = new SImage(getClass().getResourceAsStream("/resource/white_5.jpg"));
+	private SImage white6 = new SImage(getClass().getResourceAsStream("/resource/white_6.jpg"));
+	private SImage white7 = new SImage(getClass().getResourceAsStream("/resource/white_7.jpg"));
+	private SImage yellow1 = new SImage(getClass().getResourceAsStream("/resource/yellow_1.jpg"));
+	private SImage yellow2 = new SImage(getClass().getResourceAsStream("/resource/yellow_2.jpg"));
+	private SImage yellow3 = new SImage(getClass().getResourceAsStream("/resource/yellow_3.jpg"));
+	private SImage yellow4 = new SImage(getClass().getResourceAsStream("/resource/yellow_4.jpg"));
+	private SImage yellow5 = new SImage(getClass().getResourceAsStream("/resource/yellow_5.jpg"));
+	private SImage yellow6 = new SImage(getClass().getResourceAsStream("/resource/yellow_6.jpg"));
+	private SImage yellow7 = new SImage(getClass().getResourceAsStream("/resource/yellow_7.jpg"));
+	private SImage water = new SImage(getClass().getResourceAsStream("/resource/wasser.JPG"));
 
-	private Image moveCardBlue = new Image(getClass().getResourceAsStream("/resource/card_Blue.jpg"));
-	private Image moveCardBrown = new Image(getClass().getResourceAsStream("/resource/card_Brown.jpg"));
-	private Image moveCardGreen = new Image(getClass().getResourceAsStream("/resource/card_Green.jpg"));
-	private Image moveCardGrey = new Image(getClass().getResourceAsStream("/resource/card_Grey.jpg"));
-	private Image moveCardPink = new Image(getClass().getResourceAsStream("/resource/card_Pink.jpg"));
-	private Image moveCardWhite = new Image(getClass().getResourceAsStream("/resource/card_White.jpg"));
-	private Image moveCardYellow = new Image(getClass().getResourceAsStream("/resource/card_Yellow.jpg"));
+	private SImage moveCardBlue = new SImage(getClass().getResourceAsStream("/resource/card_Blue.jpg"));
+	private SImage moveCardBrown = new SImage(getClass().getResourceAsStream("/resource/card_Brown.jpg"));
+	private SImage moveCardGreen = new SImage(getClass().getResourceAsStream("/resource/card_Green.jpg"));
+	private SImage moveCardGrey = new SImage(getClass().getResourceAsStream("/resource/card_Grey.jpg"));
+	private SImage moveCardPink = new SImage(getClass().getResourceAsStream("/resource/card_Pink.jpg"));
+	private SImage moveCardWhite = new SImage(getClass().getResourceAsStream("/resource/card_White.jpg"));
+	private SImage moveCardYellow = new SImage(getClass().getResourceAsStream("/resource/card_Yellow.jpg"));
 
 
 	//Instanzvariablen ArrayListe welche alle Tile Objekte beinhaltet
@@ -490,6 +473,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 			players.get(x).setAvatarColor(avatarColors[count]);
 			count++;
 		}
+		
 
 		//handler für alle Avatars setzen, sobald ein Avatar gewählt wurde durch Click wird der Effekt gesetzt
 		//der Player kann jeweils nur einen Avatar wählen in der StartBox
@@ -560,6 +544,9 @@ public class GameController extends SCircle implements Initializable, Serializab
 		sbPlayer = new HBox[numOfPlayers];
 		for(int i = 0; i < numOfPlayers;i++){
 			sbPlayer[i] = allBox[i];
+			startBox.getChildren().clear();
+			startBox.getChildren().add(sbPlayer[i]);
+			startBox.toFront();
 		}
 		HBox[] allBoxEB = new HBox[4];
 		allBoxEB[0] = eb_player1;
@@ -570,6 +557,9 @@ public class GameController extends SCircle implements Initializable, Serializab
 		ebPlayer = new HBox[numOfPlayers];
 		for(int i = 0; i < numOfPlayers; i++){
 			ebPlayer[i] = allBoxEB[i];
+			endBox.getChildren().clear();
+			endBox.getChildren().add(ebPlayer[i]);
+			endBox.toFront();
 		}
 		
 		//avatar Listen von den Player holen und in eine arrayListe speichern und diese Listen in eine gesamt Liste speichern
@@ -578,9 +568,6 @@ public class GameController extends SCircle implements Initializable, Serializab
 		for(int i = 0; i < numOfPlayers; i++){
 			totalAvatars.addAll(players.get(i).getAvatar());
 		}
-		
-		
-		
 	}
 	
 
@@ -851,7 +838,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 	//die Methode ersetzt das vorherige Tile mit "Wasser" und gibt die Punktzahlt des Tiles zurück
 	//um die Punktzahl danach dem Score vom Spieler zu summieren
 	public static void collectTile(Tile selectetTile, int position){
-		Image water = proformaStartGameBoard.get(0).getImage();
+		SImage water = (SImage) proformaStartGameBoard.get(0).getImage();
 		Tile Water = new Tile (water, 0, "water");
 
 		int points;
@@ -932,7 +919,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 	//collectLastTile() wird aufgerufen falls der Player aufs Land gelangt,
 	//ihm wird das entsprechende letzte verfügbare Tile zugewiesen
 	public static void collectLastTile(){
-		Image water = proformaStartGameBoard.get(0).getImage();
+		SImage water = (SImage) proformaStartGameBoard.get(0).getImage();
 		Tile Water = new Tile (water, 0, "water");
 		int lastTilePosition = 48;
 
