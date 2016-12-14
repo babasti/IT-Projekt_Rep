@@ -88,6 +88,7 @@ public class LobbyController implements Initializable {
 		fehlermeldung.setLayoutY(432);
 		fehlermeldung.toFront();
 		lobbyPane.getChildren().add(fehlermeldung);
+		//fehlermeldung farbe setzen
 
 		ClientThread.sendToServer(new Game("arrayList openSessions an Client"));
 	}

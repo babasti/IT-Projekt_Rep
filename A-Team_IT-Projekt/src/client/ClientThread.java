@@ -56,7 +56,9 @@ public class ClientThread implements Runnable{
 								g.getSession().setPlayers(playersInSession);
 //								LobbyController.fehlermeldung.setText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
 							}if(g.getWhat().equals("spiel gestartet")){
+								System.out.println("stage erhalten");
 								SStage stage = g.getStage();
+								
 								stage.show();
 								//schliesst das alte GUI
 								Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
