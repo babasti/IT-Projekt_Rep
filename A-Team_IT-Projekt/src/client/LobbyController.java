@@ -247,7 +247,7 @@ public class LobbyController implements Initializable {
 			//nur der Sitzungsersteller darf die Sitzung starten
 			//if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
 				//prüft, ob Sitzung voll ist
-				Player[] players = selectedSession.getPlayers();
+				Player[] players = selectSession().getPlayers();
 				boolean arrayNotFull = false;
 				for(Player p:players){
 					System.out.println(p);
