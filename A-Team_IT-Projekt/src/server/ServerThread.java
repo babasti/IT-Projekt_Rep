@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class ServerThread extends Thread implements Serializable{
+public class ServerThread implements Serializable, Runnable{
 	private static Socket socket = null;
 	public static ObjectOutputStream objectOutputStream;
 	public static ObjectInputStream objectInputStream;

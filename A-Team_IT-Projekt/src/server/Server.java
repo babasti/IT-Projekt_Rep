@@ -52,7 +52,8 @@ public class Server {
 			counter++;
 			System.out.println("Connection from: "+socket.getRemoteSocketAddress());
 			System.out.println("Client Nr : "+counter);
-			new ServerThread(socket).start();
+			ServerThread sThread = new ServerThread(socket);
+			new Thread(sThread).start();	
 		}
 	}
 

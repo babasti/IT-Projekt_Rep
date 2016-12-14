@@ -144,7 +144,8 @@ public class LoginController implements Initializable{
 			Socket socket = new Socket(ipAdresse.getText(), server.Server.PORT);
 			System.out.println("Connection successful...");
 			setSocket = true;
-			new ClientThread(socket).start();
+			ClientThread cThread = new ClientThread(socket);
+			new Thread(cThread).start();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
