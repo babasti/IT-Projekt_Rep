@@ -84,6 +84,8 @@ public class LobbyController implements Initializable {
 		fehlermeldung = new Label();
 		fehlermeldung.setLayoutX(325);
 		fehlermeldung.setLayoutY(432);
+		fehlermeldung.toFront();
+		lobbyPane.getChildren().add(fehlermeldung);
 
 		ClientThread.sendToServer(new Game("arrayList openSessions an Client"));
 	}
@@ -243,7 +245,7 @@ public class LobbyController implements Initializable {
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
-			if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
+			//if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
 				//prüft, ob Sitzung voll ist
 				Player[] players = selectedSession.getPlayers();
 				boolean arrayNotFull = false;
@@ -280,10 +282,10 @@ public class LobbyController implements Initializable {
 				}else{
 					fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
 				}
-			}
-			else{
-				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
-			}
+//			}
+//			else{
+//				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
+//			}
 		}
 	}
 }
