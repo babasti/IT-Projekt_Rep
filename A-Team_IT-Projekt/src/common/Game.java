@@ -30,8 +30,7 @@ public class Game implements Serializable {
 	private Button b_SpielStarten;
 	private SStage stage;
 
-	public Game (Session session, Button b){
-		this.b_SpielStarten = b;
+	public Game (Session session, SStage stage1, String s){
 		this.session = session;
 		players = session.getPlayers();
 		what = "spiel gestartet";
@@ -44,7 +43,6 @@ public class Game implements Serializable {
 			stage.setScene(new Scene(rootPane));
 
 			//schliesst das alte GUI
-			Stage stage1 = (Stage)b_SpielStarten.getScene().getWindow();
 			stage1.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

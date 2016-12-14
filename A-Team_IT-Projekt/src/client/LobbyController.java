@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import common.Game;
 import common.Player;
+import common.SStage;
 import common.Session;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class LobbyController implements Initializable {
@@ -258,7 +260,8 @@ public class LobbyController implements Initializable {
 					}
 				}
 				if(!arrayNotFull){
-					Game g = new Game(selectSession(), b_SpielStarten);
+					SStage stage = (SStage)b_SpielStarten.getScene().getWindow();
+					Game g = new Game(selectSession(), stage, "ich bin der erste" );
 					ClientThread.sendToServer(new Game(g.getSession(), g.getStage()));
 
 					//String aus ArrayList <String> offeneSitzungenList löschen
