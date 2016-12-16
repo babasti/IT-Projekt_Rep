@@ -29,25 +29,27 @@ public class Game implements Serializable {
 	@FXML
 	private Button b_SpielStarten;
 	private SStage stage;
+	private Stage oldStage;
 
 	public Game (Session session, Stage stage1, String s){
 		this.session = session;
 		players = session.getPlayers();
 		what = "spiel gestartet";
-
-		//Game wird gestartet				
-		try {
-			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-			Pane rootPane = (Pane) fxmlloader.load();
-			stage = new SStage();
-			stage.setScene(new Scene(rootPane));
-
-			//schliesst das alte GUI
-			stage1.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.oldStage = stage1;
+//
+//		//Game wird gestartet				
+//		try {
+//			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+//			Pane rootPane = (Pane) fxmlloader.load();
+//			stage = new SStage();
+//			stage.setScene(new Scene(rootPane));
+//
+//			//schliesst das alte GUI
+//			stage1.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	public Game(Session session, SStage stage){
@@ -72,6 +74,15 @@ public class Game implements Serializable {
 		}
 		if(s.equals("spiel gestartet")){
 			what = "spiel gestartet";
+			try {
+				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+				Pane rootPane = (Pane) fxmlloader.load();
+				SStage stage = new SStage();
+				stage.setScene(new Scene(rootPane));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -136,6 +147,10 @@ public class Game implements Serializable {
 	
 	public SStage getStage(){
 		return stage;
+	}
+	
+	public Stage getOldStage(){
+		return this.oldStage;
 	}
 
 

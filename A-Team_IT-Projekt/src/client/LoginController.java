@@ -84,6 +84,7 @@ public class LoginController implements Initializable{
 							stage.setResizable(false);
 							stage.setScene(new Scene(lobbyPane));
 							stage.show();
+							LobbyController.setFehlermeldungText("Sie sind als "+p.getUserName()+" eingeloggt.");
 
 							//schliesst das alte GUI
 							Stage stage1 = (Stage)b_login.getScene().getWindow();

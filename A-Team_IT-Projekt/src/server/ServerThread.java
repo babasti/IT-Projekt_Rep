@@ -75,7 +75,6 @@ public class ServerThread implements Serializable, Runnable{
 							}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
 								sendToAllClients(new Game(g.getSession(),g.getP()));
 							}
-							objectOutputStream.flush();
 						}
 						Server.arrayListToFile();
 						socket.close();

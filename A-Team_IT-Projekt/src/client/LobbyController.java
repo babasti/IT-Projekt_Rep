@@ -1,5 +1,6 @@
 package client;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -12,7 +13,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -22,6 +25,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -86,9 +91,10 @@ public class LobbyController implements Initializable {
 		fehlermeldung = new Label();
 		fehlermeldung.setLayoutX(325);
 		fehlermeldung.setLayoutY(432);
+		fehlermeldung.setTextFill(Color.web("#e82e44"));
+		fehlermeldung.setFont(Font.font(18));
 		fehlermeldung.toFront();
 		lobbyPane.getChildren().add(fehlermeldung);
-		//fehlermeldung farbe setzen
 
 		ClientThread.sendToServer(new Game("arrayList openSessions an Client"));
 	}
@@ -261,10 +267,10 @@ public class LobbyController implements Initializable {
 					}
 				}
 				if(!arrayNotFull){
-					Stage stage = (Stage)b_SpielStarten.getScene().getWindow();
-					Game g = new Game(selectSession(), stage, "ich bin der erste" );
+					Game g = new Game(selectSession(), "spiel gestartet" );
+					System.out.println(g.getWhat());			
+					
 					ClientThread.sendToServer(g);
-
 					//String aus ArrayList <String> offeneSitzungenList löschen
 					for (int i = 0; i < offeneSitzungenList.size(); i++){
 						if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
@@ -291,5 +297,9 @@ public class LobbyController implements Initializable {
 //				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
 //			}
 		}
+	}
+	
+	public static void setFehlermeldungText(String s){
+		fehlermeldung.setText(s);
 	}
 }
