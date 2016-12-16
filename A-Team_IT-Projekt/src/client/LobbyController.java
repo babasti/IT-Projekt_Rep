@@ -272,11 +272,7 @@ public class LobbyController implements Initializable, Serializable {
 			if(!arrayNotFull){
 				try{
 				ClientThread.startedSession = selectedSession;
-				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/client/GameBoard.fxml"));
-				Pane rootPane = (Pane)fxmlloader.load();
-				SStage stage = new SStage();
-				stage.setScene(new Scene(rootPane));
-				Game game = new Game(selectedSession,stage,"spiel gestartet" );
+				Game game = new Game(selectedSession,"spiel gestartet" );
 				ClientThread.sendToServer(game);
 				}catch(Exception e){
 					e.printStackTrace();

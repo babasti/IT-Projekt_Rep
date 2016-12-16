@@ -34,6 +34,14 @@ public class ServerThread implements Serializable, Runnable{
 	private static ObjectInputStream objectInputStream;
 	ServerThread(Socket socket){
 		this.socket = socket;
+		try {
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+			Server.openOutputStreams.add(objectOutputStream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void run(){
@@ -41,9 +49,6 @@ public class ServerThread implements Serializable, Runnable{
 		Object obj;
 		try{
 			synchronized(this){
-				objectInputStream = new ObjectInputStream(socket.getInputStream());
-				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-				Server.openOutputStreams.add(objectOutputStream);
 				while(true){
 					obj = objectInputStream.readObject();
 					if(obj instanceof Game){
@@ -81,7 +86,11 @@ public class ServerThread implements Serializable, Runnable{
 							p.setPCName(g.getA()[1]);
 							Server.arrayListToFile();
 						}if(g.getWhat().equals("spiel gestartet")){
-							sendToAllClients(g);
+							FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/client/GameBoard.fxml"));
+							Pane rootPane = (Pane)fxmlloader.load();
+							SStage stage = new SStage();
+							stage.setScene(new Scene(rootPane));
+							sendToAllClients(new Game(g.getSession(), stage, "spiel gestartet"));
 							Server.startedSession = null;
 						}if(g.getWhat().equals("sitzung erstellt")){
 							sendToAllClients(g);
@@ -115,6 +124,7 @@ public class ServerThread implements Serializable, Runnable{
 		try {
 			objectOutputStream.writeObject(g);
 			objectOutputStream.flush();
+			objectOutputStream.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -125,6 +135,7 @@ public class ServerThread implements Serializable, Runnable{
 			try {
 				oos.writeObject(g);
 				oos.flush();
+				oos.reset();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

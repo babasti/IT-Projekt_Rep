@@ -55,8 +55,8 @@ public class Game implements Serializable {
 		if(s.equals("sitzung erstellt")){
 			what = "sitzung erstellt";
 		}
-		if(s.equals("gestartete Sitzung")){
-			what = "gestartete Sitzung";
+		if(s.equals("spiel gestartet")){
+			what = "spiel gestartet";
 		}
 //		if(s.equals("spiel gestartet")){
 //			what = "spiel gestartet";

@@ -31,18 +31,26 @@ public class ClientThread implements Runnable, Serializable{
 
 	ClientThread(Socket socket){
 		this.socket = socket;
+		try {
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void run(){
 		Game g;
-
+		Object obj;
 		try{
 			synchronized(this){
-				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-				objectInputStream = new ObjectInputStream(socket.getInputStream());
 				sendToServer(new Game("arrayList regPlayers an Client"));
 				while(true){
-					while((g = (Game)objectInputStream.readObject()) != null){
+					obj = objectInputStream.readObject();
+					if(obj instanceof Game){
+						g = (Game)obj;
 						if(g.getWhat().equals("arrayList regPlayers von Server")){
 							regPlayers = g.getAl();
 						}if(g.getWhat().equals("sitzung erstellt")){
@@ -71,8 +79,7 @@ public class ClientThread implements Runnable, Serializable{
 						}if(g.getWhat().equals("spiel gestartet")){
 							startedSession = g.getSession();
 							System.out.println(startedSession.getSessionName());
-							SStage stage = g.getStage();
-							stage.show();
+							g.getStage().show();
 
 							//schliesst das alte GUI
 							Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
@@ -92,8 +99,6 @@ public class ClientThread implements Runnable, Serializable{
 					//				objectInputStream.close();
 					//				objectOutputStream.close();
 				}
-
-
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -107,8 +112,8 @@ public class ClientThread implements Runnable, Serializable{
 	public static void sendToServer(Game g){
 		try {
 			ClientThread.objectOutputStream.writeObject(g);
-			objectOutputStream.reset();
 			objectOutputStream.flush();
+			objectOutputStream.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
