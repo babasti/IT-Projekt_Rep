@@ -32,8 +32,8 @@ public class ClientThread implements Runnable, Serializable{
 	ClientThread(Socket socket){
 		this.socket = socket;
 		try {
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
