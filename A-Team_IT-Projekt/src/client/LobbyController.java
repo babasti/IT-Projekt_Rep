@@ -120,6 +120,9 @@ public class LobbyController implements Initializable, Serializable {
 				if (!sessionAlreadyExist(sessionName)){
 					Player[] players = new Player[numOfPlayers];
 					players[0] = player;
+					for(Player p:players){
+						System.out.println(p);
+					}
 					Session session = new Session(sessionName, numOfPlayers, players);
 					//					offeneSitzungen.getItems().addAll(sessionName);
 					//					offeneSitzungenList.add(sessionName);

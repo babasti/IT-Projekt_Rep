@@ -113,7 +113,6 @@ public class ClientThread implements Runnable, Serializable{
 		try {
 			ClientThread.objectOutputStream.writeObject(g);
 			objectOutputStream.flush();
-			objectOutputStream.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

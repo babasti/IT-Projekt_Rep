@@ -124,7 +124,6 @@ public class ServerThread implements Serializable, Runnable{
 		try {
 			objectOutputStream.writeObject(g);
 			objectOutputStream.flush();
-			objectOutputStream.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -135,7 +134,6 @@ public class ServerThread implements Serializable, Runnable{
 			try {
 				oos.writeObject(g);
 				oos.flush();
-				oos.reset();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
