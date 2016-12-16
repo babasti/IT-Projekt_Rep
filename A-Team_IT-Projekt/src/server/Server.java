@@ -12,7 +12,7 @@ import java.util.Scanner;
 import common.Game;
 import common.Player;
 
-public class Server {
+public class Server implements Serializable{
 	public static ArrayList<Player> regPlayers;
 	public static ArrayList<ObjectOutputStream> openOutputStreams;
 	public static final int PORT = 1234;

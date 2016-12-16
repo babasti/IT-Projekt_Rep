@@ -33,6 +33,11 @@ import javafx.util.Callback;
 
 public class LobbyController implements Initializable, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1547512304397946316L;
+
 	@FXML
 	Label text_OffeneSitzungen;
 

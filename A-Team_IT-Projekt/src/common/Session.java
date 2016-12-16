@@ -6,6 +6,10 @@ import java.io.Serializable;
 public class Session implements Serializable{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3018411303261858848L;
 	private int numOfPlayers;
 	private Player[] players;
 	private String sessionName;

@@ -29,40 +29,20 @@ public class Game implements Serializable {
 	private String what;
 	private int numOfPlayers;
 	private Session session;
-	@FXML
-	private Button b_SpielStarten;
 	private SStage stage;
-	private Stage oldStage;
+
 
 	public Game (Session session, SStage stage, String s){
 		this.session = session;
 		this.stage = stage;
 		this.s = s;
 		what = "spiel gestartet";
-		//
-		//		//Game wird gestartet				
-		//		try {
-		//			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-		//			Pane rootPane = (Pane) fxmlloader.load();
-		//			stage = new SStage();
-		//			stage.setScene(new Scene(rootPane));
-		//
-		//			//schliesst das alte GUI
-		//			stage1.close();
-		//		} catch (IOException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
 	}
 
 	public Game(Session session, SStage stage){
 		this.session = session;
 		this.stage = stage;
 		what = "spiel gestartet";
-	}
-
-	public Button getButton(){
-		return this.b_SpielStarten;
 	}
 
 	public Session getSession(){
@@ -168,10 +148,6 @@ public class Game implements Serializable {
 
 	public SStage getStage(){
 		return stage;
-	}
-
-	public Stage getOldStage(){
-		return this.oldStage;
 	}
 
 	public static void setStartBoard(ArrayList<Tile> startBoard){

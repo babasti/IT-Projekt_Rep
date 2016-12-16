@@ -30,21 +30,24 @@ public class ServerThread implements Serializable, Runnable{
 	 */
 	private static final long serialVersionUID = 858159327570071613L;
 	private static Socket socket = null;
-	public static ObjectOutputStream objectOutputStream;
-	public static ObjectInputStream objectInputStream;
+	private static ObjectOutputStream objectOutputStream;
+	private static ObjectInputStream objectInputStream;
 	ServerThread(Socket socket){
 		this.socket = socket;
 	}
 
 	public void run(){
 		Game g;
+		Object obj;
 		try{
 			synchronized(this){
 				objectInputStream = new ObjectInputStream(socket.getInputStream());
 				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 				Server.openOutputStreams.add(objectOutputStream);
 				while(true){
-					while((g = (Game)objectInputStream.readObject())!= null){
+					obj = objectInputStream.readObject();
+					if(obj instanceof Game){
+						g = (Game)obj;
 						//wenn ein client arrayList der Player anfragt
 						if(g.getWhat().equals("arrayList regPlayers an Client")){
 							sendToClient(new Game(Server.regPlayers));
@@ -94,21 +97,21 @@ public class ServerThread implements Serializable, Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally{
-			try {
-				Server.arrayListToFile();
-				objectInputStream.close();
-				objectOutputStream.close();
-				socket.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		//		finally{
+		//			try {
+		//				Server.arrayListToFile();
+		//				objectInputStream.close();
+		//				objectOutputStream.close();
+		//				socket.close();
+		//			} catch (IOException e) {
+		//				// TODO Auto-generated catch block
+		//				e.printStackTrace();
+		//			}
+		//		}
 
 	}
 
-	public static void sendToClient(Game g){
+	public synchronized static void sendToClient(Game g){
 		try {
 			objectOutputStream.writeObject(g);
 			objectOutputStream.flush();
@@ -117,7 +120,7 @@ public class ServerThread implements Serializable, Runnable{
 		}
 	}
 
-	public static void sendToAllClients(Game g){
+	public synchronized static void sendToAllClients(Game g){
 		for(ObjectOutputStream oos:Server.openOutputStreams){
 			try {
 				oos.writeObject(g);
