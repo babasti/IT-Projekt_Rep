@@ -76,11 +76,12 @@ public class Game implements Serializable {
 		}
 		if(s.equals("spiel gestartet")){
 			what = "spiel gestartet";
-			try {
-				Pane pane = (Pane)FXMLLoader.load(getClass().getResource("/GameBoard.fxml"));
+			try {			
+				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+				Pane rootPane = (Pane)fxmlloader.load();
 				SStage stage = new SStage();
+				stage.setScene(new Scene(rootPane));
 				this.stage = stage;
-				stage.setScene(new Scene(pane));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
