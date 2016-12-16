@@ -528,6 +528,8 @@ public class GameController extends SCircle implements Initializable, Serializab
 			}
 		}
 
+		Game.setStartBoard(startBoard);
+		Game.setCards(cards);
 
 	}	
 

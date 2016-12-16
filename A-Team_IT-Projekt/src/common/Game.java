@@ -21,6 +21,8 @@ public class Game implements Serializable {
 	private ArrayList<Player> al;
 	private ArrayList<Session> sessionList;
 	private static Player[] players;
+	private static ArrayList<Tile> startBoard = new ArrayList<Tile>();
+	private static ArrayList<Card> cards = new ArrayList<Card>();
 	private Player p;
 	private String[] a;
 	private String what;
@@ -151,6 +153,14 @@ public class Game implements Serializable {
 	
 	public Stage getOldStage(){
 		return this.oldStage;
+	}
+	
+	public static void setStartBoard(ArrayList<Tile> startBoard){
+		Game.startBoard = startBoard;
+	}
+	
+	public static void setCards(ArrayList<Card> cards){
+		Game.cards = cards;
 	}
 
 
