@@ -30,59 +30,56 @@ public class ServerThread implements Serializable, Runnable{
 	public void run(){
 		Game g;
 		try{
-			synchronized(objectInputStream = new ObjectInputStream(socket.getInputStream())){
-				synchronized (objectOutputStream = new ObjectOutputStream(socket.getOutputStream())){
-					Server.openOutputStreams.add(objectOutputStream);
-					while(true){	
-						while((g = (Game)objectInputStream.readObject()) != null){
-							//wenn ein client arrayList der Player anfragt
-							if(g.getWhat().equals("arrayList regPlayers an Client")){
-								sendToAllClients(new Game(Server.regPlayers));
-							}
-							if(g.getWhat().equals("arrayList openSessions an Client")){
-								sendToClient(new Game(Server.openSessions, "arrayList openSessions an Client"));
-							}
-							//wenn gesendetes Game-Objekt player enthält, wird er der arraylist hinzugefügt	
-							if(g.getWhat().equals("Player an Server")){
-								//wenn Benutzer sich einlogged, wird alreadyLoggedIn auf true gesetzt
-								ArrayList<String> names = new ArrayList<String>();
-								for(Player p:Server.regPlayers){
-									names.add(p.getUserName());
-								}
-								if(names.contains(g.getP().getUserName())){
-									for(Player p:Server.regPlayers){
-										if(g.getP().getUserName().equals(p.getUserName())){
-											p.setAlreadyLoggedIn(true);
-										}
-									}
-
-								}else{
-									Server.regPlayers.add(g.getP());
-								}					
-								sendToAllClients(new Game(Server.regPlayers));
-								Server.arrayListToFile();
-							}
-							//wenn gesendetes Game-Objekt ein Array enthält wird der PCName des Users updated
-							if(g.getWhat().equals("PC Name und User an Server")){
-								Player p = Player.getPlayerUser(g.getA()[0]);
-								p.setPCName(g.getA()[1]);
-								Server.arrayListToFile();
-							}if(g.getWhat().equals("spiel gestartet")){
-								sendToAllClients(g);
-							}if(g.getWhat().equals("sitzung erstellt")){
-								sendToAllClients(new Game(g.getSession(),"sitzung erstellt"));
-								Server.openSessions.add(g.getSession());
-							}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
-								sendToAllClients(new Game(g.getSession(),g.getP()));
-							}
-						}
-						Server.arrayListToFile();
-						socket.close();
-						objectInputStream.close();
-						objectOutputStream.close();
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			Server.openOutputStreams.add(objectOutputStream);
+			while(true){	
+				while((g = (Game)objectInputStream.readObject()) != null){
+					//wenn ein client arrayList der Player anfragt
+					if(g.getWhat().equals("arrayList regPlayers an Client")){
+						sendToAllClients(new Game(Server.regPlayers));
 					}
-
+					if(g.getWhat().equals("arrayList openSessions an Client")){
+						sendToClient(new Game(Server.openSessions, "arrayList openSessions an Client"));
+					}
+					//wenn gesendetes Game-Objekt player enthält, wird er der arraylist hinzugefügt	
+					if(g.getWhat().equals("Player an Server")){
+						//wenn Benutzer sich einlogged, wird alreadyLoggedIn auf true gesetzt
+						ArrayList<String> names = new ArrayList<String>();
+						for(Player p:Server.regPlayers){
+							names.add(p.getUserName());
+						}
+						if(names.contains(g.getP().getUserName())){
+							for(Player p:Server.regPlayers){
+								if(g.getP().getUserName().equals(p.getUserName())){
+									p.setAlreadyLoggedIn(true);
+									sendToAllClients(new Game(g.getP(), "player hat sich eingeloggt"));
+								}
+							}
+						}else{
+							Server.regPlayers.add(g.getP());
+						}					
+						sendToAllClients(new Game(Server.regPlayers));
+						Server.arrayListToFile();
+					}
+					//wenn gesendetes Game-Objekt ein Array enthält wird der PCName des Users updated
+					if(g.getWhat().equals("PC Name und User an Server")){
+						Player p = Player.getPlayerUser(g.getA()[0]);
+						p.setPCName(g.getA()[1]);
+						Server.arrayListToFile();
+					}if(g.getWhat().equals("spiel gestartet")){
+						sendToAllClients(g);
+					}if(g.getWhat().equals("sitzung erstellt")){
+						sendToAllClients(new Game(g.getSession(),"sitzung erstellt"));
+						Server.openSessions.add(g.getSession());
+					}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
+						sendToAllClients(new Game(g.getSession(),g.getP()));
+					}
 				}
+				Server.arrayListToFile();
+				socket.close();
+				objectInputStream.close();
+				objectOutputStream.close();
 			}
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block

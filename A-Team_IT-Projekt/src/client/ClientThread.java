@@ -31,56 +31,60 @@ public class ClientThread implements Runnable{
 	public void run(){
 		Game g;
 		try{
-			synchronized(objectOutputStream = new ObjectOutputStream(socket.getOutputStream())){
-				synchronized(objectInputStream = new ObjectInputStream(socket.getInputStream())){
-					sendToServer(new Game("arrayList regPlayers an Client"));
-					while(true){
-						while((g = (Game)objectInputStream.readObject()) != null){
-							if(g.getWhat().equals("arrayList regPlayers von Server")){
-								regPlayers = g.getAl();
-							}if(g.getWhat().equals("sitzung erstellt")){
-								if(!LobbyController.sessionAlreadyExist(g.getSession().getSessionName())){
-									LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
-									LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
-									LobbyController.openSessions.add(g.getSession());
-								}
-							}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
-								for(Session s:LobbyController.openSessions){
-									if(s.getSessionName().equals(g.getSession().getSessionName())){
-										s.setPlayers(g.getSession().getPlayers());
-									}
-								}
-								g.getSession().getSessionName();
-								LobbyController.offeneSitzungen.getItems();
-								Player[] playersInSession = g.getSession().getPlayers();
-								g.getSession().setPlayers(playersInSession);
-								//LobbyController.setFehlermeldungText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
-							}if(g.getWhat().equals("spiel gestartet")){
-								System.out.println("stage erhalten");
-								SStage stage = g.getStage();
-								stage.show();
-
-								//schliesst das alte GUI
-								Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
-								stage1.close();
-							}//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
-							//um diese in der ListView anzuzeigen
-							if(g.getWhat().equals("arrayList openSessions an Client")){
-								sessionList = g.getSessionList();
-								for(Session s:sessionList){
-									LobbyController.offeneSitzungen.getItems().addAll(s.getSessionName());
-									LobbyController.offeneSitzungenList.add(s.getSessionName());
-									LobbyController.openSessions.add(s);
-								}
-							}
-							objectOutputStream.flush();
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+			sendToServer(new Game("arrayList regPlayers an Client"));
+			while(true){
+				while((g = (Game)objectInputStream.readObject()) != null){
+					if(g.getWhat().equals("arrayList regPlayers von Server")){
+						regPlayers = g.getAl();
+					}if(g.getWhat().equals("sitzung erstellt")){
+						if(!LobbyController.sessionAlreadyExist(g.getSession().getSessionName())){
+							LobbyController.offeneSitzungen.getItems().addAll(g.getSession().getSessionName());
+							LobbyController.offeneSitzungenList.add(g.getSession().getSessionName());
+							LobbyController.openSessions.add(g.getSession());
 						}
-						socket.close();
-						objectInputStream.close();
-						objectOutputStream.close();
+					}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
+						for(Session s:LobbyController.openSessions){
+							if(s.getSessionName().equals(g.getSession().getSessionName())){
+								s.setPlayers(g.getSession().getPlayers());
+							}
+						}
+						g.getSession().getSessionName();
+						LobbyController.offeneSitzungen.getItems();
+						Player[] playersInSession = g.getSession().getPlayers();
+						g.getSession().setPlayers(playersInSession);
+						//LobbyController.setFehlermeldungText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
+					}if(g.getWhat().equals("player hat sich eingeloggt")){
+						for(Player p:regPlayers){
+							if(g.getP().getUserName().equals(p.getUserName())){
+								p.setAlreadyLoggedIn(true);
+							}
+						}
+					}if(g.getWhat().equals("spiel gestartet")){
+						System.out.println("stage erhalten");
+						SStage stage = g.getStage();
+						stage.show();
 
+						//schliesst das alte GUI
+						Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
+						stage1.close();
+					}//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
+					//um diese in der ListView anzuzeigen
+					if(g.getWhat().equals("arrayList openSessions an Client")){
+						sessionList = g.getSessionList();
+						for(Session s:sessionList){
+							LobbyController.offeneSitzungen.getItems().addAll(s.getSessionName());
+							LobbyController.offeneSitzungenList.add(s.getSessionName());
+							LobbyController.openSessions.add(s);
+						}
 					}
+					objectOutputStream.flush();
 				}
+				socket.close();
+				objectInputStream.close();
+				objectOutputStream.close();
+
 			}
 		}catch(Exception e){
 			e.printStackTrace();

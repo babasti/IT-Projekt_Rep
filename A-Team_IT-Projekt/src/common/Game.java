@@ -77,10 +77,10 @@ public class Game implements Serializable {
 		if(s.equals("spiel gestartet")){
 			what = "spiel gestartet";
 			try {
-				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-				Pane rootPane = (Pane) fxmlloader.load();
+				Pane pane = (Pane)FXMLLoader.load(getClass().getResource("/GameBoard.fxml"));
 				SStage stage = new SStage();
-				stage.setScene(new Scene(rootPane));
+				this.stage = stage;
+				stage.setScene(new Scene(pane));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -124,6 +124,14 @@ public class Game implements Serializable {
 	public Game(Player p){
 		this.p = p;
 		what = "Player an Server";
+	}
+	
+	public Game(Player p, String s){
+		this.p = p;
+		this.s = s;
+		if(s.equals("player hat sich eingeloggt")){
+			what = "player hat sich eingeloggt";
+		}
 	}
 
 	public Player getP(){

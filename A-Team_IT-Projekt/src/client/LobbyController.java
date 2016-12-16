@@ -260,15 +260,12 @@ public class LobbyController implements Initializable, Serializable {
 				Player[] players = selectSession().getPlayers();
 				boolean arrayNotFull = false;
 				for(Player p:players){
-					System.out.println(p);
-				}
-				for(Player p:players){
 					if(p == null){
 						arrayNotFull = true;
 					}
 				}
 				if(!arrayNotFull){
-					Game g = new Game(selectedSession, "spiel gestartet" );
+					Game g = new Game(selectedSession, "spiel gestartet");
 					System.out.println(g.getWhat());			
 					
 					ClientThread.sendToServer(g);
