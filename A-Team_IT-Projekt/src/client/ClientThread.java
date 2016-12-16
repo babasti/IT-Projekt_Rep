@@ -93,6 +93,7 @@ public class ClientThread implements Runnable{
 	public static void sendToServer(Game g){
 		try {
 			ClientThread.objectOutputStream.writeObject(g);
+			objectOutputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
