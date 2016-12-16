@@ -267,7 +267,7 @@ public class LobbyController implements Initializable {
 					}
 				}
 				if(!arrayNotFull){
-					Game g = new Game(selectSession(), "spiel gestartet" );
+					Game g = new Game(selectedSession, "spiel gestartet" );
 					System.out.println(g.getWhat());			
 					
 					ClientThread.sendToServer(g);
