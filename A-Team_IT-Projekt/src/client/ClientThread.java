@@ -16,13 +16,18 @@ import common.Player;
 import common.SStage;
 import common.Session;
 
-public class ClientThread implements Runnable{
+public class ClientThread implements Runnable, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1898421210671840445L;
 	private static Socket socket;
 	private static ObjectOutputStream objectOutputStream;
 	private static ObjectInputStream objectInputStream;
 	public static ArrayList<Player> regPlayers;
 	public static ArrayList<Session> sessionList;
+	public static Session startedSession;
 
 	ClientThread(Socket socket){
 		this.socket = socket;
@@ -30,6 +35,7 @@ public class ClientThread implements Runnable{
 
 	public void run(){
 		Game g;
+
 		try{
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
@@ -62,7 +68,8 @@ public class ClientThread implements Runnable{
 							}
 						}
 					}if(g.getWhat().equals("spiel gestartet")){
-						System.out.println("stage erhalten");
+						startedSession = g.getSession();
+						System.out.println(startedSession.getSessionName());
 						SStage stage = g.getStage();
 						stage.show();
 
@@ -79,24 +86,27 @@ public class ClientThread implements Runnable{
 							LobbyController.openSessions.add(s);
 						}
 					}
-					objectOutputStream.flush();
 				}
-				socket.close();
-				objectInputStream.close();
-				objectOutputStream.close();
-
+				//				socket.close();
+				//				objectInputStream.close();
+				//				objectOutputStream.close();
 			}
+
+
+
 		}catch(Exception e){
 			e.printStackTrace();
-
 		}
 	}
 
 
+
+
 	//sendet Objekt an Server
-	public static void sendToServer(Game g){
+	public synchronized static void sendToServer(Game g){
 		try {
 			ClientThread.objectOutputStream.writeObject(g);
+			objectOutputStream.reset();
 			objectOutputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

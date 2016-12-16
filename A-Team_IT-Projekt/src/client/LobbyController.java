@@ -77,7 +77,7 @@ public class LobbyController implements Initializable, Serializable {
 	public static Session selectedSession;
 	ObservableList<Integer> cb_AnzahlSpielerList = (ObservableList<Integer>) FXCollections.observableArrayList(2,3,4);
 	public static Label fehlermeldung;
-	
+
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		//Wertinitialisierung der Choicebox
@@ -116,9 +116,9 @@ public class LobbyController implements Initializable, Serializable {
 					Player[] players = new Player[numOfPlayers];
 					players[0] = player;
 					Session session = new Session(sessionName, numOfPlayers, players);
-//					offeneSitzungen.getItems().addAll(sessionName);
-//					offeneSitzungenList.add(sessionName);
-//					openSessions.add(session);
+					//					offeneSitzungen.getItems().addAll(sessionName);
+					//					offeneSitzungenList.add(sessionName);
+					//					openSessions.add(session);
 					ClientThread.sendToServer(new Game(session,"sitzung erstellt"));
 				}else{
 					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
@@ -256,47 +256,56 @@ public class LobbyController implements Initializable, Serializable {
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
 			//if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
-				//prüft, ob Sitzung voll ist
-				Player[] players = selectSession().getPlayers();
-				boolean arrayNotFull = false;
-				for(Player p:players){
-					if(p == null){
-						arrayNotFull = true;
+			//prüft, ob Sitzung voll ist
+			Player[] players = selectSession().getPlayers();
+			boolean arrayNotFull = false;
+			for(Player p:players){
+				if(p == null){
+					arrayNotFull = true;
+				}
+			}
+			if(!arrayNotFull){
+				try{
+				ClientThread.startedSession = selectedSession;
+				FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/client/GameBoard.fxml"));
+				Pane rootPane = (Pane)fxmlloader.load();
+				SStage stage = new SStage();
+				stage.setScene(new Scene(rootPane));
+				Game game = new Game(selectedSession,stage,"spiel gestartet" );
+				ClientThread.sendToServer(game);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+
+				//String aus ArrayList <String> offeneSitzungenList löschen
+				for (int i = 0; i < offeneSitzungenList.size(); i++){
+					if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
+						offeneSitzungenList.remove(i);
 					}
 				}
-				if(!arrayNotFull){
-					Game g = new Game(selectedSession, "spiel gestartet");
-					System.out.println(g.getWhat());			
-					
-					ClientThread.sendToServer(g);
-					//String aus ArrayList <String> offeneSitzungenList löschen
-					for (int i = 0; i < offeneSitzungenList.size(); i++){
-						if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
-							offeneSitzungenList.remove(i);
-						}
+				//Session aus ArrayList <Session> openSessions löschen
+				for(int b = 0; b < openSessions.size(); b++){
+					if(openSessions.get(b).equals(selectedSession)){
+						openSessions.remove(b);
 					}
-					//Session aus ArrayList <Session> openSessions löschen
-					for(int b = 0; b < openSessions.size(); b++){
-						if(openSessions.get(b).equals(selectedSession)){
-							openSessions.remove(b);
-						}
-					}
-					//Item aus ListView <String> offeneSitzungen löschen
-					for (int c = 0; c < offeneSitzungen.getItems().size();c++){
-						if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
-							offeneSitzungen.getItems().remove(c);
-						}
-					}
-				}else{
-					fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
 				}
-//			}
-//			else{
-//				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
-//			}
+				//Item aus ListView <String> offeneSitzungen löschen
+				for (int c = 0; c < offeneSitzungen.getItems().size();c++){
+					if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
+						offeneSitzungen.getItems().remove(c);
+					}
+				}
+			}else{
+				fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
+			}
+			//			}
+			//			else{
+			//				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
+			//			}
+
 		}
 	}
-	
+
 	public static void setFehlermeldungText(String s){
 		fehlermeldung.setText(s);
 	}

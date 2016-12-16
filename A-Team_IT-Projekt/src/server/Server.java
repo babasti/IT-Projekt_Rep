@@ -18,6 +18,7 @@ public class Server {
 	public static final int PORT = 1234;
 	public static int counter = 0;
 	public static ArrayList<Session> openSessions;
+	public static Session startedSession;
 	private ServerSocket serverSocket;
 
 	public static void main(String[] args) throws Exception{
@@ -37,6 +38,7 @@ public class Server {
 		if(openSessions == null){
 			openSessions = new ArrayList<Session>();
 		}
+
 		//alle User aus dem File werden in eine ArrayList geschrieben
 		try{
 			this.fileToArrayList();

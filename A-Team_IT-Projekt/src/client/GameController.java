@@ -5,10 +5,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+
 import common.Card;
 import common.Game;
 import common.Player;
+import common.SCircle;
+import common.SImage;
 import common.Tile;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -21,15 +25,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import common.SCircle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import common.SImage;
 
 public class GameController extends SCircle implements Initializable, Serializable{
 
@@ -400,8 +401,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-
-		for(Player player : Game.getPlayers()){
+		for(Player player : ClientThread.startedSession.getPlayers()){
 			players.add(player);
 		}
 
