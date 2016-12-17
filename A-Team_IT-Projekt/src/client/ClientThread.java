@@ -1,29 +1,20 @@
 package client;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import common.Game;
 import common.Player;
-import common.SStage;
 import common.Session;
 
 public class ClientThread implements Runnable, Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1898421210671840445L;
-	private static Socket socket;
+	private Socket socket;
 	public static ArrayList<Player> regPlayers;
+	//offene Sitzungen
 	public static ArrayList<Session> sessionList;
 	public static Session startedSession;
 
@@ -38,6 +29,7 @@ public class ClientThread implements Runnable, Serializable{
 			synchronized(this){
 				sendToServer(new Game("arrayList regPlayers an Client"));
 				while(true){
+					//Objekte einlesen
 					obj = LoginController.objectInputStream.readObject();
 					if(obj instanceof Game){
 						g = (Game)obj;
@@ -51,14 +43,11 @@ public class ClientThread implements Runnable, Serializable{
 							}
 						}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
 							for(Session s:LobbyController.openSessions){
+								//Player der verschickten Session werden der Session in openSessions hinzugefügt
 								if(s.getSessionName().equals(g.getSession().getSessionName())){
 									s.setPlayers(g.getSession().getPlayers());
 								}
 							}
-							g.getSession().getSessionName();
-							LobbyController.offeneSitzungen.getItems();
-							Player[] playersInSession = g.getSession().getPlayers();
-							g.getSession().setPlayers(playersInSession);
 							//LobbyController.setFehlermeldungText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
 						}if(g.getWhat().equals("player hat sich eingeloggt")){
 							for(Player p:regPlayers){
@@ -68,7 +57,6 @@ public class ClientThread implements Runnable, Serializable{
 							}
 						}if(g.getWhat().equals("spiel gestartet")){
 							startedSession = g.getSession();
-							System.out.println(startedSession.getSessionName());
 							g.getStage().show();
 
 							//schliesst das alte GUI
@@ -99,7 +87,7 @@ public class ClientThread implements Runnable, Serializable{
 	public synchronized static void sendToServer(Game g){
 		try {
 			LoginController.objectOutputStream.writeObject(g);
-			LoginController.objectOutputStream.reset();
+			LoginController.objectOutputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
