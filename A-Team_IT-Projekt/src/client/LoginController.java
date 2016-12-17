@@ -3,6 +3,7 @@ package client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
@@ -23,8 +24,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class LoginController implements Initializable{
+public class LoginController implements Initializable, Serializable{
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5871514816795748970L;
 
 	@FXML
 	TextField tf_username;

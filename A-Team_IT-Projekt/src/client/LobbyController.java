@@ -120,13 +120,7 @@ public class LobbyController implements Initializable, Serializable {
 				if (!sessionAlreadyExist(sessionName)){
 					Player[] players = new Player[numOfPlayers];
 					players[0] = player;
-					for(Player p:players){
-						System.out.println(p);
-					}
 					Session session = new Session(sessionName, numOfPlayers, players);
-					//					offeneSitzungen.getItems().addAll(sessionName);
-					//					offeneSitzungenList.add(sessionName);
-					//					openSessions.add(session);
 					ClientThread.sendToServer(new Game(session,"sitzung erstellt"));
 				}else{
 					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
@@ -234,6 +228,7 @@ public class LobbyController implements Initializable, Serializable {
 			}
 			if(!alreadyInSession){
 				players[index] = p;
+				selectedSession.setPlayers(players);
 			}else{
 				fehlermeldung.setText("Sie sind der Sitzung bereits beigetreten.");
 			}
@@ -274,8 +269,8 @@ public class LobbyController implements Initializable, Serializable {
 			}
 			if(!arrayNotFull){
 				try{
-				ClientThread.startedSession = selectedSession;
-				Game game = new Game(selectedSession,"spiel gestartet" );
+				ClientThread.startedSession = selectSession();
+				Game game = new Game(selectSession(),"spiel gestartet" );
 				ClientThread.sendToServer(game);
 				}catch(Exception e){
 					e.printStackTrace();

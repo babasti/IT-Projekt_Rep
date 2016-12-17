@@ -99,7 +99,7 @@ public class ClientThread implements Runnable, Serializable{
 	public synchronized static void sendToServer(Game g){
 		try {
 			LoginController.objectOutputStream.writeObject(g);
-			LoginController.objectOutputStream.flush();
+			LoginController.objectOutputStream.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

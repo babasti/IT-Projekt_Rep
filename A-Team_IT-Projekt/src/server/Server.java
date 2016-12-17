@@ -15,6 +15,10 @@ import common.Game;
 import common.Player;
 
 public class Server implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1580803078405733848L;
 	public static ArrayList<Player> regPlayers;
 	public static ArrayList<ObjectOutputStream> openOutputStreams;
 	public static final int PORT = 1234;
