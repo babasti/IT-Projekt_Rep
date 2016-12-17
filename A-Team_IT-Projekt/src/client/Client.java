@@ -20,11 +20,7 @@ import common.Game;
 import common.Player;
 
 public class Client extends Application implements Serializable{
-
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 5208359137429335816L;
 
 	public static void main(String[] args) throws Exception{	
