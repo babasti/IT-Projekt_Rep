@@ -23,22 +23,12 @@ public class ClientThread implements Runnable, Serializable{
 	 */
 	private static final long serialVersionUID = 1898421210671840445L;
 	private static Socket socket;
-	private static ObjectOutputStream objectOutputStream;
-	private static ObjectInputStream objectInputStream;
 	public static ArrayList<Player> regPlayers;
 	public static ArrayList<Session> sessionList;
 	public static Session startedSession;
 
 	ClientThread(Socket socket){
 		this.socket = socket;
-		try {
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 
 	public void run(){
@@ -48,7 +38,7 @@ public class ClientThread implements Runnable, Serializable{
 			synchronized(this){
 				sendToServer(new Game("arrayList regPlayers an Client"));
 				while(true){
-					obj = objectInputStream.readObject();
+					obj = LoginController.objectInputStream.readObject();
 					if(obj instanceof Game){
 						g = (Game)obj;
 						if(g.getWhat().equals("arrayList regPlayers von Server")){
@@ -95,9 +85,9 @@ public class ClientThread implements Runnable, Serializable{
 							}
 						}
 					}
-					//				socket.close();
-					//				objectInputStream.close();
-					//				objectOutputStream.close();
+//									socket.close();
+//									objectInputStream.close();
+//									objectOutputStream.close();
 				}
 			}
 		}catch(Exception e){
@@ -105,14 +95,11 @@ public class ClientThread implements Runnable, Serializable{
 		}
 	}
 
-
-
-
 	//sendet Objekt an Server
-	public static void sendToServer(Game g){
+	public synchronized static void sendToServer(Game g){
 		try {
-			ClientThread.objectOutputStream.writeObject(g);
-			objectOutputStream.flush();
+			LoginController.objectOutputStream.writeObject(g);
+			LoginController.objectOutputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

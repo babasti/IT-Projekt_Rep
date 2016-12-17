@@ -30,18 +30,9 @@ public class ServerThread implements Serializable, Runnable{
 	 */
 	private static final long serialVersionUID = 858159327570071613L;
 	private static Socket socket = null;
-	private static ObjectOutputStream objectOutputStream;
-	private static ObjectInputStream objectInputStream;
 	ServerThread(Socket socket){
 		this.socket = socket;
-		try {
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			Server.openOutputStreams.add(objectOutputStream);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	public void run(){
@@ -50,7 +41,7 @@ public class ServerThread implements Serializable, Runnable{
 		try{
 			synchronized(this){
 				while(true){
-					obj = objectInputStream.readObject();
+					obj = Server.objectInputStream.readObject();
 					if(obj instanceof Game){
 						g = (Game)obj;
 						//wenn ein client arrayList der Player anfragt
@@ -76,9 +67,9 @@ public class ServerThread implements Serializable, Runnable{
 								}
 							}else{
 								Server.regPlayers.add(g.getP());
+								sendToAllClients(new Game(Server.regPlayers));
+								Server.arrayListToFile();
 							}					
-							sendToAllClients(new Game(Server.regPlayers));
-							Server.arrayListToFile();
 						}
 						//wenn gesendetes Game-Objekt ein Array enthält wird der PCName des Users updated
 						if(g.getWhat().equals("PC Name und User an Server")){
@@ -86,6 +77,7 @@ public class ServerThread implements Serializable, Runnable{
 							p.setPCName(g.getA()[1]);
 							Server.arrayListToFile();
 						}if(g.getWhat().equals("spiel gestartet")){
+							System.out.println("spiel auf server erhalten");
 							FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/client/GameBoard.fxml"));
 							Pane rootPane = (Pane)fxmlloader.load();
 							SStage stage = new SStage();
@@ -122,8 +114,8 @@ public class ServerThread implements Serializable, Runnable{
 
 	public synchronized static void sendToClient(Game g){
 		try {
-			objectOutputStream.writeObject(g);
-			objectOutputStream.flush();
+			Server.objectOutputStream.writeObject(g);
+			Server.objectOutputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

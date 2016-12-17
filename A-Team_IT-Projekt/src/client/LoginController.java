@@ -1,6 +1,8 @@
 package client;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
@@ -55,6 +57,9 @@ public class LoginController implements Initializable{
 	TextField ipAdresse;
 
 	private boolean setSocket = false;
+	
+	public static ObjectOutputStream objectOutputStream;
+	public static ObjectInputStream objectInputStream;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -145,6 +150,11 @@ public class LoginController implements Initializable{
 			Socket socket = new Socket(ipAdresse.getText(), server.Server.PORT);
 			System.out.println("Connection successful...");
 			setSocket = true;
+
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			objectOutputStream.flush();
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+
 			ClientThread cThread = new ClientThread(socket);
 			new Thread(cThread).start();
 		} catch (UnknownHostException e) {

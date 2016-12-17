@@ -38,12 +38,12 @@ public class Game implements Serializable {
 		this.s = s;
 		what = "spiel gestartet";
 	}
-
-	public Game(Session session, SStage stage){
-		this.session = session;
-		this.stage = stage;
-		what = "spiel gestartet";
-	}
+//
+//	public Game(Session session, SStage stage){
+//		this.session = session;
+//		this.stage = stage;
+//		what = "spiel gestartet";
+//	}
 
 	public Session getSession(){
 		return this.session;
