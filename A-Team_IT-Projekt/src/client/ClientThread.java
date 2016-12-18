@@ -4,9 +4,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import common.Game;
 import common.Player;
+import common.SStage;
 import common.Session;
 
 public class ClientThread implements Runnable, Serializable{
@@ -57,7 +62,8 @@ public class ClientThread implements Runnable, Serializable{
 							}
 						}if(g.getWhat().equals("spiel gestartet")){
 							startedSession = g.getSession();
-							g.getStage().show();
+							SStage stage = g.getStage();
+							stage.show();
 
 							//schliesst das alte GUI
 							Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();

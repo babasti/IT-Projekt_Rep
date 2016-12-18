@@ -160,7 +160,7 @@ public class LoginController implements Initializable, Serializable{
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			objectOutputStream.flush();
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
-
+			
 			ClientThread cThread = new ClientThread(socket);
 			new Thread(cThread).start();
 		} catch (UnknownHostException e) {

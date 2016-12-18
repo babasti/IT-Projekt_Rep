@@ -7,11 +7,14 @@ import java.util.ResourceBundle;
 
 import common.Game;
 import common.Player;
+import common.SStage;
 import common.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -258,8 +261,7 @@ public class LobbyController implements Initializable, Serializable {
 			}
 			if(!arrayNotFull){
 				try{
-					ClientThread.startedSession = selectSession();
-					Game game = new Game(selectSession(),"spiel gestartet" );
+					Game game = new Game(selectSession(), "spiel gestartet");
 					ClientThread.sendToServer(game);
 				}catch(Exception e){
 					e.printStackTrace();

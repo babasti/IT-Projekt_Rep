@@ -63,7 +63,7 @@ public class Server implements Serializable{
 			try {
 				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 				objectOutputStream.flush();
-				objectInputStream = new ObjectInputStream(socket.getInputStream());
+				objectInputStream = new ObjectInputStream(socket.getInputStream());	
 				Server.openOutputStreams.add(objectOutputStream);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
