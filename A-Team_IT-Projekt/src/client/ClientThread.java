@@ -62,14 +62,10 @@ public class ClientThread implements Runnable, Serializable{
 							}
 						}if(game.getWhat().equals("spielLaden")){
 							startedSession = game.getSession();
-							
-							Platform.runLater(new Runnable(){
-								public void run(){
-									Game.showGame();
-								}
-							});
-							
-							
+
+							GameController.showGame();
+
+
 							//schliesst das alte GUI
 							Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
 							stage1.close();
@@ -84,9 +80,9 @@ public class ClientThread implements Runnable, Serializable{
 							}
 						}
 					}
-//									socket.close();
-//									objectInputStream.close();
-//									objectOutputStream.close();
+					//									socket.close();
+					//									objectInputStream.close();
+					//									objectOutputStream.close();
 				}
 			}
 		}catch(Exception e){
@@ -103,7 +99,7 @@ public class ClientThread implements Runnable, Serializable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Game getGame(){
 		return game;
 	}

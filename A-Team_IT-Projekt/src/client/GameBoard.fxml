@@ -308,9 +308,6 @@
                   <ImageView fx:id="moveCard3" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true">
                      <image>
       <Image url="@../resource/lazio2.jpg" />               </image>
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
                   </ImageView>
                   <ImageView fx:id="moveCard4" fitHeight="120.0" fitWidth="70.0" onMouseClicked="#moveCardClicked" onMouseEntered="#showPossibleMove" onMouseExited="#handleMouseExit" pickOnBounds="true" preserveRatio="true">
                      <image>

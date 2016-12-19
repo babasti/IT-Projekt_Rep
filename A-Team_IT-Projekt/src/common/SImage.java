@@ -15,7 +15,7 @@ public class SImage implements Serializable{
 	 */
 	private static final long serialVersionUID = 3999766578638350771L;
 	
-	private String imagePath;  
+	private String imagePath;
 	
 	
 	public SImage(String imagePath){		

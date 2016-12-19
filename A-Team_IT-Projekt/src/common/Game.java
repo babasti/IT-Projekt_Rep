@@ -1,21 +1,8 @@
 package common;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-
-import client.Client;
-import client.ClientThread;
-import client.ImageContainer;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class Game implements Serializable {
 	/**
@@ -23,13 +10,14 @@ public class Game implements Serializable {
 	 */
 	private static final long serialVersionUID = -2361871497549590976L;
 	private ImageContainer imageContainer;
+	private AvatarContainer avatarContainer;
 	private static Player[] players;
 	private ArrayList<Tile> startBoard;
 	private ArrayList<Card> cards;
 	private ArrayList<Tile> proformaStartGameBoard;
 	private Player currentPlayer;
 	private int currentPlayerPosition;
-	
+
 	private String s;
 	private ArrayList<Player> al;
 	private ArrayList<Session> sessionList;
@@ -38,13 +26,6 @@ public class Game implements Serializable {
 	private String what;
 	private int numOfPlayers;
 	private Session session;
-
-//
-//	public Game (Session session, SStage stage, String s){
-//		this.session = session;
-//		this.s = s;
-//		what = "spiel gestartet";
-//	}
 
 
 	public Session getSession(){
@@ -62,33 +43,25 @@ public class Game implements Serializable {
 		}
 		if(s.equals("spielLaden")){
 			what = "spielLaden";
-			
-		imageContainer = new ImageContainer();
-		cards = setStartMoveCards();
-		startBoard = setStartTiles();
-		players = session.getPlayers();
-		currentPlayer = players[0];
-		
-		currentPlayerPosition = 0;
-			
+
+			imageContainer = new ImageContainer();
+			avatarContainer = new AvatarContainer();
+			cards = setStartMoveCards();
+			startBoard = setStartTiles();
+			players = session.getPlayers();
+
+			for(int i = 0; i < players.length; i++){
+				setPlayerAvatar(players[i]);
+				players[i].setAvatarColor(avatarContainer.getAvatarColors().get(i));
+				initPlayerCards(cards, players[i]);
+			}
+
+
+
+			currentPlayer = players[0];
+			currentPlayerPosition = 0;
+
 		}
-//		if(s.equals("spiel gestartet")){
-//			what = "spiel gestartet";
-//			try {
-//				if(ClientThread.startedSession != null){
-//					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/client/GameBoard.fxml"));
-//					Pane rootPane = (Pane)fxmlloader.load();
-//					SStage stage = new SStage();
-//					stage.setScene(new Scene(rootPane));
-//					this.stage = stage;
-//				}
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//
-//			}
-//
-//		}
 	}
 
 	public Game(Session session, Player p){
@@ -160,7 +133,7 @@ public class Game implements Serializable {
 		return players;
 	}
 
-	
+
 	public ArrayList<Card> setStartMoveCards(){
 
 		ArrayList<Card> startMoveCards = new ArrayList<Card>(initCardArray());
@@ -205,11 +178,11 @@ public class Game implements Serializable {
 
 	public void initPlayerCards(ArrayList<Card> cardss, Player player){
 		for(int i = 0; i < 5; i++){
-			player.playerCards.add(cards.get(0));
+			player.getPlayerCards().add(cards.get(0));
 			cards.remove(0);
 		}
 	}
-	
+
 	public ArrayList<Tile> setStartTiles(){
 		ArrayList<Tile> tileBoard = new ArrayList<Tile>(setTiles());
 		ArrayList<Tile> proformaList = new ArrayList<Tile>(setTiles());
@@ -225,26 +198,26 @@ public class Game implements Serializable {
 		}
 		return tileBoard;
 	}
-	
+
 	public ArrayList<Tile> setTiles(){
 		proformaStartGameBoard = new ArrayList<Tile>();
 		proformaStartGameBoard.add(imageContainer.getWater());
-		
+
 		ArrayList<Tile> startGameBoard = new ArrayList<Tile>();
 		for(Tile value : imageContainer.getTiles().values()) {
 			startGameBoard.add(value);
 		}
 		return startGameBoard;
 	}
-	
+
 	public ArrayList<Card> getCards(){
 		return cards;
 	}
-	
+
 	public Player getCurrentPlayer(){
 		return currentPlayer;
 	}
-	
+
 	//damit der currentPlayer nach Spielzug auf den nÃ¤chsten Player in der Liste
 	//gesetzt wird
 	public void setCurrentPlayerPosition(){
@@ -254,11 +227,11 @@ public class Game implements Serializable {
 			currentPlayerPosition++;
 		}
 	}
-	
+
 	public void setCurrentPlayer(Player player){
 		currentPlayer = player;
 	}
-	
+
 	public ArrayList<Tile> getProformaStartGameBoard(){
 		return proformaStartGameBoard;
 	}
@@ -266,16 +239,16 @@ public class Game implements Serializable {
 	public ArrayList<Tile> getStartBoard(){
 		return startBoard;
 	}
-	
+
 	public void setSession(Session session){
 		this.session = session;
 	}
-	
-	public static void showGame(){
-		Platform.runLater(new Runnable(){
-			public void run(){
-				Client.loadGame();
-			}
-		});	
+
+	public void setPlayerAvatar(Player player){
+		for(int i = 0; i < 3; i++){
+			player.getPlayerAvatars().add(avatarContainer.getAvatars().get(i));
+			avatarContainer.getAvatars().remove(i);
+		}
 	}
+
 }

@@ -1,4 +1,4 @@
-package client;
+package common;
 
 import java.io.Serializable;
 import java.util.*;
@@ -6,7 +6,7 @@ import java.util.*;
 import common.*;
 
 public class ImageContainer implements Serializable{
-	
+
 	/**
 	 * 
 	 */
@@ -17,18 +17,18 @@ public class ImageContainer implements Serializable{
 	private HashMap<String, Tile> tiles;
 	private Tile waterTile;
 	private String imageFormat = ".jpg";
-	
+
 	public ImageContainer(){
 		cards = new ArrayList<Card>();		
 		tiles = new HashMap<String, Tile>();
 		colors = new ArrayList<String>();
 		waterTile = new Tile(new SImage("/resource/wasser.JPG"), 0, "water");
-		
+
 		SetColors();
 		SetCards();
 		SetTiles();		
 	}
-	
+
 	private void SetColors() {
 		colors.add("blue");
 		colors.add("brown");
@@ -72,25 +72,23 @@ public class ImageContainer implements Serializable{
 		}		
 		return stringBuilder.toString();		
 	}
-	
+
 	public void SetCards(){		
 		for(String color : colors) {
 			String imagePath = this.imagePath + "card_" + upperCaseTheFirstLetter(color) + imageFormat;
-		    SImage img = new SImage(imagePath);
+			SImage img = new SImage(imagePath);
 			cards.add(new Card(color, img));
 		}		
 	}
-	
+
 	private void SetTiles() {
 		for(String color : colors ) {		    
-	    	for(int y=1; y <= 7; y++){
-	    		String imagePath =  this.imagePath + color + "_" + y + imageFormat;
-	    		SImage img = new SImage(imagePath);
-	    		Tile tile = new Tile(img, y, color);
+			for(int y=1; y <= 7; y++){
+				String imagePath =  this.imagePath + color + "_" + y + imageFormat;
+				SImage img = new SImage(imagePath);
+				Tile tile = new Tile(img, y, color);
 				tiles.put(color + y, tile);
 			}		    
-		}
-		
-//		private SImage blue1 = new SImage(new Image(getClass().getResourceAsStream("/resource/blue_1.jpg")));		
+		}	
 	}	
 }

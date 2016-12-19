@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import common.Card;
@@ -41,7 +42,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 
 	//alle Instanzvariablen welche benÃ¶tigt werden definieren
 	//so ziemlich alle aus der GameController Klasse welche hier aufgelistet sind
-	private SCircle selectetAvatar;
+	private Circle selectetAvatar;
 	private Card selectetCard;
 	private ImageView selectetCardImageView;
 	private ArrayList<Tile> startBoard;
@@ -53,7 +54,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 	private HBox currentAvatarPosition;
 	private static HBox[] ebPlayer;
 	private int currentPlayerPosition;
-	private ArrayList<SCircle> playersAvatar;
+	private ArrayList<Circle> playersAvatar;
 	private Player currentPlayer;
 
 
@@ -77,7 +78,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 		ebPlayer = GameController.getEbPlayer();
 		currentPlayerPosition = GameController.getCurrentPlayerPosition();
 		currentPlayer = GameController.getCurrentPlayer();
-		playersAvatar = currentPlayer.getAvatar();
+		playersAvatar = GameController.getPlayersAvatar();
 		int count = 0;
 
 		if(currentAvatarPosition.getId().contains("sb_player")){

@@ -16,7 +16,7 @@ public class Card implements Serializable{
 	
 	public Card(String color, SImage image){
 		this.color = color;
-		img = image;
+		this.img = image;
 	}
 	
 	public String getColor(){
