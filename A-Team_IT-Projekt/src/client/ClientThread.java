@@ -65,10 +65,15 @@ public class ClientThread implements Runnable, Serializable{
 
 							GameController.showGame();
 
-
 							//schliesst das alte GUI
-							Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
-							stage1.close();
+							Platform.runLater(new Runnable(){
+								public void run(){
+									Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
+									stage1.close();
+								}
+							});
+							//schliesst das alte GUI
+						
 						}//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
 						//um diese in der ListView anzuzeigen
 						if(game.getWhat().equals("arrayList openSessions an Client")){

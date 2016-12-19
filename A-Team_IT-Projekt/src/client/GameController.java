@@ -1249,16 +1249,16 @@ public class GameController implements Initializable{
 			}
 		}
 	}
-
+	
+	public static ArrayList<Circle> getPlayersAvatar(){
+		return playerAvatars;
+	}
+	
 	public static void showGame(){
 		Platform.runLater(new Runnable(){
 			public void run(){
 				Client.loadGame();
 			}
 		});	
-	}
-	
-	public static ArrayList<Circle> getPlayersAvatar(){
-		return playerAvatars;
 	}
 }
