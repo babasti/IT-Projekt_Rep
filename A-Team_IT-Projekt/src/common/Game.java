@@ -53,8 +53,10 @@ public class Game implements Serializable {
 			for(int i = 0; i < players.length; i++){
 				setPlayerAvatar(players[i]);
 				players[i].setAvatarColor(avatarContainer.getAvatarColors().get(i));
-				initPlayerCards(cards, players[i]);
+				initPlayerCards(players[i]);
 			}
+			
+			
 
 
 
@@ -176,7 +178,7 @@ public class Game implements Serializable {
 		return cards;
 	}
 
-	public void initPlayerCards(ArrayList<Card> cardss, Player player){
+	public void initPlayerCards(Player player){
 		for(int i = 0; i < 5; i++){
 			player.getPlayerCards().add(cards.get(0));
 			cards.remove(0);
