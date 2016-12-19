@@ -303,7 +303,6 @@ public class GameController implements Initializable{
 	@FXML
 	ImageView moveCard10;
 
-	//Bilder welche im Ordner resource abgelget sind instanziert als Image
 
 	
 	//Instanzvariablen ArrayListe welche alle Tile Objekte beinhaltet
@@ -345,7 +344,7 @@ public class GameController implements Initializable{
 
 
 
-	//initialize Methode instanziert eine startBoard Liste mit Tile Objekte welche zufÃ¤llig
+	//initialize Methode instanziert eine startBoard Liste mit Tile Objekte welche zufällig
 	//in der Liste gesetzt wurden.
 	// mit initTileArray wird die Instanzvariable tileImages initialisiert um ein Array mit allen 
 	//ImageViews zu haben
@@ -376,6 +375,10 @@ public class GameController implements Initializable{
 
 		initScoreTable();
 		initMessage();
+		
+		for(Player player : players){
+		System.out.println(player.getPlayerCards());
+		}
 	}	
 
 	private void initStartBox(){
@@ -486,7 +489,7 @@ public class GameController implements Initializable{
 		playerAvatars = new ArrayList<Circle>();
 
 
-		//den avatars die zustÃ¤ndige farbe zuteilen und in die entsprechenden Boxen zuteilen
+		//den avatars die zuständige farbe zuteilen und in die entsprechenden Boxen zuteilen
 		for(int i = 0; i < 3; i++){
 			Circle avatar = new Circle();
 			avatar.setFill(avatarColors[players.indexOf(currentPlayer)]);
@@ -502,8 +505,8 @@ public class GameController implements Initializable{
 		currentPlayer.setAvatarColor(avatarContainer.getAvatarColors().get(players.indexOf(currentPlayer)));
 
 
-		//handler fÃ¼r alle Avatars setzen, sobald ein Avatar gewÃ¤hlt wurde durch Click wird der Effekt gesetzt
-		//der Player kann jeweils nur einen Avatar wÃ¤hlen in der StartBox
+		//handler für alle Avatars setzen, sobald ein Avatar gewählt wurde durch Click wird der Effekt gesetzt
+		//der Player kann jeweils nur einen Avatar wählen in der StartBox
 
 		for(int i = 0; i < playerAvatars.size(); i++){
 			playerAvatars.get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -649,8 +652,8 @@ public class GameController implements Initializable{
 
 	}	
 
-	//setStartTiles wird gebraucht um eine ArrayList zu haben welche zufÃ¤llig mit Tile Images
-	//gefÃ¼llt wurde
+	//setStartTiles wird gebraucht um eine ArrayList zu haben welche zufällig mit Tile Images
+	//gefüllt wurde
 	public ArrayList<Tile> setStartTiles(){
 
 		ArrayList<Tile> tileBoard = new ArrayList<Tile>(setTiles());
@@ -676,7 +679,7 @@ public class GameController implements Initializable{
 
 
 	//instanziert neue Tile Objekte und addet die Objekte einer Liste zu.
-	//diese Liste ist nicht zufÃ¤llig verteilt 
+	//diese Liste ist nicht zufällig verteilt 
 	//haben wir erstellt damit wir eine Liste mit allen Tile Objekte haben
 	public ArrayList<Tile> setTiles(){
 
@@ -704,8 +707,8 @@ public class GameController implements Initializable{
 	}	
 
 
-	//wird ausgelÃ¶st wenn der Spieler sein Avatar auf eine entsprechendes Tile setzen will
-	//die Methode ersetzt das vorherige Tile mit "Wasser" und gibt die Punktzahlt des Tiles zurÃ¼ck
+	//wird ausgelöst wenn der Spieler sein Avatar auf eine entsprechendes Tile setzen will
+	//die Methode ersetzt das vorherige Tile mit "Wasser" und gibt die Punktzahlt des Tiles zurück
 	//um die Punktzahl danach dem Score vom Spieler zu summieren
 	public static void collectTile(Tile selectetTile, int position){
 		ImageContainer imgContainer = new ImageContainer();		
@@ -716,7 +719,7 @@ public class GameController implements Initializable{
 
 		HBox collectBox = tileBox.get(position-countPosition);
 
-		//somit wird verhindert dass der Player das Tile hinter ihm erhÃ¤lt, obwohl eine andere Figur
+		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
 		//darauf steht
 		while(!(collectBox.getChildren().isEmpty())){
 			countPosition++;
@@ -740,7 +743,7 @@ public class GameController implements Initializable{
 			}else{
 				do{
 					//falls das Tile keine Punkte hat, also "Wasser" ist
-					//mÃ¶chten wir natÃ¼rlich, dass der Player ein Tile weiter hinten auf dem Board erhÃ¤lt mit Punkte
+					//möchten wir natürlich, dass der Player ein Tile weiter hinten auf dem Board erhält mit Punkte
 					countPosition++;
 					//falls wir mit der Iteration am Start des Boards gelangen
 					//hat es keine Tiles mehr mit Punkte, dann wird der Loop gebrochen und der Player 
@@ -787,7 +790,7 @@ public class GameController implements Initializable{
 	}
 
 	//collectLastTile() wird aufgerufen falls der Player aufs Land gelangt,
-	//ihm wird das entsprechende letzte verfÃ¼gbare Tile zugewiesen
+	//ihm wird das entsprechende letzte verfügbare Tile zugewiesen
 	public static void collectLastTile(){
 		ImageContainer container = new ImageContainer();
 		Tile Water = container.getWater();
@@ -798,7 +801,7 @@ public class GameController implements Initializable{
 
 		HBox collectBox = tileBox.get(lastTilePosition);
 
-		//somit wird verhindert dass der Player das Tile hinter ihm erhÃ¤lt, obwohl eine andere Figur
+		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
 		//darauf steht
 		while(!(collectBox.getChildren().isEmpty())){
 			countPosition++;
@@ -853,8 +856,8 @@ public class GameController implements Initializable{
 
 	}
 
-	//gibt eine Liste zurÃ¼ck mit 105 Bewegungskarten jeweils 7 Arten Ã Â  15 Karten
-	//die Karten sind nicht zufÃ¤llig verteilt in der Liste
+	//gibt eine Liste zurück mit 105 Bewegungskarten jeweils 7 Arten à  15 Karten
+	//die Karten sind nicht zufällig verteilt in der Liste
 	public ArrayList<Card> initCardArray(){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		ArrayList<Card> tempCards = cardArrayToUse();
@@ -872,7 +875,7 @@ public class GameController implements Initializable{
 
 	}
 
-	//instanziert Bewegeungskarten vom Typ Card und setzt diese in eine Liste damit wir auf alle 7 Bewegungskarten zugreifen kÃ¶nnen
+	//instanziert Bewegeungskarten vom Typ Card und setzt diese in eine Liste damit wir auf alle 7 Bewegungskarten zugreifen können
 	public ArrayList<Card> cardArrayToUse(){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		for(Card card : imageContainer.getCards()) {
@@ -882,8 +885,8 @@ public class GameController implements Initializable{
 	}
 
 
-	//gibt uns eine Liste zurÃ¼ck mit allen Bewegungskarten die zufÃ¤llig verteilt sind
-	//total haben wir 105 Karten, jeweils 7 verschiedene Arten Ã Â  15 Karten
+	//gibt uns eine Liste zurück mit allen Bewegungskarten die zufällig verteilt sind
+	//total haben wir 105 Karten, jeweils 7 verschiedene Arten à  15 Karten
 	public ArrayList<Card> setStartMoveCards(){
 
 		ArrayList<Card> startMoveCards = new ArrayList<Card>(initCardArray());
@@ -902,7 +905,7 @@ public class GameController implements Initializable{
 		return startMoveCards;
 	}
 
-	//setzt ImageViews in einem Array damit wir auf diese zugreiffen kÃ¶nnen
+	//setzt ImageViews in einem Array damit wir auf diese zugreiffen können
 	public void initMoveCardArray(){
 		moveImages = new ArrayList<ImageView>();
 
@@ -918,7 +921,7 @@ public class GameController implements Initializable{
 		moveImages.add(moveCard10);
 	}
 
-	//zusÃ¤tzliche Bewegungskarten anzeigen in der zweiten moveCardBox
+	//zusätzliche Bewegungskarten anzeigen in der zweiten moveCardBox
 	public static void addMoveImage(int count){
 
 
@@ -953,8 +956,8 @@ public class GameController implements Initializable{
 
 
 
-	//zeigt im Player seine mÃ¶gliche SpielzÃ¼ge welche er machen kann
-	//wenn sich die mouse Ã¼ber eine Bewegungskarte bewegt, dann wird diese highlightet sowie die 
+	//zeigt im Player seine mögliche Spielzüge welche er machen kann
+	//wenn sich die mouse über eine Bewegungskarte bewegt, dann wird diese highlightet sowie die 
 	//passenden Tiles werden auch gehighlightet
 	public void showPossibleMove(MouseEvent event){
 		String selectetMoveCard = handleMoveCard(event);
@@ -994,7 +997,7 @@ public class GameController implements Initializable{
 		return selectetMoveCard;
 	}
 
-	//handle MouseEvent Methode welche den Highlight effekt wieder zurÃ¼cksetzt sobald die Bewegungskarte
+	//handle MouseEvent Methode welche den Highlight effekt wieder zurücksetzt sobald die Bewegungskarte
 	//mit der Mouse verlassen wird
 	public void handleMouseExit(MouseEvent event){
 		ImageView moveCard = (ImageView) event.getSource(); ;
@@ -1006,12 +1009,12 @@ public class GameController implements Initializable{
 		tileShadow.setRadius(0);
 	}
 
-	//methode welche ausgefÃ¼hrt wird bei einem Click auf der Bewegungskarte
+	//methode welche ausgeführt wird bei einem Click auf der Bewegungskarte
 	//der Effekt "Highlight" bleibt auf der geklickten Karte mouseExit wird auf null gesetzt
-	//das heisst der Effekt bei den dazugehÃ¶rigen Tiles bleibt,
+	//das heisst der Effekt bei den dazugehörigen Tiles bleibt,
 	//auf den anderen Karten bleibt der mousExit effekt
-	//natÃ¼rlich wenn zwei gleiche Bewegungskarte in der Hand sind, und der Player bei der 
-	//nicht gewÃ¤hlten Karten drÃ¼ber fÃ¼hrt wird der mouseExit Effekt ausgelÃ¶st somit auch bei den Tiles
+	//natürlich wenn zwei gleiche Bewegungskarte in der Hand sind, und der Player bei der 
+	//nicht gewählten Karten drüber führt wird der mouseExit Effekt ausgelöst somit auch bei den Tiles
 	public void moveCardClicked(MouseEvent event){
 		ImageView moveCard = (ImageView) event.getSource();
 		HBox currentMoveCardBox = (HBox) moveCard.getParent();
@@ -1065,7 +1068,7 @@ public class GameController implements Initializable{
 		}
 	}
 
-	//effekt welcher bei den Tiles ausgelÃ¶st wird wenn eine Bewegungskarte ausgewÃ¤hlt wird
+	//effekt welcher bei den Tiles ausgelöst wird wenn eine Bewegungskarte ausgewählt wird
 	public static void showPossibleTiles(ArrayList<ImageView> possibleTileArray){
 
 		tileShadow = new InnerShadow();
@@ -1080,7 +1083,7 @@ public class GameController implements Initializable{
 		}
 	}
 
-	//Ã¶ffnet das GUI um Karte zu kaufen
+	//öffnet das GUI um Karte zu kaufen
 	public void switchToBuyCard(){
 		if(moveImages.get(moveImages.size()-1).isVisible()){
 			setMessage("Du hast das Maximum an Karten!");
@@ -1102,8 +1105,8 @@ public class GameController implements Initializable{
 		}
 	}
 
-	// Ã¶ffnet das GUI um den Move zu bestÃ¤tigen oder zu canceln
-	//vorher wird geprÃ¼ft ob ein Avatar und eine Karte gewÃ¤hlte wurde
+	// öffnet das GUI um den Move zu bestätigen oder zu canceln
+	//vorher wird geprüft ob ein Avatar und eine Karte gewählte wurde
 	public void switchToMoveAvatar(){
 		if(GameController.selectetAvatar == null || GameController.selectetCard == null){
 			setMessage("Bitte Karte und Avatar wählen!");
@@ -1127,9 +1130,9 @@ public class GameController implements Initializable{
 	}
 
 	//setzt den Effekt beim Avatar
-	//in der Start Box kann jeweils nur ein Avatar gewÃ¤hlt werden
+	//in der Start Box kann jeweils nur ein Avatar gewählt werden
 	//der Effekt wird nur bei einem gesetzt
-	//Um wÃ¤hrend dem Spiel nur ein Avatar zu wÃ¤hlen muss noch ein Code geschrieben werden
+	//Um während dem Spiel nur ein Avatar zu wählen muss noch ein Code geschrieben werden
 	public static void handleSelectetAvatar(MouseEvent event){
 		Circle selectetAvatar = (Circle) event.getSource();
 		InnerShadow avatarShadow = new InnerShadow();
@@ -1211,7 +1214,7 @@ public class GameController implements Initializable{
 	}
 
 
-	//damit der currentPlayer nach Spielzug auf den nÃ¤chsten Player in der Liste
+	//damit der currentPlayer nach Spielzug auf den nächsten Player in der Liste
 	//gesetzt wird
 	public void setCurrentPlayerPosition(){
 		if(currentPlayerPosition == players.size()-1){
