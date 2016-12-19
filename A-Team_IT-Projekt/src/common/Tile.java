@@ -1,8 +1,9 @@
 package common;
 
+import javafx.scene.image.*;
 import java.io.Serializable;
 
-import javafx.scene.image.Image;
+import common.SImage;
 
 public class Tile implements Serializable {
 	
@@ -13,16 +14,13 @@ public class Tile implements Serializable {
 	
 	
 	
-	private Image img;
+	private SImage img;
 	private int points;
 	private String color;
 	
 	
-	
-	
-	
-	public Tile(Image img, int points, String color){
-		this.img = img;
+	public Tile(SImage image, int points, String color){
+		this.img = image;
 		this.points = points;
 		this.color = color;
 	}
@@ -31,7 +29,7 @@ public class Tile implements Serializable {
 		return this.points;
 	}
 	
-	public Image getImage(){
+	public SImage getImage(){
 		return this.img;
 	}
 	

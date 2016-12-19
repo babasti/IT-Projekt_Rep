@@ -9,17 +9,19 @@ import javafx.stage.Stage;
 public class MainGame extends Application {
 
 	public static void main(String[] args) {
-		launch();
+		javafx.application.Application.launch("GameBoard.fxml");
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try{
-			Pane root = (Pane)FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setResizable(false);
-			primaryStage.setScene(scene);
-			primaryStage.show();
+//			Pane root = (Pane)FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
+//			Scene scene = new Scene(root);
+//			primaryStage.setResizable(false);
+//			primaryStage.setScene(scene);
+//			primaryStage.show();
+//			
+//			javafx.application.Application.launch("GameBoard.fxml");
 			
 		}catch (Exception e){
 			e.printStackTrace();

@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
+import client.Client;
 import client.ClientThread;
+import client.ImageContainer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,26 +22,29 @@ public class Game implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2361871497549590976L;
+	private ImageContainer imageContainer;
+	private static Player[] players;
+	private ArrayList<Tile> startBoard;
+	private ArrayList<Card> cards;
+	private ArrayList<Tile> proformaStartGameBoard;
+	private Player currentPlayer;
+	private int currentPlayerPosition;
+	
 	private String s;
 	private ArrayList<Player> al;
 	private ArrayList<Session> sessionList;
-	private static Player[] players;
-	private static ArrayList<Tile> startBoard = new ArrayList<Tile>();
-	private static ArrayList<Card> cards = new ArrayList<Card>();
 	private Player p;
 	private String[] a;
 	private String what;
 	private int numOfPlayers;
 	private Session session;
-	private SStage stage;
 
-
-	public Game (Session session, SStage stage, String s){
-		this.session = session;
-		this.stage = stage;
-		this.s = s;
-		what = "spiel gestartet";
-	}
+//
+//	public Game (Session session, SStage stage, String s){
+//		this.session = session;
+//		this.s = s;
+//		what = "spiel gestartet";
+//	}
 
 
 	public Session getSession(){
@@ -52,6 +59,18 @@ public class Game implements Serializable {
 		}
 		if(s.equals("spiel gestartet")){
 			what = "spiel gestartet";
+		}
+		if(s.equals("spielLaden")){
+			what = "spielLaden";
+			
+		imageContainer = new ImageContainer();
+		cards = setStartMoveCards();
+		startBoard = setStartTiles();
+		players = session.getPlayers();
+		currentPlayer = players[0];
+		
+		currentPlayerPosition = 0;
+			
 		}
 //		if(s.equals("spiel gestartet")){
 //			what = "spiel gestartet";
@@ -137,21 +156,126 @@ public class Game implements Serializable {
 		return this.what;
 	}
 
-	public static Player[] getPlayers(){
+	public Player[] getPlayers(){
 		return players;
 	}
 
-	public SStage getStage(){
-		return stage;
+	
+	public ArrayList<Card> setStartMoveCards(){
+
+		ArrayList<Card> startMoveCards = new ArrayList<Card>(initCardArray());
+		ArrayList<Card> proformaCards = new ArrayList<Card>(initCardArray());
+
+		Random rand = new Random();
+		int count = 105;
+
+		for (int i = 0; i < startMoveCards.size(); i++){
+			int x = rand.nextInt(count);
+			startMoveCards.set(i, proformaCards.get(x));
+			proformaCards.remove(x);
+			count--;
+		}
+		return startMoveCards;
 	}
 
-	public static void setStartBoard(ArrayList<Tile> startBoard){
-		Game.startBoard = startBoard;
+	public ArrayList<Card> initCardArray(){
+		ArrayList<Card> cards = new ArrayList<Card>();
+		ArrayList<Card> tempCards = cardArrayToUse();
+
+		int count = 0;
+
+
+		for(int i = 0; i < tempCards.size(); i++){
+			for(int f = 0; f <15; f++){
+				cards.add((Card) tempCards.get(count));
+			}
+			count++;
+		}
+		return cards;
+
 	}
 
-	public static void setCards(ArrayList<Card> cards){
-		Game.cards = cards;
+	public ArrayList<Card> cardArrayToUse(){
+		ArrayList<Card> cards = new ArrayList<Card>();
+		for(Card card : imageContainer.getCards()) {
+			cards.add(card);
+		}
+		return cards;
 	}
 
+	public void initPlayerCards(ArrayList<Card> cardss, Player player){
+		for(int i = 0; i < 5; i++){
+			player.playerCards.add(cards.get(0));
+			cards.remove(0);
+		}
+	}
+	
+	public ArrayList<Tile> setStartTiles(){
+		ArrayList<Tile> tileBoard = new ArrayList<Tile>(setTiles());
+		ArrayList<Tile> proformaList = new ArrayList<Tile>(setTiles());
 
+		Random rand = new Random();
+		int count = 49;
+
+		for (int i=0; i < tileBoard.size(); i++){
+			int x = rand.nextInt(count);
+			tileBoard.set(i, proformaList.get(x));
+			proformaList.remove(x);
+			count--;
+		}
+		return tileBoard;
+	}
+	
+	public ArrayList<Tile> setTiles(){
+		proformaStartGameBoard = new ArrayList<Tile>();
+		proformaStartGameBoard.add(imageContainer.getWater());
+		
+		ArrayList<Tile> startGameBoard = new ArrayList<Tile>();
+		for(Tile value : imageContainer.getTiles().values()) {
+			startGameBoard.add(value);
+		}
+		return startGameBoard;
+	}
+	
+	public ArrayList<Card> getCards(){
+		return cards;
+	}
+	
+	public Player getCurrentPlayer(){
+		return currentPlayer;
+	}
+	
+	//damit der currentPlayer nach Spielzug auf den nÃ¤chsten Player in der Liste
+	//gesetzt wird
+	public void setCurrentPlayerPosition(){
+		if(currentPlayerPosition == players.length-1){
+			currentPlayerPosition = 0;
+		}else{
+			currentPlayerPosition++;
+		}
+	}
+	
+	public void setCurrentPlayer(Player player){
+		currentPlayer = player;
+	}
+	
+	public ArrayList<Tile> getProformaStartGameBoard(){
+		return proformaStartGameBoard;
+	}
+
+	public ArrayList<Tile> getStartBoard(){
+		return startBoard;
+	}
+	
+	public void setSession(Session session){
+		this.session = session;
+	}
+	
+	public static void showGame(){
+		Platform.runLater(new Runnable(){
+			public void run(){
+				Client.loadGame();
+			}
+		});	
+	}
 }

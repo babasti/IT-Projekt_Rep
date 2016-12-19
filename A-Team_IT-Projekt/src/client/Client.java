@@ -1,6 +1,7 @@
 package client;
 
 import java.io.*;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +24,25 @@ public class Client extends Application implements Serializable{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void startLoadGame(){
+		loadGame();
+	}
+	
+	public static void loadGame(){
+		
+		Pane rootPane;
+		try {
+			rootPane = (Pane) FXMLLoader.load(ResourceProvider.getResourceProvider().getResource("GameBoard.fxml"));
+			Scene scene = new Scene(rootPane);
+			Stage primaryStage = new Stage();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

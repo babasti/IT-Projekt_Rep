@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import common.Game;
 import common.Player;
-import common.SStage;
 import common.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

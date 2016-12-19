@@ -6,7 +6,6 @@ import client.ClientThread;
 import client.LobbyController;
 import common.Game;
 import common.Player;
-import common.SStage;
 
 import java.lang.reflect.Array;
 import java.net.*;
@@ -81,13 +80,8 @@ public class ServerThread implements Serializable, Runnable{
 						}if(g.getWhat().equals("spiel gestartet")){
 							System.out.println("spiel auf server erhalten");
 							
-							FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/client/GameBoard.fxml"));
-							Pane rootPane = (Pane)fxmlloader.load();
-							SStage stage = new SStage();
-							stage.setScene(new Scene(rootPane));
-							
-							Game game = new Game(g.getSession(), stage, "spiel gestartet");
-							
+							Game game = new Game(g.getSession(), "spielLaden");
+							game.setSession(g.getSession());
 							sendToAllClients(game);
 							Server.startedSession = null;
 						}if(g.getWhat().equals("sitzung erstellt")){

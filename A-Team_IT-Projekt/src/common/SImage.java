@@ -1,18 +1,29 @@
 package common;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
-import javafx.scene.image.Image;
+import javafx.scene.image.*;
 
-public class SImage extends Image implements Serializable{
+
+import javax.swing.ImageIcon;
+
+
+public class SImage implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3999766578638350771L;
-
-	public SImage(InputStream inputStream){
-		super(inputStream);
+	
+	private String imagePath;  
+	
+	
+	public SImage(String imagePath){		
+		this.imagePath = imagePath;
 	}
+	
+	public String getimagePath(){
+		return this.imagePath;
+	}
+	
 }
