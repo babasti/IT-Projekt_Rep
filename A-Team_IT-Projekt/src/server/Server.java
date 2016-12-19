@@ -15,6 +15,10 @@ import common.Game;
 import common.Player;
 
 public class Server implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1580803078405733848L;
 	public static ArrayList<Player> regPlayers;
 	public static ArrayList<ObjectOutputStream> openOutputStreams;
 	public static final int PORT = 1234;
@@ -59,7 +63,7 @@ public class Server implements Serializable{
 			try {
 				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 				objectOutputStream.flush();
-				objectInputStream = new ObjectInputStream(socket.getInputStream());
+				objectInputStream = new ObjectInputStream(socket.getInputStream());	
 				Server.openOutputStreams.add(objectOutputStream);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

@@ -1,30 +1,15 @@
 package client;
 
-import java.net.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
 import java.io.*;
 
-import server.Server;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import common.Game;
-import common.Player;
 
 public class Client extends Application implements Serializable{
-
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 5208359137429335816L;
 
 	public static void main(String[] args) throws Exception{	
@@ -39,6 +24,25 @@ public class Client extends Application implements Serializable{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void startLoadGame(){
+		loadGame();
+	}
+	
+	public static void loadGame(){
+		
+		Pane rootPane;
+		try {
+			rootPane = (Pane) FXMLLoader.load(ResourceProvider.getResourceProvider().getResource("GameBoard.fxml"));
+			Scene scene = new Scene(rootPane);
+			Stage primaryStage = new Stage();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

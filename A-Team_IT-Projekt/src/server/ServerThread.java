@@ -2,10 +2,10 @@ package server;
 
 import java.io.*;
 
+import client.ClientThread;
 import client.LobbyController;
 import common.Game;
 import common.Player;
-import common.SStage;
 
 import java.lang.reflect.Array;
 import java.net.*;
@@ -39,8 +39,9 @@ public class ServerThread implements Serializable, Runnable{
 		Game g;
 		Object obj;
 		try{
-			synchronized(this){
-				while(true){
+			int counter = 0;
+			while(true){
+				synchronized(Server.objectInputStream){
 					obj = Server.objectInputStream.readObject();
 					if(obj instanceof Game){
 						g = (Game)obj;
@@ -78,11 +79,10 @@ public class ServerThread implements Serializable, Runnable{
 							Server.arrayListToFile();
 						}if(g.getWhat().equals("spiel gestartet")){
 							System.out.println("spiel auf server erhalten");
-							FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/client/GameBoard.fxml"));
-							Pane rootPane = (Pane)fxmlloader.load();
-							SStage stage = new SStage();
-							stage.setScene(new Scene(rootPane));
-							sendToAllClients(new Game(g.getSession(), stage, "spiel gestartet"));
+							
+							Game game = new Game(g.getSession(), "spielLaden");
+							game.setSession(g.getSession());
+							sendToAllClients(game);
 							Server.startedSession = null;
 						}if(g.getWhat().equals("sitzung erstellt")){
 							sendToAllClients(g);

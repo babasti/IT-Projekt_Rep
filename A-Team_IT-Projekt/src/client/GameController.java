@@ -1,18 +1,11 @@
 package client;
 
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import common.Card;
-import common.Game;
-import common.Player;
-import common.SCircle;
-import common.SImage;
-import common.Tile;
-
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -21,18 +14,34 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.image.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import common.Avatar;
+import common.AvatarContainer;
+import common.Card;
+import common.Game;
+import common.ImageContainer;
+import common.Player;
+import common.SCircle;
+import common.Tile;
 
-public class GameController extends SCircle implements Initializable, Serializable{
+public class GameController implements Initializable{
 
 
 	// Elemente vom GUI definieren
@@ -296,103 +305,47 @@ public class GameController extends SCircle implements Initializable, Serializab
 
 	//Bilder welche im Ordner resource abgelget sind instanziert als Image
 
-	private SImage blue1 = new SImage(getClass().getResourceAsStream("/resource/blue_1.jpg"));
-	private SImage blue2 = new SImage(getClass().getResourceAsStream("/resource/blue_2.jpg"));
-	private SImage blue3 = new SImage(getClass().getResourceAsStream("/resource/blue_3.jpg"));
-	private SImage blue4 = new SImage(getClass().getResourceAsStream("/resource/blue_4.jpg"));
-	private SImage blue5 = new SImage(getClass().getResourceAsStream("/resource/blue_5.jpg"));
-	private SImage blue6 = new SImage(getClass().getResourceAsStream("/resource/blue_6.jpg"));
-	private SImage blue7 = new SImage(getClass().getResourceAsStream("/resource/blue_7.jpg"));
-	private SImage brown1 = new SImage(getClass().getResourceAsStream("/resource/brown_1.jpg"));
-	private SImage brown2 = new SImage(getClass().getResourceAsStream("/resource/brown_2.jpg"));
-	private SImage brown3 = new SImage(getClass().getResourceAsStream("/resource/brown_3.jpg"));
-	private SImage brown4 = new SImage(getClass().getResourceAsStream("/resource/brown_4.jpg"));
-	private SImage brown5 = new SImage(getClass().getResourceAsStream("/resource/brown_5.jpg"));
-	private SImage brown6 = new SImage(getClass().getResourceAsStream("/resource/brown_6.jpg"));
-	private SImage brown7 = new SImage(getClass().getResourceAsStream("/resource/brown_7.jpg"));
-	private SImage green1 = new SImage(getClass().getResourceAsStream("/resource/green_1.jpg"));
-	private SImage green2 = new SImage(getClass().getResourceAsStream("/resource/green_2.jpg"));
-	private SImage green3 = new SImage(getClass().getResourceAsStream("/resource/green_3.jpg"));
-	private SImage green4 = new SImage(getClass().getResourceAsStream("/resource/green_4.jpg"));
-	private SImage green5 = new SImage(getClass().getResourceAsStream("/resource/green_5.jpg"));
-	private SImage green6 = new SImage(getClass().getResourceAsStream("/resource/green_6.jpg"));
-	private SImage green7 = new SImage(getClass().getResourceAsStream("/resource/green_7.jpg"));
-	private SImage grey1 = new SImage(getClass().getResourceAsStream("/resource/grey_1.jpg"));
-	private SImage grey2 = new SImage(getClass().getResourceAsStream("/resource/grey_2.jpg"));
-	private SImage grey3 = new SImage(getClass().getResourceAsStream("/resource/grey_3.jpg"));
-	private SImage grey4 = new SImage(getClass().getResourceAsStream("/resource/grey_4.jpg"));
-	private SImage grey5 = new SImage(getClass().getResourceAsStream("/resource/grey_5.jpg"));
-	private SImage grey6 = new SImage(getClass().getResourceAsStream("/resource/grey_6.jpg"));
-	private SImage grey7 = new SImage(getClass().getResourceAsStream("/resource/grey_7.jpg"));
-	private SImage pink1 = new SImage(getClass().getResourceAsStream("/resource/pink_1.jpg"));
-	private SImage pink2 = new SImage(getClass().getResourceAsStream("/resource/pink_2.jpg"));
-	private SImage pink3 = new SImage(getClass().getResourceAsStream("/resource/pink_3.jpg"));
-	private SImage pink4 = new SImage(getClass().getResourceAsStream("/resource/pink_4.jpg"));
-	private SImage pink5 = new SImage(getClass().getResourceAsStream("/resource/pink_5.jpg"));
-	private SImage pink6 = new SImage(getClass().getResourceAsStream("/resource/pink_6.jpg"));
-	private SImage pink7 = new SImage(getClass().getResourceAsStream("/resource/pink_7.jpg"));
-	private SImage white1 = new SImage(getClass().getResourceAsStream("/resource/white_1.jpg"));
-	private SImage white2 = new SImage(getClass().getResourceAsStream("/resource/white_2.jpg"));
-	private SImage white3 = new SImage(getClass().getResourceAsStream("/resource/white_3.jpg"));
-	private SImage white4 = new SImage(getClass().getResourceAsStream("/resource/white_4.jpg"));
-	private SImage white5 = new SImage(getClass().getResourceAsStream("/resource/white_5.jpg"));
-	private SImage white6 = new SImage(getClass().getResourceAsStream("/resource/white_6.jpg"));
-	private SImage white7 = new SImage(getClass().getResourceAsStream("/resource/white_7.jpg"));
-	private SImage yellow1 = new SImage(getClass().getResourceAsStream("/resource/yellow_1.jpg"));
-	private SImage yellow2 = new SImage(getClass().getResourceAsStream("/resource/yellow_2.jpg"));
-	private SImage yellow3 = new SImage(getClass().getResourceAsStream("/resource/yellow_3.jpg"));
-	private SImage yellow4 = new SImage(getClass().getResourceAsStream("/resource/yellow_4.jpg"));
-	private SImage yellow5 = new SImage(getClass().getResourceAsStream("/resource/yellow_5.jpg"));
-	private SImage yellow6 = new SImage(getClass().getResourceAsStream("/resource/yellow_6.jpg"));
-	private SImage yellow7 = new SImage(getClass().getResourceAsStream("/resource/yellow_7.jpg"));
-	private SImage water = new SImage(getClass().getResourceAsStream("/resource/wasser.JPG"));
-
-	private SImage moveCardBlue = new SImage(getClass().getResourceAsStream("/resource/card_Blue.jpg"));
-	private SImage moveCardBrown = new SImage(getClass().getResourceAsStream("/resource/card_Brown.jpg"));
-	private SImage moveCardGreen = new SImage(getClass().getResourceAsStream("/resource/card_Green.jpg"));
-	private SImage moveCardGrey = new SImage(getClass().getResourceAsStream("/resource/card_Grey.jpg"));
-	private SImage moveCardPink = new SImage(getClass().getResourceAsStream("/resource/card_Pink.jpg"));
-	private SImage moveCardWhite = new SImage(getClass().getResourceAsStream("/resource/card_White.jpg"));
-	private SImage moveCardYellow = new SImage(getClass().getResourceAsStream("/resource/card_Yellow.jpg"));
-
-
+	
 	//Instanzvariablen ArrayListe welche alle Tile Objekte beinhaltet
 	//und ImageView Array welche alle ImageView mit ID beinhaltet
-
+	
+	
+	private AvatarContainer avatarContainer;
+	private ImageContainer imageContainer;
 	private static ArrayList<Tile> startBoard;
 	private static ImageView[] tileImages;
 	public static ArrayList<ImageView> moveImages;
 	public static ArrayList<Card> cards;
 	private static InnerShadow tileShadow;
-	public static Label numOfDeck = new Label();
-	Tile Water = new Tile(water, 0, "water");
-	private static Color[] avatarColors = new Color[4];
-	private static ArrayList<Player> players = new ArrayList<Player>(); 
-	private static ArrayList<SCircle> avatars;
+	public static Label numOfDeck;
+	Tile Water;
+	private Color[] avatarColors = new Color[4];
+	private static ArrayList<Player> players; 
 	private static Card selectetCard;
 	private static ImageView selectetCardImageView;
-	private static SCircle selectetAvatar;
+	private static Circle selectetAvatar;
 	private static ArrayList<HBox> tileBox;
 	private static ArrayList<Tile> proformaStartGameBoard;
 	private static ArrayList<ImageView> possibleTilesArray;
 	private static HBox currentAvatarPosition;
-	private static HBox[] ebPlayer;
-	private static HBox[] sbPlayer;
+	private static  HBox[] ebPlayer;
+	private HBox[] sbPlayer;
 	public static Player currentPlayer;
 	private static int currentPlayerPosition = 0;
 	static TableView<Player> scoreTable;
 	static ObservableList<Player> playersData = FXCollections.observableArrayList();
 	static TableColumn<Player, String> userNameColumn = new TableColumn<Player, String>();
 	static TableColumn<Player, Integer> scoreColumn = new TableColumn<Player, Integer>();
-	static TableColumn<Player, SCircle> avatarColorColumn = new TableColumn<Player, SCircle>();
+	static TableColumn<Player, String> avatarColorColumn = new TableColumn<Player, String>();
 	private static Label message;
 	private static ArrayList<ImageView> playerCardsNotVisible = new ArrayList<ImageView>();
-	private static ArrayList<SCircle> totalAvatars;
+	private ArrayList<Avatar> totalAvatars;
+	private Game game;
+	private static ArrayList<Circle> playerAvatars;
 
 
 
-
-	//initialize Methode instanziert eine startBoard Liste mit Tile Objekte welche zufällig
+	//initialize Methode instanziert eine startBoard Liste mit Tile Objekte welche zufÃ¤llig
 	//in der Liste gesetzt wurden.
 	// mit initTileArray wird die Instanzvariable tileImages initialisiert um ein Array mit allen 
 	//ImageViews zu haben
@@ -400,102 +353,89 @@ public class GameController extends SCircle implements Initializable, Serializab
 	//somit haben wir ein visuelles GameBoard
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		imageContainer = new ImageContainer();
+		Water = imageContainer.getWater();
+		avatarContainer = new AvatarContainer();
+		
+		game = ClientThread.getGame();
+		
+		initTileArray();
+		initStartBox();
+		initEndBox();
+		initPlayers();
+		initCurrentPlayer();
+		initCards();
+		initTotalAvatars();
+		initNumOfDeck();
+		initStartBoard();
+		initMoveCardArray();
+		initPlayerMoveCards();
+		initPlayerAvatars();
 
-		for(Player player : ClientThread.startedSession.getPlayers()){
-			players.add(player);
-		}
 
-		currentPlayer = players.get(0);
+		initScoreTable();
+		initMessage();
+	}	
 
+	private void initStartBox(){
+
+		sbPlayer = new HBox[4];
+		sbPlayer[0] = sb_player1;
+		sbPlayer[1] = sb_player2;
+		sbPlayer[2] = sb_player3;
+		sbPlayer[3] = sb_player4;
+
+	}
+
+	public void initEndBox(){
+		ebPlayer = new HBox[4];
+		ebPlayer[0] = eb_player1;
+		ebPlayer[1] = eb_player2;
+		ebPlayer[2] = eb_player3;
+		ebPlayer[3] = eb_player4;
+	}
+
+	//avatar Listen von den Player holen und in eine arrayListe speichern und diese Listen in eine gesamt Liste speichern
+	//vielleicht geht es auch direkt noch nicht probiert
+	public void initTotalAvatars(){
+		totalAvatars = new ArrayList<Avatar>();
+		totalAvatars = avatarContainer.getAvatars();
+	}
+
+	public void initNumOfDeck(){
+		numOfDeck = new Label();
 		//Label mit folgende Eigenschaften zur StackPane hinzufügen
 		numOfDeck.setFont(Font.font("System", FontWeight.BOLD, 40));
 		numOfDeck.setTextFill(Color.WHITE);
 		numOfDeck.setAlignment(Pos.CENTER);
 		movementCards.getChildren().add(numOfDeck);
 
-		//start Plättchen aufs Board setzen
-		startBoard = new ArrayList<Tile>(setStartTiles());
-		initTileArray();
-		int countTile = 0;
-		for(int i = 0; i < startBoard.size(); i++){
-			tileImages[countTile].setImage(startBoard.get(i).getImage());
-			countTile++;
-		}
-
-		//Liste mit Bewegungskarte initialisieren
-		cards = new ArrayList<Card>(setStartMoveCards());
-		//proforma, playerCards muss beim Player Objekt instanziert werden
-		//hier nur zu test Zwecken
-
-		for(int x = 0; x < players.size(); x++){
-			for(int i = 0; i < 5; i++){
-				players.get(x).playerCards.add(cards.get(0));
-				cards.remove(0);
-			}
-		}
-
-		initMoveCardArray();
-		int countMoveCard = 0;
-
-		for(int i = 0; i < currentPlayer.playerCards.size(); i++){
-			moveImages.get(countMoveCard).setImage(currentPlayer.playerCards.get(i).getImage());
-			countMoveCard++;
-		}
-
 		//Anzahl Bewegungskarten im Deck anzeigen
 		String numberOfDeck = String.valueOf(cards.size());
 		numOfDeck.setText(numberOfDeck);
+	}
 
+	public void initCards(){
+		cards = new ArrayList<Card>(game.getCards());
+	}
 
-		// ------------------------------------------- provisorisch ab hier
-
-		//avatar Farben instanziert und in einem array gespeichert
-		avatarColors[0] = Color.RED;
-		avatarColors[1] = Color.BLUE;
-		avatarColors[2] = Color.GREEN;
-		avatarColors[3] = Color.ORANGE;
-
-		//Initialisierung der StartBoxen
-		initStartBox(players.size());
-
-		int count = 0;
-		int count2 = 0;
-
-		//den avatars die zuständige farbe zuteilen und in die entsprechenden Boxen zuteilen
-		for(int x = 0; x < players.size(); x++){	
-			for(int i = 0; i < 3; i++){
-				totalAvatars.get(count2).setFill(avatarColors[count]);
-				sbPlayer[count].getChildren().add(totalAvatars.get(count2));
-				sbPlayer[count].setVisible(true);
-				sbPlayer[count].toFront();
-				count2++;
-			}
-			players.get(x).setAvatarColor(avatarColors[count]);
-			count++;
+	public void initStartBoard(){
+		startBoard = new ArrayList<Tile>(game.getStartBoard());
+		int countTile = 0;
+		for(int i = 0; i < startBoard.size(); i++){
+			Image img = new Image(FileProvider.getFileProvider().getFile(startBoard.get(i).getImage().getimagePath()));
+			tileImages[countTile].setImage(img);
+			countTile++;
 		}
-		
+		proformaStartGameBoard = game.getProformaStartGameBoard();
+	}
 
-		//handler für alle Avatars setzen, sobald ein Avatar gewählt wurde durch Click wird der Effekt gesetzt
-		//der Player kann jeweils nur einen Avatar wählen in der StartBox
+	public void initCurrentPlayer(){
+		currentPlayer = game.getCurrentPlayer();
+	}
 
-		for(int x = 0; x < players.size();x++){
-			for(int i = 0; i < players.get(x).getAvatar().size(); i++){
-				players.get(x).getAvatar().get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
-
-					@Override
-					public void handle(MouseEvent event) {
-						handleSelectetAvatar(event);
-					}
-				});
-			}
-		}
-
-		message = new Label();
-		message.setLayoutX(800);
-		message.setLayoutY(650);
-		message.setVisible(false);
-		rootPane.getChildren().add(message);
-
+	public void initScoreTable(){
 		scoreTable = new TableView<Player>();
 		scoreTable.setLayoutX(913);
 		scoreTable.setLayoutY(361);
@@ -513,70 +453,96 @@ public class GameController extends SCircle implements Initializable, Serializab
 		avatarColorColumn.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, SCircle>("avatarColor"));
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("avatarColor"));
 
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().clear();
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
+	}
+
+	public void initMessage(){
+		message = new Label();
+		message.setLayoutX(800);
+		message.setLayoutY(650);
+		message.setVisible(false);
+		rootPane.getChildren().add(message);
 
 		setMessage(currentPlayer.getUserName()+" ist dran!");
+	}
+	
+	public void initPlayers(){
+		players = new ArrayList<Player>();
+		for(int i = 0; i < game.getSession().getPlayers().length; i++){
+			players.add(game.getSession().getPlayers()[i]);
+		}
+	}
+
+	public void initPlayerAvatars(){
+		//avatar Farben instanziert und in einem array gespeichert
+		avatarColors[0] = Color.RED;
+		avatarColors[1] = Color.BLUE;
+		avatarColors[2] = Color.GREEN;
+		avatarColors[3] = Color.ORANGE;
+		playerAvatars = new ArrayList<Circle>();
+
+
+		//den avatars die zustÃ¤ndige farbe zuteilen und in die entsprechenden Boxen zuteilen
+		for(int i = 0; i < 3; i++){
+			Circle avatar = new Circle();
+			avatar.setFill(avatarColors[players.indexOf(currentPlayer)]);
+			sbPlayer[players.indexOf(currentPlayer)].getChildren().add(avatar);
+			sbPlayer[players.indexOf(currentPlayer)].setVisible(true);
+			sbPlayer[players.indexOf(currentPlayer)].toFront();
+			playerAvatars.add(avatar);
+			avatar.setRadius(10);
+			avatar.setStroke(Color.BLACK);
+			avatar.toFront();
+			avatar.setVisible(true);
+		}
+		currentPlayer.setAvatarColor(avatarContainer.getAvatarColors().get(players.indexOf(currentPlayer)));
+
+
+		//handler fÃ¼r alle Avatars setzen, sobald ein Avatar gewÃ¤hlt wurde durch Click wird der Effekt gesetzt
+		//der Player kann jeweils nur einen Avatar wÃ¤hlen in der StartBox
+
+		for(int i = 0; i < playerAvatars.size(); i++){
+			playerAvatars.get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+				@Override
+				public void handle(MouseEvent event) {
+					handleSelectetAvatar(event);
+				}
+			});
+		}
+	}
+
+	public void initPlayerMoveCards(){
+		int countMoveCard = 0;
+		int countPlayer = 0;
+		Player player;
+		for(int i = 0; i < players.size(); i++){
+			if(players.get(i).getUserName().equals(System.getProperty("user.name")));
+			countPlayer = i;
+		}
+		player = players.get(countPlayer);
 		
+		for(int i = 0; i < player.getPlayerCards().size(); i++){			
+			moveImages.get(countMoveCard).setImage(new Image(FileProvider.getFileProvider().getFile(player.getPlayerCards().get(i).getImage().getimagePath())));
+			countMoveCard++;
+		}
 		
 		for(ImageView notVisible : moveImages){
 			if(!notVisible.isVisible()){
 				playerCardsNotVisible.add(notVisible);
 			}
 		}
-
-		Game.setStartBoard(startBoard);
-		Game.setCards(cards);
-
-	}	
-
-	// ---------------------------------------------------------- bis hier
-
-	private void initStartBox(int numOfPlayers){
-		
-		HBox[] allBox = new HBox[4];
-		allBox[0] = sb_player1;
-		allBox[1] = sb_player2;
-		allBox[2] = sb_player3;
-		allBox[3] = sb_player4;
-
-		sbPlayer = new HBox[numOfPlayers];
-		for(int i = 0; i < numOfPlayers;i++){
-			sbPlayer[i] = allBox[i];
-			startBox.getChildren().clear();
-			startBox.getChildren().add(sbPlayer[i]);
-			startBox.toFront();
-		}
-		HBox[] allBoxEB = new HBox[4];
-		allBoxEB[0] = eb_player1;
-		allBoxEB[1] = eb_player2;
-		allBoxEB[2] = eb_player3;
-		allBoxEB[3] = eb_player4;
-
-		ebPlayer = new HBox[numOfPlayers];
-		for(int i = 0; i < numOfPlayers; i++){
-			ebPlayer[i] = allBoxEB[i];
-			endBox.getChildren().clear();
-			endBox.getChildren().add(ebPlayer[i]);
-			endBox.toFront();
-		}
-		
-		//avatar Listen von den Player holen und in eine arrayListe speichern und diese Listen in eine gesamt Liste speichern
-		//vielleicht geht es auch direkt noch nicht probiert
-		totalAvatars = new ArrayList<SCircle>();
-		for(int i = 0; i < numOfPlayers; i++){
-			totalAvatars.addAll(players.get(i).getAvatar());
-		}
 	}
-	
+
 
 	//initialisiert die Instanzvariable tileImages um ein Array mit allen ImageViews zu haben
 	//damit wir darauf zugreiffen können um ein Bild zu setzen
 	private void initTileArray(){	
-
+		
 		tileImages = new ImageView[49];
 
 		tileImages[0] = tile1;
@@ -683,8 +649,8 @@ public class GameController extends SCircle implements Initializable, Serializab
 
 	}	
 
-	//setStartTiles wird gebraucht um eine ArrayList zu haben welche zufällig mit Tile Images
-	//gefüllt wurde
+	//setStartTiles wird gebraucht um eine ArrayList zu haben welche zufÃ¤llig mit Tile Images
+	//gefÃ¼llt wurde
 	public ArrayList<Tile> setStartTiles(){
 
 		ArrayList<Tile> tileBoard = new ArrayList<Tile>(setTiles());
@@ -710,116 +676,18 @@ public class GameController extends SCircle implements Initializable, Serializab
 
 
 	//instanziert neue Tile Objekte und addet die Objekte einer Liste zu.
-	//diese Liste ist nicht zufällig verteilt 
+	//diese Liste ist nicht zufÃ¤llig verteilt 
 	//haben wir erstellt damit wir eine Liste mit allen Tile Objekte haben
 	public ArrayList<Tile> setTiles(){
 
 		ArrayList<Tile> startGameBoard = new ArrayList<Tile>();
 		proformaStartGameBoard = new ArrayList<Tile>();
-
-		Tile Blue1 = new Tile(blue1, 1, "blue");
-		Tile Blue2 = new Tile(blue2, 2, "blue");
-		Tile Blue3 = new Tile(blue3, 3, "blue");
-		Tile Blue4 = new Tile(blue4, 4, "blue");
-		Tile Blue5 = new Tile(blue5, 5, "blue");
-		Tile Blue6 = new Tile(blue6, 6, "blue");
-		Tile Blue7 = new Tile(blue7, 7, "blue");
-		Tile Brown1 = new Tile(brown1, 1, "brown");
-		Tile Brown2 = new Tile(brown2, 2, "brown");
-		Tile Brown3 = new Tile(brown3, 3, "brown");
-		Tile Brown4 = new Tile(brown4, 4, "brown");
-		Tile Brown5 = new Tile(brown5, 5, "brown");
-		Tile Brown6 = new Tile(brown6, 6, "brown");
-		Tile Brown7 = new Tile(brown7, 7, "brown");
-		Tile Grey1 = new Tile(grey1, 1, "grey");
-		Tile Grey2 = new Tile(grey2, 2, "grey");
-		Tile Grey3 = new Tile(grey3, 3, "grey");
-		Tile Grey4 = new Tile(grey4, 4, "grey");
-		Tile Grey5 = new Tile(grey5, 5, "grey");
-		Tile Grey6 = new Tile(grey6, 6, "grey");
-		Tile Grey7 = new Tile(grey7, 7, "grey");
-		Tile Green1 = new Tile(green1, 1, "green");
-		Tile Green2 = new Tile(green2, 2, "green");
-		Tile Green3 = new Tile(green3, 3, "green");
-		Tile Green4 = new Tile(green4, 4, "green");
-		Tile Green5 = new Tile(green5, 5, "green");
-		Tile Green6 = new Tile(green6, 6, "green");
-		Tile Green7 = new Tile(green7, 7, "green");
-		Tile Pink1 = new Tile(pink1, 1, "pink");
-		Tile Pink2 = new Tile(pink2, 2, "pink");
-		Tile Pink3 = new Tile(pink3, 3, "pink");
-		Tile Pink4 = new Tile(pink4, 4, "pink");
-		Tile Pink5 = new Tile(pink5, 5, "pink");
-		Tile Pink6 = new Tile(pink6, 6, "pink");
-		Tile Pink7 = new Tile(pink7, 7, "pink");
-		Tile White1 = new Tile(white1, 1, "white");
-		Tile White2 = new Tile(white2, 2, "white");
-		Tile White3 = new Tile(white3, 3, "white");
-		Tile White4 = new Tile(white4, 4, "white");
-		Tile White5 = new Tile(white5, 5, "white");
-		Tile White6 = new Tile(white6, 6, "white");
-		Tile White7 = new Tile(white7, 7, "white");
-		Tile Yellow1 = new Tile(yellow1, 1, "yellow");
-		Tile Yellow2 = new Tile(yellow2, 2, "yellow");
-		Tile Yellow3 = new Tile(yellow3, 3, "yellow");
-		Tile Yellow4 = new Tile(yellow4, 4, "yellow");
-		Tile Yellow5 = new Tile(yellow5, 5, "yellow");
-		Tile Yellow6 = new Tile(yellow6, 6, "yellow");
-		Tile Yellow7 = new Tile(yellow7, 7, "yellow");
-		Tile Water = new Tile(water, 0, "water");
-
+		
+		for(Tile tile : imageContainer.getTiles().values()){
+			startGameBoard.add(tile);
+		}
+		
 		proformaStartGameBoard.add(Water);
-
-		startGameBoard.add(Blue1);
-		startGameBoard.add(Blue2);
-		startGameBoard.add(Blue3);
-		startGameBoard.add(Blue4);
-		startGameBoard.add(Blue5);
-		startGameBoard.add(Blue6);
-		startGameBoard.add(Blue7);
-		startGameBoard.add(Brown1);
-		startGameBoard.add(Brown2);
-		startGameBoard.add(Brown3);
-		startGameBoard.add(Brown4);
-		startGameBoard.add(Brown5);
-		startGameBoard.add(Brown6);
-		startGameBoard.add(Brown7);
-		startGameBoard.add(Grey1);
-		startGameBoard.add(Grey2);
-		startGameBoard.add(Grey3);
-		startGameBoard.add(Grey4);
-		startGameBoard.add(Grey5);
-		startGameBoard.add(Grey6);
-		startGameBoard.add(Grey7);
-		startGameBoard.add(Green1);
-		startGameBoard.add(Green2);
-		startGameBoard.add(Green3);
-		startGameBoard.add(Green4);
-		startGameBoard.add(Green5);
-		startGameBoard.add(Green6);
-		startGameBoard.add(Green7);
-		startGameBoard.add(Pink1);
-		startGameBoard.add(Pink2);
-		startGameBoard.add(Pink3);
-		startGameBoard.add(Pink4);
-		startGameBoard.add(Pink5);
-		startGameBoard.add(Pink6);
-		startGameBoard.add(Pink7);
-		startGameBoard.add(White1);
-		startGameBoard.add(White2);
-		startGameBoard.add(White3);
-		startGameBoard.add(White4);
-		startGameBoard.add(White5);
-		startGameBoard.add(White6);
-		startGameBoard.add(White7);
-		startGameBoard.add(Yellow1);
-		startGameBoard.add(Yellow2);
-		startGameBoard.add(Yellow3);
-		startGameBoard.add(Yellow4);
-		startGameBoard.add(Yellow5);
-		startGameBoard.add(Yellow6);
-		startGameBoard.add(Yellow7);
-
 
 		return startGameBoard;
 	}
@@ -836,19 +704,19 @@ public class GameController extends SCircle implements Initializable, Serializab
 	}	
 
 
-	//wird ausgelöst wenn der Spieler sein Avatar auf eine entsprechendes Tile setzen will
-	//die Methode ersetzt das vorherige Tile mit "Wasser" und gibt die Punktzahlt des Tiles zurück
+	//wird ausgelÃ¶st wenn der Spieler sein Avatar auf eine entsprechendes Tile setzen will
+	//die Methode ersetzt das vorherige Tile mit "Wasser" und gibt die Punktzahlt des Tiles zurÃ¼ck
 	//um die Punktzahl danach dem Score vom Spieler zu summieren
 	public static void collectTile(Tile selectetTile, int position){
-		SImage water = (SImage) proformaStartGameBoard.get(0).getImage();
-		Tile Water = new Tile (water, 0, "water");
+		ImageContainer imgContainer = new ImageContainer();		
+		Tile Water = imgContainer.getWater();
 
 		int points;
 		int countPosition = 1;
 
 		HBox collectBox = tileBox.get(position-countPosition);
 
-		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
+		//somit wird verhindert dass der Player das Tile hinter ihm erhÃ¤lt, obwohl eine andere Figur
 		//darauf steht
 		while(!(collectBox.getChildren().isEmpty())){
 			countPosition++;
@@ -868,11 +736,11 @@ public class GameController extends SCircle implements Initializable, Serializab
 			if(points > 0){
 				currentPlayer.addToScore(points);
 				startBoard.set(position-countPosition, Water);
-				tileImages[position-countPosition].setImage(startBoard.get(position-countPosition).getImage());
+				tileImages[position-countPosition].setImage(new Image(FileProvider.getFileProvider().getFile(startBoard.get(position-countPosition).getImage().getimagePath())));
 			}else{
 				do{
 					//falls das Tile keine Punkte hat, also "Wasser" ist
-					//möchten wir natürlich, dass der Player ein Tile weiter hinten auf dem Board erhält mit Punkte
+					//mÃ¶chten wir natÃ¼rlich, dass der Player ein Tile weiter hinten auf dem Board erhÃ¤lt mit Punkte
 					countPosition++;
 					//falls wir mit der Iteration am Start des Boards gelangen
 					//hat es keine Tiles mehr mit Punkte, dann wird der Loop gebrochen und der Player 
@@ -900,7 +768,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 					points = selectTile1.getPoints();
 					currentPlayer.addToScore(points);
 					startBoard.set(position-countPosition, Water);
-					tileImages[position-countPosition].setImage(startBoard.get(position-countPosition).getImage());
+					tileImages[position-countPosition].setImage(new Image(FileProvider.getFileProvider().getFile(startBoard.get(position-countPosition).getImage().getimagePath())));
 				}while(points == 0);
 			}
 		}
@@ -912,17 +780,17 @@ public class GameController extends SCircle implements Initializable, Serializab
 		avatarColorColumn.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, SCircle>("avatarColor"));
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("avatarColor"));
 
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 	}
 
 	//collectLastTile() wird aufgerufen falls der Player aufs Land gelangt,
-	//ihm wird das entsprechende letzte verfügbare Tile zugewiesen
+	//ihm wird das entsprechende letzte verfÃ¼gbare Tile zugewiesen
 	public static void collectLastTile(){
-		SImage water = (SImage) proformaStartGameBoard.get(0).getImage();
-		Tile Water = new Tile (water, 0, "water");
+		ImageContainer container = new ImageContainer();
+		Tile Water = container.getWater();
 		int lastTilePosition = 48;
 
 		int points;
@@ -930,7 +798,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 
 		HBox collectBox = tileBox.get(lastTilePosition);
 
-		//somit wird verhindert dass der Player das Tile hinter ihm erhält, obwohl eine andere Figur
+		//somit wird verhindert dass der Player das Tile hinter ihm erhÃ¤lt, obwohl eine andere Figur
 		//darauf steht
 		while(!(collectBox.getChildren().isEmpty())){
 			countPosition++;
@@ -943,7 +811,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		if(points > 0){	
 			currentPlayer.addToScore(points);
 			startBoard.set(lastTilePosition-countPosition, Water);
-			tileImages[lastTilePosition-countPosition].setImage(startBoard.get(lastTilePosition-countPosition).getImage());
+			tileImages[lastTilePosition-countPosition].setImage(new Image(FileProvider.getFileProvider().getFile(startBoard.get(lastTilePosition-countPosition).getImage().getimagePath())));
 		}else{
 			do{
 				countPosition++;
@@ -969,7 +837,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 			}while(points == 0);
 
 			startBoard.set(lastTilePosition-countPosition, Water);
-			tileImages[lastTilePosition-countPosition].setImage(startBoard.get(lastTilePosition-countPosition).getImage());
+			tileImages[lastTilePosition-countPosition].setImage(new Image(FileProvider.getFileProvider().getFile(startBoard.get(lastTilePosition-countPosition).getImage().getimagePath())));
 		}
 
 		scoreTable.getColumns().clear();
@@ -978,15 +846,15 @@ public class GameController extends SCircle implements Initializable, Serializab
 		avatarColorColumn.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, SCircle>("avatarColor"));
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("avatarColor"));
 
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 
 	}
 
-	//gibt eine Liste zurück mit 105 Bewegungskarten jeweils 7 Arten à  15 Karten
-	//die Karten sind nicht zufällig verteilt in der Liste
+	//gibt eine Liste zurÃ¼ck mit 105 Bewegungskarten jeweils 7 Arten Ã Â  15 Karten
+	//die Karten sind nicht zufÃ¤llig verteilt in der Liste
 	public ArrayList<Card> initCardArray(){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		ArrayList<Card> tempCards = cardArrayToUse();
@@ -1004,31 +872,18 @@ public class GameController extends SCircle implements Initializable, Serializab
 
 	}
 
-	//instanziert Bewegeungskarten vom Typ Card und setzt diese in eine Liste damit wir auf alle 7 Bewegungskarten zugreifen können
+	//instanziert Bewegeungskarten vom Typ Card und setzt diese in eine Liste damit wir auf alle 7 Bewegungskarten zugreifen kÃ¶nnen
 	public ArrayList<Card> cardArrayToUse(){
-		Card blue = new Card("blue", moveCardBlue);
-		Card brown = new Card("brown", moveCardBrown);
-		Card green = new Card("green", moveCardGreen);
-		Card grey = new Card("grey", moveCardGrey);
-		Card pink = new Card("pink", moveCardPink);
-		Card white = new Card("white", moveCardWhite);
-		Card yellow = new Card("yellow", moveCardYellow);
-
-		ArrayList<Card> tempCards = new ArrayList<Card>();
-		tempCards.add(blue);
-		tempCards.add(brown);
-		tempCards.add(green);
-		tempCards.add(grey);
-		tempCards.add(pink);
-		tempCards.add(white);
-		tempCards.add(yellow);
-
-		return tempCards;
+		ArrayList<Card> cards = new ArrayList<Card>();
+		for(Card card : imageContainer.getCards()) {
+			cards.add(card);
+		}
+		return cards;
 	}
 
 
-	//gibt uns eine Liste zurück mit allen Bewegungskarten die zufällig verteilt sind
-	//total haben wir 105 Karten, jeweils 7 verschiedene Arten à  15 Karten
+	//gibt uns eine Liste zurÃ¼ck mit allen Bewegungskarten die zufÃ¤llig verteilt sind
+	//total haben wir 105 Karten, jeweils 7 verschiedene Arten Ã Â  15 Karten
 	public ArrayList<Card> setStartMoveCards(){
 
 		ArrayList<Card> startMoveCards = new ArrayList<Card>(initCardArray());
@@ -1047,7 +902,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		return startMoveCards;
 	}
 
-	//setzt ImageViews in einem Array damit wir auf diese zugreiffen können
+	//setzt ImageViews in einem Array damit wir auf diese zugreiffen kÃ¶nnen
 	public void initMoveCardArray(){
 		moveImages = new ArrayList<ImageView>();
 
@@ -1063,7 +918,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		moveImages.add(moveCard10);
 	}
 
-	//zusätzliche Bewegungskarten anzeigen in der zweiten moveCardBox
+	//zusÃ¤tzliche Bewegungskarten anzeigen in der zweiten moveCardBox
 	public static void addMoveImage(int count){
 
 
@@ -1073,12 +928,14 @@ public class GameController extends SCircle implements Initializable, Serializab
 			}
 		}
 
-
 		moveImages.get(count).setVisible(true);
 		int countCards = 0;
 
-		currentPlayer.playerCards.add(cards.get(countCards));
-		moveImages.get(count).setImage(cards.get(countCards).getImage());
+		currentPlayer.getPlayerCards().add(cards.get(countCards));
+		
+		Image img = new Image(FileProvider.getFileProvider().getFile(cards.get(countCards).getImage().getimagePath()));
+		moveImages.get(count).setImage(img);
+		
 		cards.remove(countCards);
 
 		//Anzahl Bewegungskarten im Deck anzeigen
@@ -1092,14 +949,12 @@ public class GameController extends SCircle implements Initializable, Serializab
 				playerCardsNotVisible.add(notVisible);
 			}
 		}
-
-
 	}
 
 
 
-	//zeigt im Player seine mögliche Spielzüge welche er machen kann
-	//wenn sich die mouse über eine Bewegungskarte bewegt, dann wird diese highlightet sowie die 
+	//zeigt im Player seine mÃ¶gliche SpielzÃ¼ge welche er machen kann
+	//wenn sich die mouse Ã¼ber eine Bewegungskarte bewegt, dann wird diese highlightet sowie die 
 	//passenden Tiles werden auch gehighlightet
 	public void showPossibleMove(MouseEvent event){
 		String selectetMoveCard = handleMoveCard(event);
@@ -1107,7 +962,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		String subString = selectetMoveCard.substring(8);
 		int moveCardPosition = Integer.parseInt(subString);
 
-		Card selectMoveCard = currentPlayer.playerCards.get(moveCardPosition-1);
+		Card selectMoveCard = currentPlayer.getPlayerCards().get(moveCardPosition-1);
 
 		ArrayList<Tile> possibleTiles = new ArrayList<Tile>();
 		ArrayList<ImageView>possibleTilesArray = new ArrayList<ImageView>();
@@ -1139,7 +994,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		return selectetMoveCard;
 	}
 
-	//handle MouseEvent Methode welche den Highlight effekt wieder zurücksetzt sobald die Bewegungskarte
+	//handle MouseEvent Methode welche den Highlight effekt wieder zurÃ¼cksetzt sobald die Bewegungskarte
 	//mit der Mouse verlassen wird
 	public void handleMouseExit(MouseEvent event){
 		ImageView moveCard = (ImageView) event.getSource(); ;
@@ -1151,12 +1006,12 @@ public class GameController extends SCircle implements Initializable, Serializab
 		tileShadow.setRadius(0);
 	}
 
-	//methode welche ausgeführt wird bei einem Click auf der Bewegungskarte
+	//methode welche ausgefÃ¼hrt wird bei einem Click auf der Bewegungskarte
 	//der Effekt "Highlight" bleibt auf der geklickten Karte mouseExit wird auf null gesetzt
-	//das heisst der Effekt bei den dazugehörigen Tiles bleibt,
+	//das heisst der Effekt bei den dazugehÃ¶rigen Tiles bleibt,
 	//auf den anderen Karten bleibt der mousExit effekt
-	//natürlich wenn zwei gleiche Bewegungskarte in der Hand sind, und der Player bei der 
-	//nicht gewählten Karten drüber führt wird der mouseExit Effekt ausgelöst somit auch bei den Tiles
+	//natÃ¼rlich wenn zwei gleiche Bewegungskarte in der Hand sind, und der Player bei der 
+	//nicht gewÃ¤hlten Karten drÃ¼ber fÃ¼hrt wird der mouseExit Effekt ausgelÃ¶st somit auch bei den Tiles
 	public void moveCardClicked(MouseEvent event){
 		ImageView moveCard = (ImageView) event.getSource();
 		HBox currentMoveCardBox = (HBox) moveCard.getParent();
@@ -1200,7 +1055,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 			}
 		}
 		moveCard.setEffect(iShadow);
-		selectetCard = currentPlayer.playerCards.get(Integer.parseInt(moveCardId.substring(8))-1);
+		selectetCard = currentPlayer.getPlayerCards().get(Integer.parseInt(moveCardId.substring(8))-1);
 		selectetCardImageView = moveCard;
 		possibleTilesArray = new ArrayList<ImageView>();
 		for(int i = 0; i < startBoard.size(); i++){
@@ -1210,7 +1065,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		}
 	}
 
-	//effekt welcher bei den Tiles ausgelöst wird wenn eine Bewegungskarte ausgewählt wird
+	//effekt welcher bei den Tiles ausgelÃ¶st wird wenn eine Bewegungskarte ausgewÃ¤hlt wird
 	public static void showPossibleTiles(ArrayList<ImageView> possibleTileArray){
 
 		tileShadow = new InnerShadow();
@@ -1225,7 +1080,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		}
 	}
 
-	//öffnet das GUI um Karte zu kaufen
+	//Ã¶ffnet das GUI um Karte zu kaufen
 	public void switchToBuyCard(){
 		if(moveImages.get(moveImages.size()-1).isVisible()){
 			setMessage("Du hast das Maximum an Karten!");
@@ -1247,8 +1102,8 @@ public class GameController extends SCircle implements Initializable, Serializab
 		}
 	}
 
-	// öffnet das GUI um den Move zu bestätigen oder zu canceln
-	//vorher wird geprüft ob ein Avatar und eine Karte gewählte wurde
+	// Ã¶ffnet das GUI um den Move zu bestÃ¤tigen oder zu canceln
+	//vorher wird geprÃ¼ft ob ein Avatar und eine Karte gewÃ¤hlte wurde
 	public void switchToMoveAvatar(){
 		if(GameController.selectetAvatar == null || GameController.selectetCard == null){
 			setMessage("Bitte Karte und Avatar wählen!");
@@ -1272,11 +1127,11 @@ public class GameController extends SCircle implements Initializable, Serializab
 	}
 
 	//setzt den Effekt beim Avatar
-	//in der Start Box kann jeweils nur ein Avatar gewählt werden
+	//in der Start Box kann jeweils nur ein Avatar gewÃ¤hlt werden
 	//der Effekt wird nur bei einem gesetzt
-	//Um während dem Spiel nur ein Avatar zu wählen muss noch ein Code geschrieben werden
+	//Um wÃ¤hrend dem Spiel nur ein Avatar zu wÃ¤hlen muss noch ein Code geschrieben werden
 	public static void handleSelectetAvatar(MouseEvent event){
-		SCircle selectetAvatar = (SCircle) event.getSource();
+		Circle selectetAvatar = (Circle) event.getSource();
 		InnerShadow avatarShadow = new InnerShadow();
 		avatarShadow.setChoke(0.5);
 		avatarShadow.setColor(Color.web("F7FF00"));
@@ -1296,7 +1151,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 		return GameController.selectetCard;
 	}
 
-	public static SCircle getSelectetAvatar(){
+	public static Circle getSelectetAvatar(){
 		return GameController.selectetAvatar;
 	}
 
@@ -1340,7 +1195,7 @@ public class GameController extends SCircle implements Initializable, Serializab
 	}
 
 	public static HBox[] getEbPlayer(){
-		return GameController.ebPlayer;
+		return ebPlayer;
 	}
 
 	public static ArrayList<Player> getPlayers(){
@@ -1351,14 +1206,14 @@ public class GameController extends SCircle implements Initializable, Serializab
 		return GameController.currentPlayer;
 	}
 
-	public static void setCurrentPlayer(){
-		GameController.currentPlayer = players.get(currentPlayerPosition);
+	public void setCurrentPlayer(){
+		currentPlayer = players.get(currentPlayerPosition);
 	}
 
 
-	//damit der currentPlayer nach Spielzug auf den nächsten Player in der Liste
+	//damit der currentPlayer nach Spielzug auf den nÃ¤chsten Player in der Liste
 	//gesetzt wird
-	public static void setCurrentPlayerPosition(){
+	public void setCurrentPlayerPosition(){
 		if(currentPlayerPosition == players.size()-1){
 			currentPlayerPosition = 0;
 		}else{
@@ -1393,5 +1248,17 @@ public class GameController extends SCircle implements Initializable, Serializab
 				playerCardsNotVisible.add(notVisible);
 			}
 		}
+	}
+	
+	public static ArrayList<Circle> getPlayersAvatar(){
+		return playerAvatars;
+	}
+	
+	public static void showGame(){
+		Platform.runLater(new Runnable(){
+			public void run(){
+				Client.loadGame();
+			}
+		});	
 	}
 }

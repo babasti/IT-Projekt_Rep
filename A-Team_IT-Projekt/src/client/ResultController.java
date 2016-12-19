@@ -36,7 +36,7 @@ public class ResultController implements Initializable, Serializable {
 		for(int i = 0; i < players.size(); i++){
 			if(score <= players.get(i).getScore()){
 				if(score == players.get(i).getScore()){
-					if(ebPlayer[i].getChildren().containsAll(players.get(i).getAvatar())){
+					if(ebPlayer[i].getChildren().containsAll(GameController.getPlayersAvatar())){
 						score = players.get(i).getScore();
 						winner = players.get(i);
 					}

@@ -5,42 +5,44 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.sun.prism.paint.Color;
-
-import common.SCircle;
-import common.Card;
-import common.Player;
-import common.Tile;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+import common.Card;
+import common.Player;
+import common.SCircle;
+import common.Tile;
 
-//Diese Klasse wird benötigt um eine Spielfigur zu bewegen oder die Aktion
-//abzubrechen damit der Spieler nochmals eine figur und eine Karte wählen kann
+
+//Diese Klasse wird benÃ¶tigt um eine Spielfigur zu bewegen oder die Aktion
+//abzubrechen damit der Spieler nochmals eine figur und eine Karte wÃ¤hlen kann
 
 public class MoveAvatarController implements Initializable, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6388869005591116075L;
 	@FXML
 	Button b_SpielzugBestätigen;
 	@FXML
 	Button b_SpielzugAbbruch;
 
-	//alle Instanzvariablen welche benötigt werden definieren
+	//alle Instanzvariablen welche benÃ¶tigt werden definieren
 	//so ziemlich alle aus der GameController Klasse welche hier aufgelistet sind
-	private SCircle selectetAvatar;
+	private Circle selectetAvatar;
 	private Card selectetCard;
 	private ImageView selectetCardImageView;
 	private ArrayList<Tile> startBoard;
@@ -52,7 +54,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 	private HBox currentAvatarPosition;
 	private static HBox[] ebPlayer;
 	private int currentPlayerPosition;
-	private ArrayList<SCircle> playersAvatar;
+	private ArrayList<Circle> playersAvatar;
 	private Player currentPlayer;
 
 
@@ -76,12 +78,12 @@ public class MoveAvatarController implements Initializable, Serializable {
 		ebPlayer = GameController.getEbPlayer();
 		currentPlayerPosition = GameController.getCurrentPlayerPosition();
 		currentPlayer = GameController.getCurrentPlayer();
-		playersAvatar = currentPlayer.getAvatar();
+		playersAvatar = GameController.getPlayersAvatar();
 		int count = 0;
 
 		if(currentAvatarPosition.getId().contains("sb_player")){
 			//die Figur wird auf das erste Tile aus der startBoard Liste gesetzt
-			//welches mit der ausgewählten Bewegungskarte übereinstimmt
+			//welches mit der ausgewÃ¤hlten Bewegungskarte Ã¼bereinstimmt
 			for(int i = 0; i < startBoard.size(); i++){
 				if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
 					if(tileBox.get(i).getChildren().isEmpty()){
@@ -144,7 +146,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 		}
 
 
-		//sobald die Figur gesetzt wurde, werden sämtliche Effekte zurückgesetzt
+		//sobald die Figur gesetzt wurde, werden sÃ¤mtliche Effekte zurÃ¼ckgesetzt
 		tileShadowMove = GameController.getTileShadow();
 		possibleTilesArrayMove = GameController.getPossibleTilesArray();
 		tileShadowMove.setChoke(0);
@@ -165,20 +167,20 @@ public class MoveAvatarController implements Initializable, Serializable {
 		});
 
 
-		//gespielte Bewegungskarte vom Player Array löschen und eine neue Karte aus dem Deck ziehen
+		//gespielte Bewegungskarte vom Player Array lÃ¶schen und eine neue Karte aus dem Deck ziehen
 		//die neue Karte wird an der Position der gespielten Karte gesetzt
 		GameController.currentPlayer.playerCards.set(Integer.parseInt(selectetCardImageView.getId().substring(8))-1, GameController.cards.get(0));
-		GameController.moveImages.get(Integer.parseInt(selectetCardImageView.getId().substring(8))-1).setImage(GameController.cards.get(0).getImage());
+		GameController.moveImages.get(Integer.parseInt(selectetCardImageView.getId().substring(8))-1).setImage(new Image(FileProvider.getFileProvider().getFile(GameController.cards.get(0).getImage().getimagePath())));
 		GameController.cards.remove(0);
 
 		GameController.numOfDeck.setText(String.valueOf(GameController.cards.size()));
 
 
 
-		//damit wir weitere aktionen durchführen können, müssen die selectetAvatar
+		//damit wir weitere aktionen durchfÃ¼hren kÃ¶nnen, mÃ¼ssen die selectetAvatar
 		//und selectetCard auf null gesetzt werden
 		//somit haben wir eine Sicherheit bei der Abfrage ob wir einen Spielzug
-		//tätigen können
+		//tÃ¤tigen kÃ¶nnen
 
 
 		GameController.setSelectetAvatar();
@@ -189,7 +191,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 		stage.close();
 	}
 
-	//cancelAction ist dafür da um alle Variablen und Effekten zurück zu setzen
+	//cancelAction ist dafÃ¼r da um alle Variablen und Effekten zurÃ¼ck zu setzen
 	public void cancelAction(){
 		tileShadow = GameController.getTileShadow();
 		selectetAvatar = GameController.getSelectetAvatar();
@@ -222,9 +224,9 @@ public class MoveAvatarController implements Initializable, Serializable {
 		stage.close();
 	}
 
-	//der onMouseExit effekt wurde übernommen aus der GameController Klasse
-	//ist dafür da, damit wir den gewünschten effekt beim verlassen der Bewegungskarte
-	//ausgeführt wird
+	//der onMouseExit effekt wurde Ã¼bernommen aus der GameController Klasse
+	//ist dafÃ¼r da, damit wir den gewÃ¼nschten effekt beim verlassen der Bewegungskarte
+	//ausgefÃ¼hrt wird
 	public void handleMouseExit(MouseEvent event){
 		selectetCardImageView.setEffect(null);
 		tileShadow = GameController.getTileShadow();

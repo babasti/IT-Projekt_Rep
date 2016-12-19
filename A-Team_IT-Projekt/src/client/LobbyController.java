@@ -1,6 +1,5 @@
 package client;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,9 +7,7 @@ import java.util.ResourceBundle;
 
 import common.Game;
 import common.Player;
-import common.SStage;
 import common.Session;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,21 +18,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class LobbyController implements Initializable, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1547512304397946316L;
 
 	@FXML
@@ -87,6 +76,7 @@ public class LobbyController implements Initializable, Serializable {
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		//Wertinitialisierung der Choicebox
 		cb_AnzahlSpieler.setItems(cb_AnzahlSpielerList);
+
 		offeneSitzungen = new ListView<String>();
 		offeneSitzungen.setLayoutX(394);
 		offeneSitzungen.setLayoutY(123);
@@ -94,18 +84,20 @@ public class LobbyController implements Initializable, Serializable {
 		offeneSitzungen.setPrefHeight(200);
 		offeneSitzungen.toFront();
 		lobbyPane.getChildren().add(offeneSitzungen);
+
 		fehlermeldung = new Label();
 		fehlermeldung.setLayoutX(325);
 		fehlermeldung.setLayoutY(432);
-		fehlermeldung.setTextFill(Color.web("#e82e44"));
+		fehlermeldung.setTextFill(Color.web("#e44317"));
+		fehlermeldung.setEffect(text_Sitzungsname.getEffect());
 		fehlermeldung.setFont(Font.font(18));
 		fehlermeldung.toFront();
 		lobbyPane.getChildren().add(fehlermeldung);
 
+		//Wenn Lobby gestartet wird, werden dem Player alle offenen Sitzungen angezeigt
 		ClientThread.sendToServer(new Game("arrayList openSessions an Client"));
 	}
 
-	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void createNewSession(){
 		try{
 			String sessionName = tf_Sitzungsname.getText();
@@ -120,13 +112,7 @@ public class LobbyController implements Initializable, Serializable {
 				if (!sessionAlreadyExist(sessionName)){
 					Player[] players = new Player[numOfPlayers];
 					players[0] = player;
-					for(Player p:players){
-						System.out.println(p);
-					}
 					Session session = new Session(sessionName, numOfPlayers, players);
-					//					offeneSitzungen.getItems().addAll(sessionName);
-					//					offeneSitzungenList.add(sessionName);
-					//					openSessions.add(session);
 					ClientThread.sendToServer(new Game(session,"sitzung erstellt"));
 				}else{
 					fehlermeldung.setText("Dieser Sitzungsname existiert bereits.");
@@ -150,7 +136,6 @@ public class LobbyController implements Initializable, Serializable {
 		return alreadyExist;
 	}
 
-	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
 	public void exitSession(){
 		try{
 			//Damit wenn ListView leer ist und darauf geklickt wird, das Programm nicht zusammenstürtzt
@@ -234,6 +219,7 @@ public class LobbyController implements Initializable, Serializable {
 			}
 			if(!alreadyInSession){
 				players[index] = p;
+				selectedSession.setPlayers(players);
 			}else{
 				fehlermeldung.setText("Sie sind der Sitzung bereits beigetreten.");
 			}
@@ -258,14 +244,14 @@ public class LobbyController implements Initializable, Serializable {
 		}
 	}
 
-	// hier muss ein Objekt weiterverschickt werden für die Client-Server-Kommunikation
-	//Array muss voll sein um spielen zu können
+
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
-			//if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
+			if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
 			//prüft, ob Sitzung voll ist
 			Player[] players = selectSession().getPlayers();
+			//Array muss voll sein um spielen zu können
 			boolean arrayNotFull = false;
 			for(Player p:players){
 				if(p == null){
@@ -274,9 +260,8 @@ public class LobbyController implements Initializable, Serializable {
 			}
 			if(!arrayNotFull){
 				try{
-				ClientThread.startedSession = selectedSession;
-				Game game = new Game(selectedSession,"spiel gestartet" );
-				ClientThread.sendToServer(game);
+					Game game = new Game(selectSession(), "spiel gestartet");
+					ClientThread.sendToServer(game);
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -302,15 +287,15 @@ public class LobbyController implements Initializable, Serializable {
 			}else{
 				fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
 			}
-			//			}
-			//			else{
-			//				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
-			//			}
-
 		}
-	}
+		else{
+			fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
+		}
 
-	public static void setFehlermeldungText(String s){
-		fehlermeldung.setText(s);
 	}
+}
+
+public static void setFehlermeldungText(String s){
+	fehlermeldung.setText(s);
+}
 }

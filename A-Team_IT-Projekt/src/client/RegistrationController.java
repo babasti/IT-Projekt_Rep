@@ -101,7 +101,7 @@ public class RegistrationController implements Initializable {
 					Stage stage = new Stage();
 					stage.setScene(new Scene(rootPane));
 					stage.show();
-
+					LobbyController.setFehlermeldungText("Sie sind als "+p.getUserName()+" eingeloggt.");
 					//schliesst das alte GUI
 					Stage stage1 = (Stage)b_register.getScene().getWindow();
 					stage1.close();

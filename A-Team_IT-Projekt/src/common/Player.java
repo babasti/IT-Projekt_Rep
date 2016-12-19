@@ -1,24 +1,16 @@
 package common;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
-import javafx.scene.paint.Color;
-import common.SCircle;
+
 import client.ClientThread;
 
-public class Player extends SCircle implements Serializable{
+
+public class Player implements Serializable{
 
 	/**
 	 * 
@@ -31,11 +23,9 @@ public class Player extends SCircle implements Serializable{
 	private int score;
 	private String PCName;
 	private boolean alreadyLoggedIn = false;
-	private ArrayList<SCircle> avatars;
-	private SCircle avatar1 = new SCircle();
-	private SCircle avatar2 = new SCircle();
-	private SCircle avatar3 = new SCircle();
-	private SCircle avatarColor = new SCircle();
+	private ArrayList<Avatar> playerAvatars;
+	private String avatarColor;
+
 
 	public Player(String userName, String password, Date dateOfBirth, String PCName){
 		this.userName = userName;
@@ -44,16 +34,7 @@ public class Player extends SCircle implements Serializable{
 		this.PCName = PCName;
 		playerCards = new ArrayList<Card>();
 		score = 0;
-		avatars = new ArrayList<SCircle>();
-		avatars.add(avatar1);
-		avatars.add(avatar2);
-		avatars.add(avatar3);
-		for(int i = 0; i < avatars.size(); i++){
-			avatars.get(i).setRadius(10);
-			avatars.get(i).setStroke(Color.BLACK);
-			avatars.get(i).toFront();
-			avatars.get(i).setVisible(true);
-		}
+		playerAvatars = new ArrayList<Avatar>();
 	}
 
 	public void setScore(int score){
@@ -121,15 +102,11 @@ public class Player extends SCircle implements Serializable{
 		}
 		return exist;
 	}
-	
-	public ArrayList<SCircle> getAvatar(){
-		return this.avatars;
-	}
-	
+
 	public void addToScore(int points){
 		this.score += points;
 	}
-	
+
 	public void subFromScore(int points){
 		this.score -=points;
 	}
@@ -138,24 +115,26 @@ public class Player extends SCircle implements Serializable{
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		return "Name: "+this.userName+"\n"+"Passwort: "+this.password+"\n"+"Geburtsdatum: "+dateFormat.format(this.dateOfBirth);
 	}
-	
+
 	public boolean getAlreadyLoggedIn(){
 		return this.alreadyLoggedIn;
 	}
-	
+
 	public void setAlreadyLoggedIn(boolean b){
 		this.alreadyLoggedIn = b;
 	}
-	
-	public void setAvatarColor (Color avatarColor){
-		this.avatarColor.setFill(avatarColor);
-		this.avatarColor.setRadius(10);
-		this.avatarColor.setStroke(Color.BLACK);
-		this.avatarColor.setVisible(true);
+
+	public void setAvatarColor (String avatarColor){
+		this.avatarColor = avatarColor;
+	}
+
+
+	public ArrayList<Avatar> getPlayerAvatars(){
+		return this.playerAvatars;
 	}
 	
-	public SCircle getAvatarColor(){
-		return this.avatarColor;
+	public ArrayList<Card> getPlayerCards(){
+		return this.playerCards;
 	}
 
 }
