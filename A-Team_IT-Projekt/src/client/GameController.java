@@ -521,7 +521,7 @@ public class GameController implements Initializable{
 		int countPlayer = 0;
 		Player player;
 		for(int i = 0; i < players.size(); i++){
-			if(players.get(i).getPCName().equals(System.getProperty("user.name")));
+			if(players.get(i).getUserName().equals(System.getProperty("user.name")));
 			countPlayer = i;
 		}
 		player = players.get(countPlayer);
