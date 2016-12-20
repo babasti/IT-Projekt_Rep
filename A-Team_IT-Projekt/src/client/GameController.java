@@ -499,6 +499,7 @@ public class GameController implements Initializable{
 				sbPlayer[y].toFront();
 				playerAvatars.add(circle);
 			}
+			
 		}
 
 
