@@ -48,12 +48,21 @@ public class Game implements Serializable {
 			cards = setStartMoveCards();
 			startBoard = setStartTiles();
 			players = session.getPlayers();
-
+			
 			for(int i = 0; i < players.length; i++){
-				setPlayerAvatar(players[i]);
-				players[i].setAvatarColor(avatarContainer.getAvatarColors().get(i));
+				for(int y = 0; y < 3; y++){
+					players[i].getPlayerAvatars().add(avatarContainer.getAvatars().get(0));
+					avatarContainer.getAvatars().remove(0);
+				}
 				initPlayerCards(players[i]);
 			}
+
+
+			int count = 0;
+			for(int x = 0; x < players.length; x++){
+				players[x].setAvatarColor(players[x].getPlayerAvatars().get(count));
+			}
+
 			currentPlayer = players[0];
 			currentPlayerPosition = 0;
 		}
@@ -236,6 +245,10 @@ public class Game implements Serializable {
 			currentPlayerPosition++;
 		}
 	}
+	
+	public void setCurrentPlayerPosition(int currentPlayerPosition){
+		this.currentPlayerPosition = currentPlayerPosition;
+	}
 
 	public void setCurrentPlayer(Player player){
 		currentPlayer = player;
@@ -249,11 +262,16 @@ public class Game implements Serializable {
 		return startBoard;
 	}
 
-	public void setPlayerAvatar(Player player){
-		for(int i = 0; i < 3; i++){
-			player.getPlayerAvatars().add(avatarContainer.getAvatars().get(i));
-			avatarContainer.getAvatars().remove(i);
-		}
+	public void setStartBoard(ArrayList<Tile> board){
+		this.startBoard = board;
+	}
+	
+	public void setCards(ArrayList<Card> cards){
+		this.cards = cards;
+	}
+	
+	public void setWhat(String what){
+		this.what = what;
 	}
 
 }

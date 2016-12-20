@@ -21,7 +21,7 @@ public class Player implements Serializable{
 	private String PCName;
 	private boolean alreadyLoggedIn = false;
 	private ArrayList<Avatar> playerAvatars;
-	private String avatarColor;
+	private Avatar avatarColor;
 
 
 	public Player(String userName, String password, Date dateOfBirth, String PCName){
@@ -32,6 +32,7 @@ public class Player implements Serializable{
 		playerCards = new ArrayList<Card>();
 		score = 0;
 		playerAvatars = new ArrayList<Avatar>();
+		
 	}
 
 	public void setScore(int score){
@@ -121,10 +122,11 @@ public class Player implements Serializable{
 		this.alreadyLoggedIn = b;
 	}
 
-	public void setAvatarColor (String avatarColor){
-		this.avatarColor = avatarColor;
+	public void setAvatarColor (Avatar avatar){
+		this.avatarColor = avatar;
 	}
 
+	
 	public ArrayList<Avatar> getPlayerAvatars(){
 		return this.playerAvatars;
 	}
