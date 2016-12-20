@@ -118,9 +118,15 @@ public class ClientThread implements Runnable, Serializable{
 							//Item aus ListView <String> offeneSitzungen löschen
 							for (int c = 0; c < LobbyController.offeneSitzungen.getItems().size();c++){
 								if (LobbyController.offeneSitzungen.getItems().get(c).equals(game.getSession().getSessionName())){
-									LobbyController.offeneSitzungen.getItems().remove(c);
+									string = LobbyController.offeneSitzungen.getItems().get(c);
 								}
 							}
+							final String toBeRemoved = string;
+							Platform.runLater(new Runnable(){
+								public void run(){
+									LobbyController.offeneSitzungen.getItems().remove(toBeRemoved);
+								}
+							});
 						}
 						if(game.getWhat().equals("Player aus Sitzung ausgetreten")){
 							for(Session session:LobbyController.openSessions){
