@@ -90,6 +90,10 @@ public class ServerThread implements Serializable, Runnable{
 						}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
 							sendToAllClients(g);
 						}
+						
+						if(g.getWhat().equals("spielzugBeendet")){
+							sendToAllClients(g);
+						}
 					}
 				}
 			}

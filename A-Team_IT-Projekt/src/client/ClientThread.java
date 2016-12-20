@@ -74,7 +74,12 @@ public class ClientThread implements Runnable, Serializable{
 							});
 							//schliesst das alte GUI
 						
-						}//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
+						}
+						if(game.getWhat().equals("spielzugBeendet")){
+							updateGame();
+						}
+						
+						//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
 						//um diese in der ListView anzuzeigen
 						if(game.getWhat().equals("arrayList openSessions an Client")){
 							sessionList = game.getSessionList();
