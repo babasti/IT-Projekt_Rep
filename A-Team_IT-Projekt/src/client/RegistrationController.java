@@ -92,8 +92,7 @@ public class RegistrationController implements Initializable {
 			}else{
 				Player p = new Player(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
 				p.setAlreadyLoggedIn(true);
-				ClientThread.regPlayers.add(p);
-				ClientThread.sendToServer(new Game(p));
+				ClientThread.sendToServer(new Game(p, "player hat sich eingeloggt", System.getProperty("user.name")));
 				try{
 					//Weiterleitung in Lobby				
 					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
@@ -101,7 +100,7 @@ public class RegistrationController implements Initializable {
 					Stage stage = new Stage();
 					stage.setScene(new Scene(rootPane));
 					stage.show();
-					LobbyController.setFehlermeldungText("Sie sind als "+p.getUserName()+" eingeloggt.");
+					LobbyController.fehlermeldung.setText("Sie sind als "+p.getUserName()+" eingeloggt.");
 					//schliesst das alte GUI
 					Stage stage1 = (Stage)b_register.getScene().getWindow();
 					stage1.close();

@@ -83,9 +83,9 @@ public class LoginController implements Initializable, Serializable{
 				Player p = Player.getPlayerUser(eingabeName);
 				if(!p.getAlreadyLoggedIn()){
 					if(p.getPassword().equals(eingabePW)){// Benutzer existiert&Passwort korrekt
-						p.updatePCName();
+						//p.updatePCName();
 						p.setAlreadyLoggedIn(true);
-						ClientThread.sendToServer(new Game(p));
+						ClientThread.sendToServer(new Game(p, "player hat sich eingeloggt", System.getProperty("user.name")));
 						text_Fehlermeldung.setText("Eingaben korrekt");
 						try{
 							//Weiterleitung in Lobby	
@@ -95,7 +95,7 @@ public class LoginController implements Initializable, Serializable{
 							stage.setResizable(false);
 							stage.setScene(new Scene(lobbyPane));
 							stage.show();
-							LobbyController.setFehlermeldungText("Sie sind als "+p.getUserName()+" eingeloggt.");
+							LobbyController.fehlermeldung.setText("Sie sind als "+p.getUserName()+" eingeloggt.");
 
 							//schliesst das alte GUI
 							Stage stage1 = (Stage)b_login.getScene().getWindow();

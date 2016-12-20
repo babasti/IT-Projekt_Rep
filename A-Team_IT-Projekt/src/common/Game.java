@@ -24,13 +24,9 @@ public class Game implements Serializable {
 	private Player p;
 	private String[] a;
 	private String what;
+	private String PCName;
 	private int numOfPlayers;
 	private Session session;
-
-
-	public Session getSession(){
-		return this.session;
-	}
 
 	public Game(Session session, String s){
 		this.session = session;
@@ -40,6 +36,9 @@ public class Game implements Serializable {
 		}
 		if(s.equals("spiel gestartet")){
 			what = "spiel gestartet";
+		}
+		if(s.equals("sitzung ist leer")){
+			what = "sitzung ist leer";
 		}
 		if(s.equals("spielLaden")){
 			what = "spielLaden";
@@ -58,6 +57,7 @@ public class Game implements Serializable {
 				initPlayerCards(players[i]);
 			}
 
+
 			int count = 0;
 			for(int x = 0; x < players.length; x++){
 				players[x].setAvatarColor(players[x].getPlayerAvatars().get(count));
@@ -65,14 +65,18 @@ public class Game implements Serializable {
 
 			currentPlayer = players[0];
 			currentPlayerPosition = 0;
-
 		}
 	}
 
-	public Game(Session session, Player p){
+	public Game(Session session, Player p, String s){
 		this.session = session;
 		this.p = p;
-		what = "Player ist Sitzung beigetreten";
+		this.s = s;
+		if(s.equals("Player ist Sitzung beigetreten")){
+			what = "Player ist Sitzung beigetreten";
+		}if(s.equals("Player aus Sitzung ausgetreten")){
+			what = "Player aus Sitzung ausgetreten";
+		}
 	}
 
 	public Game(String s){
@@ -88,42 +92,49 @@ public class Game implements Serializable {
 		this.al = al;
 		what = "arrayList regPlayers von Server";
 	}
-
-	public ArrayList<Player> getAl(){
-		return this.al;
-	}
-
+	
 	public Game(ArrayList<Session> sessionList, String s){
 		if(s.equals("arrayList openSessions an Client")){
 			what = "arrayList openSessions an Client";
 			this.sessionList = sessionList;
 		}
 	}
+	
+	public Game(ArrayList<Player> al, Player p, String s){
+		this.al = al;
+		this.p = p;
+		this.s = s;
+		what = "spieler hat sich registriert";
+	}
+
+	public Game(Player p, String s, String PCName){
+		this.p = p;
+		this.s = s;
+		this.PCName = PCName;
+		if(s.equals("player hat sich eingeloggt")){
+			what = "player hat sich eingeloggt";
+		}
+	}
+	
+	public Game(String[] a){
+		this.a = a;
+		what = "PC Name und User an Server";
+	}
+	
+	public Session getSession(){
+		return this.session;
+	}
+
+	public ArrayList<Player> getAl(){
+		return this.al;
+	}
 
 	public ArrayList<Session> getSessionList(){
 		return this.sessionList;
 	}
 
-	public Game(Player p){
-		this.p = p;
-		what = "Player an Server";
-	}
-
-	public Game(Player p, String s){
-		this.p = p;
-		this.s = s;
-		if(s.equals("player hat sich eingeloggt")){
-			what = "player hat sich eingeloggt";
-		}
-	}
-
 	public Player getP(){
 		return this.p;
-	}
-
-	public Game(String[] a){
-		this.a = a;
-		what = "PC Name und User an Server";
 	}
 
 	public String[] getA(){
@@ -138,6 +149,9 @@ public class Game implements Serializable {
 		return players;
 	}
 
+	public void setSession(Session session){
+		this.session = session;
+	}
 
 	public ArrayList<Card> setStartMoveCards(){
 
@@ -170,7 +184,6 @@ public class Game implements Serializable {
 			count++;
 		}
 		return cards;
-
 	}
 
 	public ArrayList<Card> cardArrayToUse(){
@@ -247,10 +260,6 @@ public class Game implements Serializable {
 
 	public ArrayList<Tile> getStartBoard(){
 		return startBoard;
-	}
-
-	public void setSession(Session session){
-		this.session = session;
 	}
 
 	public void setStartBoard(ArrayList<Tile> board){

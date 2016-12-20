@@ -6,6 +6,7 @@ import client.ClientThread;
 import client.LobbyController;
 import common.Game;
 import common.Player;
+import common.Session;
 
 import java.lang.reflect.Array;
 import java.net.*;
@@ -25,14 +26,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class ServerThread implements Serializable, Runnable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 858159327570071613L;
 	private static Socket socket = null;
 	ServerThread(Socket socket){
 		this.socket = socket;
-
 	}
 
 	public void run(){
@@ -53,33 +51,27 @@ public class ServerThread implements Serializable, Runnable{
 							sendToClient(new Game(Server.openSessions, "arrayList openSessions an Client"));
 						}
 						//wenn gesendetes Game-Objekt player enthält, wird er der arraylist hinzugefügt	
-						if(g.getWhat().equals("Player an Server")){
+						if(g.getWhat().equals("player hat sich eingeloggt")){
 							//wenn Benutzer sich einlogged, wird alreadyLoggedIn auf true gesetzt
 							ArrayList<String> names = new ArrayList<String>();
 							for(Player p:Server.regPlayers){
 								names.add(p.getUserName());
 							}
+							//nur Login
 							if(names.contains(g.getP().getUserName())){
 								for(Player p:Server.regPlayers){
 									if(g.getP().getUserName().equals(p.getUserName())){
-										p.setAlreadyLoggedIn(true);
-										sendToAllClients(new Game(g.getP(), "player hat sich eingeloggt"));
+										sendToAllClients(g);
+										Server.arrayListToFile();
 									}
 								}
+								//neuer Player hat sich registriert
 							}else{
 								Server.regPlayers.add(g.getP());
-								sendToAllClients(new Game(Server.regPlayers));
+								sendToAllClients(new Game(Server.regPlayers, g.getP(), "spieler hat sich registriert"));
 								Server.arrayListToFile();
 							}					
-						}
-						//wenn gesendetes Game-Objekt ein Array enthält wird der PCName des Users updated
-						if(g.getWhat().equals("PC Name und User an Server")){
-							Player p = Player.getPlayerUser(g.getA()[0]);
-							p.setPCName(g.getA()[1]);
-							Server.arrayListToFile();
-						}if(g.getWhat().equals("spiel gestartet")){
-							System.out.println("spiel auf server erhalten");
-							
+						}if(g.getWhat().equals("spiel gestartet")){							
 							Game game = new Game(g.getSession(), "spielLaden");
 							game.setSession(g.getSession());
 							sendToAllClients(game);
@@ -88,6 +80,18 @@ public class ServerThread implements Serializable, Runnable{
 							sendToAllClients(g);
 							Server.openSessions.add(g.getSession());
 						}if(g.getWhat().equals("Player ist Sitzung beigetreten")){
+							sendToAllClients(g);
+						}if(g.getWhat().equals("sitzung ist leer")){
+							Session sessionToBeRemoved = null;
+							for(Session session:Server.openSessions){
+								if(g.getSession().getSessionName().equals(session.getSessionName())){
+									sessionToBeRemoved = session;
+								}
+							}
+							Server.openSessions.remove(sessionToBeRemoved);
+							sendToAllClients(g);
+						}
+						if(g.getWhat().equals("Player aus Sitzung ausgetreten")){
 							sendToAllClients(g);
 						}
 						
@@ -102,18 +106,16 @@ public class ServerThread implements Serializable, Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//		finally{
-		//			try {
-		//				Server.arrayListToFile();
-		//				objectInputStream.close();
-		//				objectOutputStream.close();
-		//				socket.close();
-		//			} catch (IOException e) {
-		//				// TODO Auto-generated catch block
-		//				e.printStackTrace();
-		//			}
-		//		}
-
+		finally{
+			try {		
+				Server.objectInputStream.close();
+				Server.objectOutputStream.close();
+				socket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public synchronized static void sendToClient(Game g){
@@ -134,7 +136,6 @@ public class ServerThread implements Serializable, Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 	}
 }
