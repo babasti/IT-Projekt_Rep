@@ -54,8 +54,8 @@ public class ResultController implements Initializable, Serializable {
 
 		System.out.println(players.get(0).getUserName()+" "+players.get(0).getScore());
 		System.out.println(players.get(1).getUserName()+" "+players.get(1).getScore());
-		System.out.println(players.get(2).getUserName()+" "+players.get(2).getScore());
-		System.out.println(players.get(3).getUserName()+" "+players.get(3).getScore());
+//		System.out.println(players.get(2).getUserName()+" "+players.get(2).getScore());
+//		System.out.println(players.get(3).getUserName()+" "+players.get(3).getScore());
 	}
 
 

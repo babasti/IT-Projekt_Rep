@@ -35,12 +35,10 @@ public class AvatarContainer implements Serializable{
 	private void SetAvatars() {
 		for(String color : avatarColors){
 			for(int i = 0; i < 3; i++){
-				SCircle circle = new SCircle();
-				Avatar avatar = new Avatar(color, circle);
+				Avatar avatar = new Avatar(color);
 				avatars.add(avatar);
 			}
 		}
-		
 	}
 	
 	
