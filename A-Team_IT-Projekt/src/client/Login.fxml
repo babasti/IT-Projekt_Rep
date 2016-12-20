@@ -93,21 +93,21 @@
             </Lighting>
          </effect>
       </Label>
-      <Button fx:id="hostButton" layoutX="191.0" layoutY="354.0" mnemonicParsing="false" onAction="#setSocket" text="Host" textFill="#e82e44">
+      <Button fx:id="hostButton" layoutX="175.0" layoutY="355.0" mnemonicParsing="false" onAction="#setSocket" text="Host" textFill="#e82e44">
          <font>
             <Font name="Baskerville Bold" size="14.0" />
          </font>
          <effect>
             <SepiaTone />
          </effect></Button>
-      <TextField fx:id="ipAdresse" alignment="CENTER" layoutX="252.0" layoutY="355.0" promptText="enter IP Adress">
+      <TextField fx:id="ipAdresse" alignment="CENTER" layoutX="239.0" layoutY="355.0" promptText="IP Adresse eingeben">
          <font>
             <Font name="Baskerville Bold" size="14.0" />
          </font>
          <effect>
             <InnerShadow color="#e44317" />
          </effect></TextField>
-      <Button fx:id="serverButton" layoutX="436.0" layoutY="355.0" mnemonicParsing="false" onAction="#setServerSocket" text="Connect to Server" textFill="#e82e44">
+      <Button fx:id="serverButton" layoutX="425.0" layoutY="355.0" mnemonicParsing="false" onAction="#setServerSocket" text="mit Server verbinden" textFill="#e82e44">
          <font>
             <Font name="Baskerville Bold" size="14.0" />
          </font>
