@@ -1271,6 +1271,7 @@ public class GameController implements Initializable{
 		});	
 	}
 	
+
 	public static void updateGame(Game game){
 		Platform.runLater(new Runnable(){
 			public void run(){
