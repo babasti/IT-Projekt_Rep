@@ -35,11 +35,11 @@ public class Server implements Serializable{
 
 	public void runServer() throws Exception {
 		openOutputStreams = new ArrayList<ObjectOutputStream>();
-
+		
+		//Singletons
 		if(serverSocket == null){
 			serverSocket = new ServerSocket (PORT);
 		}
-		//Singleton
 		if(regPlayers == null){
 			regPlayers = new ArrayList<Player>();
 		}
@@ -54,7 +54,6 @@ public class Server implements Serializable{
 			e.printStackTrace();
 		}
 
-	
 		System.out.println("Starting Server...");
 		System.out.println("Server started at: "+serverSocket.getInetAddress());
 		while(true){

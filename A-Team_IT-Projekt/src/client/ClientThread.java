@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import server.Server;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,9 +32,9 @@ public class ClientThread implements Runnable, Serializable{
 	public void run(){
 		Object obj;
 		try{
-			synchronized(this){
-				sendToServer(new Game("arrayList regPlayers an Client"));
-				while(true){
+			sendToServer(new Game("arrayList regPlayers an Client"));
+			while(true){
+				synchronized(LoginController.objectInputStream){
 					//Objekte einlesen
 					obj = LoginController.objectInputStream.readObject();
 					if(obj instanceof Game){
@@ -53,14 +54,22 @@ public class ClientThread implements Runnable, Serializable{
 									s.setPlayers(game.getSession().getPlayers());
 								}
 							}
-							//LobbyController.setFehlermeldungText(g.getP().getUserName()+" ist der Sitzung "+g.getSession().getSessionName()+" beigetreten.");
+							Platform.runLater(new Runnable(){
+								public void run(){
+									LobbyController.fehlermeldung.setText(game.getP().getUserName()+" ist der Sitzung "+game.getSession().getSessionName()+" beigetreten.");
+								}
+							});
 						}if(game.getWhat().equals("player hat sich eingeloggt")){
 							for(Player p:regPlayers){
 								if(game.getP().getUserName().equals(p.getUserName())){
 									p.setAlreadyLoggedIn(true);
+									p.setPCName(game.getP().getPCName());
 								}
 							}
-						}if(game.getWhat().equals("spielLaden")){
+						}if(game.getWhat().equals("spieler hat sich registriert")){
+							regPlayers.add(game.getP());
+						}
+						if(game.getWhat().equals("spielLaden")){
 							startedSession = game.getSession();
 
 							GameController.showGame();
@@ -72,8 +81,7 @@ public class ClientThread implements Runnable, Serializable{
 									stage1.close();
 								}
 							});
-							//schliesst das alte GUI
-						
+
 						}//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
 						//um diese in der ListView anzuzeigen
 						if(game.getWhat().equals("arrayList openSessions an Client")){
@@ -84,10 +92,52 @@ public class ClientThread implements Runnable, Serializable{
 								LobbyController.openSessions.add(s);
 							}
 						}
+						//wenn Sitzung leer ist, wird sie aus der listview gelöscht
+						if(game.getWhat().equals("sitzung ist leer")){
+							String string = null;
+							for (int i = 0; i < LobbyController.offeneSitzungenList.size(); i++){
+								if(LobbyController.offeneSitzungenList.get(i).equals(game.getSession().getSessionName())){
+									string = LobbyController.offeneSitzungenList.get(i);
+								}
+							}
+							//wird hier nochmals übergeben, da stringToBeRemoved final sein muss
+							final String stringToBeRemoved = string;
+							Platform.runLater(new Runnable(){
+								public void run(){
+									LobbyController.offeneSitzungenList.remove(stringToBeRemoved);
+								}
+							});
+							// Session aus ArrayList <Session> openSessions löschen
+							Session sessionToBeRemoved = null;
+							for(int b = 0; b < LobbyController.openSessions.size(); b++){
+								if(LobbyController.openSessions.get(b).getSessionName().equals(game.getSession().getSessionName())){
+									sessionToBeRemoved = LobbyController.openSessions.get(b);
+								}
+							}
+							LobbyController.openSessions.remove(sessionToBeRemoved);
+							//Item aus ListView <String> offeneSitzungen löschen
+							for (int c = 0; c < LobbyController.offeneSitzungen.getItems().size();c++){
+								if (LobbyController.offeneSitzungen.getItems().get(c).equals(game.getSession().getSessionName())){
+									LobbyController.offeneSitzungen.getItems().remove(c);
+								}
+							}
+						}
+						if(game.getWhat().equals("Player aus Sitzung ausgetreten")){
+							for(Session session:LobbyController.openSessions){
+								if(session.getSessionName().equals(game.getSession().getSessionName())){
+									session.setPlayers(game.getSession().getPlayers());
+								}
+							}
+							Platform.runLater(new Runnable(){
+								public void run(){
+									LobbyController.fehlermeldung.setText(game.getP().getUserName()+" ist aus der Sitzung "+game.getSession().getSessionName()+" ausgetreten.");
+								}
+							});
+						}
 					}
-					//									socket.close();
-					//									objectInputStream.close();
-					//									objectOutputStream.close();
+					//socket.close();
+					//objectInputStream.close();
+					//objectOutputStream.close();
 				}
 			}
 		}catch(Exception e){

@@ -5,24 +5,16 @@ import java.io.Serializable;
 
 public class Session implements Serializable{
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3018411303261858848L;
 	private int numOfPlayers;
 	private Player[] players;
 	private String sessionName;
-
-
 	
 	public Session(String sessionName, int numOfPlayers, Player[] players){
 		this.sessionName = sessionName;
 		this.numOfPlayers = numOfPlayers;
 		this.players =players;
-		
 	}
-		
 	
 	public void setSessionName(String sessionName){
 		this.sessionName = sessionName;

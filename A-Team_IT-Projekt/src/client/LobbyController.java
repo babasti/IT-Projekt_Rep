@@ -142,16 +142,18 @@ public class LobbyController implements Initializable, Serializable {
 			if(!offeneSitzungen.getSelectionModel().isEmpty()){
 				for (int z = 0; z < openSessions.size();z++){
 					//löscht den Player aus der Session
-					if(openSessions.get(z).equals(selectedSession)){
-						Player[] players = selectedSession.getPlayers();
+					if(openSessions.get(z).getSessionName().equals(selectSession().getSessionName())){
+						Player[] players = selectSession().getPlayers();
+						Player currentPlayer = Player.getPlayerPC(System.getProperty("user.name"));
 						for (int i = 0; i<players.length;i++){
 							if(!(players[i] == null)){
-								if(players[i].getUserName().equals(players[0].getUserName())){
+								if(players[i].getUserName().equals(currentPlayer.getUserName())){
 									players[i] = null;
-									selectedSession.setPlayers(players);
+									selectSession().setPlayers(players);
 								}
 							}
 						}
+						ClientThread.sendToServer(new Game(selectSession(), currentPlayer, "Player aus Sitzung ausgetreten"));
 						//wenn der letzte Player aus der Session geht, sollte die Session gelöscht werden
 						//jedes Mal wenn ein Player im Array den Wert null hat, steigt der counter um 1, das heisst also wenn 
 						//counter gleich wie die Arraygrösse ist, sind keine Players in der Session vorhanden und sie kann gelöscht werden
@@ -163,24 +165,8 @@ public class LobbyController implements Initializable, Serializable {
 						}
 						//wenn counter gleichgross wie die Grösse des Arrays ist, dann:
 						if(counter == players.length){
-							//String aus ArrayList <String> offeneSitzungenList löschen
-							for (int i = 0; i < offeneSitzungenList.size(); i++){
-								if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
-									offeneSitzungenList.remove(i);
-								}
-							}
-							// Session aus ArrayList <Session> openSessions löschen
-							for(int b = 0; b < openSessions.size(); b++){
-								if(openSessions.get(b).equals(selectedSession)){
-									//openSessions.remove(b);
-								}
-							}
-							//Item aus ListView <String> offeneSitzungen löschen
-							for (int c = 0; c < offeneSitzungen.getItems().size();c++){
-								if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
-									offeneSitzungen.getItems().remove(c);
-								}
-							}
+							ClientThread.sendToServer(new Game(selectSession(), "sitzung ist leer"));
+
 						}
 					}
 				}
@@ -219,11 +205,11 @@ public class LobbyController implements Initializable, Serializable {
 			}
 			if(!alreadyInSession){
 				players[index] = p;
-				selectedSession.setPlayers(players);
+				selectSession().setPlayers(players);
 			}else{
 				fehlermeldung.setText("Sie sind der Sitzung bereits beigetreten.");
 			}
-			ClientThread.sendToServer(new Game(selectSession(),p));
+			ClientThread.sendToServer(new Game(selectSession(),p, "Player ist Sitzung beigetreten"));
 		}
 	}
 
@@ -249,53 +235,48 @@ public class LobbyController implements Initializable, Serializable {
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
 			if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
-			//prüft, ob Sitzung voll ist
-			Player[] players = selectSession().getPlayers();
-			//Array muss voll sein um spielen zu können
-			boolean arrayNotFull = false;
-			for(Player p:players){
-				if(p == null){
-					arrayNotFull = true;
+				//prüft, ob Sitzung voll ist
+				Player[] players = selectSession().getPlayers();
+				//Array muss voll sein um spielen zu können
+				boolean arrayNotFull = false;
+				for(Player p:players){
+					if(p == null){
+						arrayNotFull = true;
+					}
+				}
+				if(!arrayNotFull){
+					try{
+						Game game = new Game(selectSession(), "spiel gestartet");
+						ClientThread.sendToServer(game);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+
+					//String aus ArrayList <String> offeneSitzungenList löschen
+					for (int i = 0; i < offeneSitzungenList.size(); i++){
+						if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
+							offeneSitzungenList.remove(i);
+						}
+					}
+					//Session aus ArrayList <Session> openSessions löschen
+					for(int b = 0; b < openSessions.size(); b++){
+						if(openSessions.get(b).equals(selectSession())){
+							openSessions.remove(b);
+						}
+					}
+					//Item aus ListView <String> offeneSitzungen löschen
+					for (int c = 0; c < offeneSitzungen.getItems().size();c++){
+						if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
+							offeneSitzungen.getItems().remove(c);
+						}
+					}
+				}else{
+					fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
 				}
 			}
-			if(!arrayNotFull){
-				try{
-					Game game = new Game(selectSession(), "spiel gestartet");
-					ClientThread.sendToServer(game);
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-
-				//String aus ArrayList <String> offeneSitzungenList löschen
-				for (int i = 0; i < offeneSitzungenList.size(); i++){
-					if(offeneSitzungenList.get(i).equals(selectedSessionListView)){
-						offeneSitzungenList.remove(i);
-					}
-				}
-				//Session aus ArrayList <Session> openSessions löschen
-				for(int b = 0; b < openSessions.size(); b++){
-					if(openSessions.get(b).equals(selectedSession)){
-						openSessions.remove(b);
-					}
-				}
-				//Item aus ListView <String> offeneSitzungen löschen
-				for (int c = 0; c < offeneSitzungen.getItems().size();c++){
-					if (offeneSitzungen.getItems().get(c).equals(selectedSessionListView)){
-						offeneSitzungen.getItems().remove(c);
-					}
-				}
-			}else{
-				fehlermeldung.setText("Die Sitzung ist noch nicht voll.");
+			else{
+				fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
 			}
 		}
-		else{
-			fehlermeldung.setText("Nur der Sitzungsersteller darf das Spiel starten.");
-		}
-
 	}
-}
-
-public static void setFehlermeldungText(String s){
-	fehlermeldung.setText(s);
-}
 }

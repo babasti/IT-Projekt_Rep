@@ -11,10 +11,7 @@ import client.ClientThread;
 
 
 public class Player implements Serializable{
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -2853507843070301083L;
 	private String userName;
 	private Date dateOfBirth;
@@ -127,7 +124,6 @@ public class Player implements Serializable{
 	public void setAvatarColor (String avatarColor){
 		this.avatarColor = avatarColor;
 	}
-
 
 	public ArrayList<Avatar> getPlayerAvatars(){
 		return this.playerAvatars;
