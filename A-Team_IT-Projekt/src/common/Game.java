@@ -236,7 +236,7 @@ public class Game implements Serializable {
 		return currentPlayer;
 	}
 
-	//damit der currentPlayer nach Spielzug auf den nÃ¤chsten Player in der Liste
+	//damit der currentPlayer nach Spielzug auf den nächsten Player in der Liste
 	//gesetzt wird
 	public void setCurrentPlayerPosition(){
 		if(currentPlayerPosition == players.length-1){
