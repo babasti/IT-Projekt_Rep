@@ -1277,15 +1277,46 @@ public class GameController implements Initializable{
 		Platform.runLater(new Runnable(){
 			public void run(){
 				setGame(game);
+				//update Tiles
 				startBoard = game.getStartBoard();
+				//update cards (Deck)
 				cards = game.getCards();
+				//update currentPlayer
 				currentPlayer = game.getCurrentPlayer();
+				//update Players
 				players.clear();
 				for(int i = 0; i<game.getPlayers().length; i++){
 					players.add(game.getPlayers()[i]);
 				}
 				
+				//Tiles von startBoard Liste setzen
+				int countTile = 0;
+				for(int i = 0; i < startBoard.size(); i++){
+					Image img = new Image(FileProvider.getFileProvider().getFile(startBoard.get(i).getImage().getimagePath()));
+					tileImages[countTile].setImage(img);
+					countTile++;
+				}
 				
+				
+				//update numOfDeck
+				String numberOfDeck = String.valueOf(cards.size());
+				numOfDeck.setText(numberOfDeck);
+				
+				//update Message
+				setMessage(currentPlayer.getUserName()+" ist dran!");
+				
+				
+				//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
+				scoreTable.getColumns().clear();
+				userNameColumn.setText("SpielerName");
+				scoreColumn.setText("Score");
+				avatarColorColumn.setText("Spielfigur");
+				userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
+				scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
+				avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));
+
+				scoreTable.setItems(playersData);
+				scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 
 			}
 		});
