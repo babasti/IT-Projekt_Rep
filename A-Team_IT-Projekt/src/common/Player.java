@@ -128,5 +128,9 @@ public class Player implements Serializable{
 	public ArrayList<Card> getPlayerCards(){
 		return this.playerCards;
 	}
+	
+	public void setPlayerCards(ArrayList<Card> playerCards){
+		this.playerCards = playerCards;
+	}
 
 }
