@@ -975,7 +975,7 @@ public class GameController implements Initializable{
 		String subString = selectetMoveCard.substring(8);
 		int moveCardPosition = Integer.parseInt(subString);
 
-		Card selectMoveCard = currentPlayer.getPlayerCards().get(moveCardPosition-1);
+		Card selectMoveCard = myClient.getPlayerCards().get(moveCardPosition-1);
 
 		ArrayList<Tile> possibleTiles = new ArrayList<Tile>();
 		ArrayList<ImageView>possibleTilesArray = new ArrayList<ImageView>();
