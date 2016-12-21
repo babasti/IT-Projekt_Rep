@@ -1290,6 +1290,8 @@ public class GameController implements Initializable{
 				}
 				
 				
+				
+				
 				//update numOfDeck
 				String numberOfDeck = String.valueOf(cards.size());
 				numOfDeck.setText(numberOfDeck);
