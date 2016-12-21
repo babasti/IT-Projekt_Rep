@@ -336,8 +336,6 @@ public class GameController implements Initializable{
 	static TableColumn<Player, String> userNameColumn = new TableColumn<Player, String>();
 	static TableColumn<Player, Integer> scoreColumn = new TableColumn<Player, Integer>();
 	static TableColumn<Player, Avatar> avatarColorColumn = new TableColumn<Player, Avatar>();
-	static TableRow<Circle> avatarColorRow = new TableRow<Circle>();
-	static TableCell<Avatar, Circle> avatarColorCell = new TableCell<Avatar, Circle>();
 	private static Label message;
 	private static ArrayList<ImageView> playerCardsNotVisible = new ArrayList<ImageView>();
 	private static Game game;
@@ -454,21 +452,15 @@ public class GameController implements Initializable{
 
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
-		//		avatarColorColumn.setText("Spielfigur");
-		avatarColorRow.setText("Spielfigur");
+		avatarColorColumn.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorCell.setItem(CreateCircle.getCreateCircle().createCircle(players.get(0).getPlayerAvatars().get(0)));
-		avatarColorCell.getItem().setFill(CreateCircleColor.getCreateCircleColor().createColor(players.get(0).getPlayerAvatars().get(0).getColor()));
-		avatarColorRow.getChildrenUnmodifiable().add(avatarColorCell);
-
-		//		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));	
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));	
 
 
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().clear();
-		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
-		scoreTable.getChildrenUnmodifiable().add(avatarColorRow);
+		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
 	}
 
 	public void initMessage(){
@@ -705,9 +697,10 @@ public class GameController implements Initializable{
 		game.setCurrentPlayer(currentPlayer);
 		game.setCurrentPlayerPosition(currentPlayerPosition);
 		game.setCards(cards);
+		game.setPlayers(players);
 		game.setWhat("spielzugBeendet");
 
-
+		
 		ClientThread.sendToServer(game);
 		//hier wird die methode sendToServer aufgerufen
 
@@ -1284,9 +1277,8 @@ public class GameController implements Initializable{
 				//update currentPlayer
 				currentPlayer = game.getCurrentPlayer();
 				//update Players
-				players.clear();
 				for(int i = 0; i<game.getPlayers().length; i++){
-					players.add(game.getPlayers()[i]);
+					players.set(i, game.getPlayers()[i]);
 				}
 				
 				//Tiles von startBoard Liste setzen

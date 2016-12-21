@@ -273,5 +273,11 @@ public class Game implements Serializable {
 	public void setWhat(String what){
 		this.what = what;
 	}
+	
+	public void setPlayers(ArrayList<Player> playersList){
+		for(int i = 0; i < playersList.size(); i++){
+			players[i] = playersList.get(i);
+		}
+	}
 
 }
