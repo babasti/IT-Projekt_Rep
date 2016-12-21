@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import client.ClientThread;
+import client.CreateCircleColor;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 
 public class Player implements Serializable{
@@ -20,10 +23,12 @@ public class Player implements Serializable{
 	private int score;
 	private boolean alreadyLoggedIn = false;
 	private ArrayList<Avatar> playerAvatars;
-	private Avatar avatarColor;
-
+	private String avatarColor;
+	transient private Circle avatarCircle;
+	
 
 	public Player(String userName, String password, Date dateOfBirth){
+		
 		this.userName = userName;
 		this.dateOfBirth= dateOfBirth;
 		this.password = password;
@@ -33,7 +38,7 @@ public class Player implements Serializable{
 		
 	}
 
-	public void setScore(int score){
+	public void setScore(int score){		
 		this.score = score;
 	}
 
@@ -105,6 +110,7 @@ public class Player implements Serializable{
 	public String toString(){
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		return "Name: "+this.userName+"\n"+"Passwort: "+this.password+"\n"+"Geburtsdatum: "+dateFormat.format(this.dateOfBirth);
+		
 	}
 
 	public boolean getAlreadyLoggedIn(){
@@ -115,10 +121,14 @@ public class Player implements Serializable{
 		this.alreadyLoggedIn = b;
 	}
 
-	public void setAvatarColor (Avatar avatar){
-		this.avatarColor = avatar;
+	public void setAvatarColor (String avatarColor){
+		this.avatarColor = avatarColor;
+		
 	}
-
+	public String getAvatarColor (){
+		
+		return avatarColor;
+	}
 	
 	public ArrayList<Avatar> getPlayerAvatars(){
 		return this.playerAvatars;
@@ -132,4 +142,17 @@ public class Player implements Serializable{
 		this.playerCards = playerCards;
 	}
 
+	public Circle getAvatarCircle() {
+		Circle circle = new Circle();
+		circle.setFill(CreateCircleColor.getCreateCircleColor().createColor(getAvatarColor()));
+		circle.setStroke(Color.BLACK);
+		circle.setRadius(10);
+		circle.setVisible(true);
+		circle.toFront();
+		return circle;
+	}
+
+	public void setAvatarCircle(Circle avatarCircle) {
+		this.avatarCircle = avatarCircle;
+	}
 }

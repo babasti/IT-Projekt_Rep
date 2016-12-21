@@ -98,6 +98,11 @@ public class ServerThread implements Serializable, Runnable{
 						}
 
 						if(g.getWhat().equals("spielzugBeendet")){
+							if(g.getCards().size() == 0){
+								g.setCards(g.setStartMoveCards());
+							}
+							
+							
 							sendToAllClients(g);
 						}
 					}

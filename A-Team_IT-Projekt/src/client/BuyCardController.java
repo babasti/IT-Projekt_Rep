@@ -44,34 +44,43 @@ public class BuyCardController implements Initializable, Serializable {
 		costs = numOfCards*2;
 		int count = 5;
 
-		if(currentPlayer.getScore() < costs){
-			message.setVisible(true);
-			message.setText("Du hast zu wenig Punkte um "+cb_BuyCard.getValue()+" zu kaufen!");
-			message.setTextFill(Color.RED);
-			message.setFont(Font.font(15));
+		if(GameController.cards.size() < numOfCards){
+			message.setText("Im Deck hat es weniger als "+numOfCards+" Karten");
+			setMessageLayout();
 		}else{
-			currentPlayer.subFromScore(costs);
-			//count startet bei 5 weil die zusätzliche Karte 
-			//ab moveCard6 hinzugefügt werden sollen
-			for(int i = 0; i < numOfCards; i++){
-				GameController.addMoveImage(count);
-				count++;
+			if(currentPlayer.getScore() < costs){
+				message.setText("Du hast zu wenig Punkte um "+numOfCards+" zu kaufen!");
+				setMessageLayout();
+			}else{
+				currentPlayer.subFromScore(costs);
+				//count startet bei 5 weil die zusätzliche Karte 
+				//ab moveCard6 hinzugefügt werden sollen
+				for(int i = 0; i < numOfCards; i++){
+					GameController.addMoveImage(count);
+					count++;
+				}
+
+				GameController.scoreTable.getColumns().clear();
+				GameController.userNameColumn.setText("SpielerName");
+				GameController.scoreColumn.setText("Score");
+				GameController.userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
+				GameController.scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
+
+				GameController.scoreTable.setItems(GameController.playersData);
+				GameController.scoreTable.getColumns().addAll(GameController.userNameColumn, GameController.scoreColumn);
+
+				//Fenster sobald die Karten gekauft wurden schliessen
+				Stage stage = (Stage)b_Buy.getScene().getWindow();
+				stage.close();
+
 			}
-			
-			GameController.scoreTable.getColumns().clear();
-			GameController.userNameColumn.setText("SpielerName");
-			GameController.scoreColumn.setText("Score");
-			GameController.userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
-			GameController.scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-			
-			GameController.scoreTable.setItems(GameController.playersData);
-			GameController.scoreTable.getColumns().addAll(GameController.userNameColumn, GameController.scoreColumn);
-
-			//Fenster sobald die Karten gekauft wurden schliessen
-			Stage stage = (Stage)b_Buy.getScene().getWindow();
-			stage.close();
-
 		}
+	}
+
+	public void setMessageLayout(){
+		message.setVisible(true);
+		message.setTextFill(Color.RED);
+		message.setFont(Font.font(15));
 	}
 
 }

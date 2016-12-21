@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import common.Avatar;
+import common.AvatarContainer;
+import common.Card;
+import common.Game;
+import common.ImageContainer;
+import common.Player;
+import common.Tile;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,9 +23,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
@@ -34,13 +39,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import common.Avatar;
-import common.AvatarContainer;
-import common.Card;
-import common.Game;
-import common.ImageContainer;
-import common.Player;
-import common.Tile;
 
 public class GameController implements Initializable{
 
@@ -335,12 +333,13 @@ public class GameController implements Initializable{
 	static ObservableList<Player> playersData = FXCollections.observableArrayList();
 	static TableColumn<Player, String> userNameColumn = new TableColumn<Player, String>();
 	static TableColumn<Player, Integer> scoreColumn = new TableColumn<Player, Integer>();
-	static TableColumn<Player, Avatar> avatarColorColumn = new TableColumn<Player, Avatar>();
+	static TableColumn<Player, Circle> avatarColorColumn = new TableColumn<Player, Circle>();
 	private static Label message;
 	private static ArrayList<ImageView> playerCardsNotVisible = new ArrayList<ImageView>();
 	private static Game game;
 	private static ArrayList<Circle> playerAvatars;
-	private Player myClient;
+	private static Player myClient;
+	private int myClientPosition;
 
 
 
@@ -379,7 +378,9 @@ public class GameController implements Initializable{
 		initMessage();
 
 		for(Player player : players){
-			System.out.println(player.getPlayerCards());
+			if(myClient.getClientID() == player.getClientID()){
+				myClientPosition = players.indexOf(player);
+			}
 		}
 	}	
 
@@ -456,9 +457,11 @@ public class GameController implements Initializable{
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
 		avatarColorColumn.setText("Spielfigur");
+		
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));	
+		
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Circle>("avatarCircle"));
 
 
 		scoreTable.setItems(playersData);
@@ -498,7 +501,9 @@ public class GameController implements Initializable{
 				sbPlayer[y].getChildren().add(circle = CreateCircle.getCreateCircle().createCircle(players.get(y).getPlayerAvatars().get(i)));
 				sbPlayer[y].setVisible(true);
 				sbPlayer[y].toFront();
-				playerAvatars.add(circle);
+				if(y == myClientPosition){
+					playerAvatars.add(circle);
+				}
 			}
 
 		}
@@ -507,8 +512,9 @@ public class GameController implements Initializable{
 		//handler für alle Avatars setzen, sobald ein Avatar gewählt wurde durch Click wird der Effekt gesetzt
 		//der Player kann jeweils nur einen Avatar wählen in der StartBox
 
-		for(int i = 0; i < playerAvatars.size(); i++){
-			playerAvatars.get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+		for(int i = 0; i < 3; i++){
+			sbPlayer[myClientPosition].getChildren().get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
 
 				@Override
 				public void handle(MouseEvent event) {
@@ -519,13 +525,13 @@ public class GameController implements Initializable{
 	}
 
 	public void initPlayerMoveCards(){
-		
+
 		for(Player player : players){
 			if(myClient.getClientID() == player.getClientID()){
 				myClient.setPlayerCards(player.getPlayerCards());
 			}
 		}
-		
+
 		int countMoveCard = 0;
 		for(int i = 0; i < myClient.getPlayerCards().size(); i++){			
 			moveImages.get(countMoveCard).setImage(new Image(FileProvider.getFileProvider().getFile(myClient.getPlayerCards().get(i).getImage().getimagePath())));
@@ -703,6 +709,7 @@ public class GameController implements Initializable{
 		game.setCurrentPlayer(currentPlayer);
 		game.setCurrentPlayerPosition(currentPlayerPosition);
 		game.setCards(cards);
+		game.setPlayers(players);
 		game.setWhat("spielzugBeendet");
 
 
@@ -782,16 +789,7 @@ public class GameController implements Initializable{
 		}
 
 		//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
-		scoreTable.getColumns().clear();
-		userNameColumn.setText("SpielerName");
-		scoreColumn.setText("Score");
-		avatarColorColumn.setText("Spielfigur");
-		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
-		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));
-
-		scoreTable.setItems(playersData);
-		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
+		updateTableview();
 	}
 
 	//collectLastTile() wird aufgerufen falls der Player aufs Land gelangt,
@@ -848,16 +846,7 @@ public class GameController implements Initializable{
 			tileImages[lastTilePosition-countPosition].setImage(new Image(FileProvider.getFileProvider().getFile(startBoard.get(lastTilePosition-countPosition).getImage().getimagePath())));
 		}
 
-		scoreTable.getColumns().clear();
-		userNameColumn.setText("SpielerName");
-		scoreColumn.setText("Score");
-		avatarColorColumn.setText("Spielfigur");
-		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
-		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));
-
-		scoreTable.setItems(playersData);
-		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
+		updateTableview();
 
 	}
 
@@ -892,7 +881,7 @@ public class GameController implements Initializable{
 
 	//gibt uns eine Liste zurück mit allen Bewegungskarten die zufällig verteilt sind
 	//total haben wir 105 Karten, jeweils 7 verschiedene Arten à  15 Karten
-	public ArrayList<Card> setStartMoveCards(){
+	public  ArrayList<Card> setStartMoveCards(){
 
 		ArrayList<Card> startMoveCards = new ArrayList<Card>(initCardArray());
 		ArrayList<Card> proformaCards = new ArrayList<Card>(initCardArray());
@@ -1090,21 +1079,25 @@ public class GameController implements Initializable{
 
 	//öffnet das GUI um Karte zu kaufen
 	public void switchToBuyCard(){
-		if(moveImages.get(moveImages.size()-1).isVisible()){
-			setMessage("Du hast das Maximum an Karten!");
+		if(game.getCards().size() == 1){
+			setMessage("Karte kaufen ist nicht möglich!");
 		}else{
-			if(currentPlayer.getScore() < 2){
-				setMessage("Du hast zu wenig Punkte \num Karten zu kaufen!");
+			if(moveImages.get(moveImages.size()-1).isVisible()){
+				setMessage("Du hast das Maximum an Karten!");
 			}else{
-				try{
-					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("BuyCard.fxml"));
-					Pane rootPane = (Pane) fxmlloader.load();
-					Stage stage = new Stage();
-					stage.setResizable(false);
-					stage.setScene(new Scene(rootPane));
-					stage.show();
-				}catch (Exception e){
-					e.printStackTrace();
+				if(currentPlayer.getScore() < 2){
+					setMessage("Du hast zu wenig Punkte \num Karten zu kaufen!");
+				}else{
+					try{
+						FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("BuyCard.fxml"));
+						Pane rootPane = (Pane) fxmlloader.load();
+						Stage stage = new Stage();
+						stage.setResizable(false);
+						stage.setScene(new Scene(rootPane));
+						stage.show();
+					}catch (Exception e){
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -1272,21 +1265,19 @@ public class GameController implements Initializable{
 
 
 	public static void updateGame(Game game){
+		GameController.game = game;
+		for(int i = 0; i < GameController.game.getPlayers().length; i++){
+			players.set(i, GameController.game.getPlayers()[i]);
+		}
+		//update Tiles
+		startBoard = game.getStartBoard();
+		//update cards (Deck)
+		cards = game.getCards();
+		//update currentPlayer
+		currentPlayer = game.getCurrentPlayer();
+		
 		Platform.runLater(new Runnable(){
 			public void run(){
-				setGame(game);
-				//update Tiles
-				startBoard = game.getStartBoard();
-				//update cards (Deck)
-				cards = game.getCards();
-				//update currentPlayer
-				currentPlayer = game.getCurrentPlayer();
-				//update Players
-				players.clear();
-				for(int i = 0; i<game.getPlayers().length; i++){
-					players.add(game.getPlayers()[i]);
-				}
-
 				//Tiles von startBoard Liste setzen
 				int countTile = 0;
 				for(int i = 0; i < startBoard.size(); i++){
@@ -1301,26 +1292,39 @@ public class GameController implements Initializable{
 				numOfDeck.setText(numberOfDeck);
 
 				//update Message
-				setMessage(currentPlayer.getUserName()+" ist dran!");
-
+				updateMessage();
 
 				//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
-				scoreTable.getColumns().clear();
-				userNameColumn.setText("SpielerName");
-				scoreColumn.setText("Score");
-				avatarColorColumn.setText("Spielfigur");
-				userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
-				scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-				avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));
-
-				scoreTable.setItems(playersData);
-				scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
+				updateTableview();
 
 			}
 		});
 	}
 
+	protected static void updateTableview() {
+		scoreTable.getColumns().clear();
+		userNameColumn.setText("SpielerName");
+		scoreColumn.setText("Score");
+		avatarColorColumn.setText("Spielfigur");
+		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
+		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
+		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Circle>("avatarCircle"));
+
+		scoreTable.setItems(playersData);
+		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
+		
+	}
+
 	public static void setGame(Game game){
 		GameController.game = game;
 	}
+
+	public static void updateMessage(){
+		if(myClient.getClientID() == currentPlayer.getClientID()){
+			setMessage("Du bist dran!");
+		}else{
+			setMessage(currentPlayer.getUserName()+" ist dran!");
+		}
+	}
+	
 }

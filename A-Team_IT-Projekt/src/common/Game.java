@@ -48,6 +48,7 @@ public class Game implements Serializable {
 			avatarContainer = new AvatarContainer();
 			cards = setStartMoveCards();
 			startBoard = setStartTiles();
+			players = new Player[session.getPlayers().length];
 			players = session.getPlayers();
 			
 			for(int i = 0; i < players.length; i++){
@@ -61,7 +62,7 @@ public class Game implements Serializable {
 
 			int count = 0;
 			for(int x = 0; x < players.length; x++){
-				players[x].setAvatarColor(players[x].getPlayerAvatars().get(count));
+				players[x].setAvatarColor(players[x].getPlayerAvatars().get(count).getColor());
 			}
 
 			currentPlayer = players[0];
@@ -285,5 +286,12 @@ public class Game implements Serializable {
 	public void setWhat(String what){
 		this.what = what;
 	}
-
+	
+	public void setPlayers(ArrayList<Player> playersList){
+		players = getSession().getPlayers(); 
+		for(int i = 0; i < playersList.size(); i++){
+			players[i] = playersList.get(i);
+		}
+	}
+	
 }

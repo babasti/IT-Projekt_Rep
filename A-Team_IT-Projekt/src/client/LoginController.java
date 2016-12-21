@@ -65,12 +65,15 @@ public class LoginController implements Initializable, Serializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		
 	}
 
-	public void login(){
+	public void login() throws UnknownHostException{
+			
 		String eingabeName = tf_username.getText();
 		String eingabePW = pf_password.getText();
+		
+		
 		if(!setSocket){ //besteht Verbindung zum Server?
 			text_Fehlermeldung.setText("Bitte wählen Sie einen Host aus.");
 		}else{
