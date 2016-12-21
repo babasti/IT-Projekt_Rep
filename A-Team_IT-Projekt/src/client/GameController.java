@@ -336,11 +336,12 @@ public class GameController implements Initializable{
 	static TableColumn<Player, String> userNameColumn = new TableColumn<Player, String>();
 	static TableColumn<Player, Integer> scoreColumn = new TableColumn<Player, Integer>();
 	static TableColumn<Player, Avatar> avatarColorColumn = new TableColumn<Player, Avatar>();
+	static TableRow<Circle> avatarColorRow = new TableRow<Circle>();
+	static TableCell<Avatar, Circle> avatarColorCell = new TableCell<Avatar, Circle>();
 	private static Label message;
 	private static ArrayList<ImageView> playerCardsNotVisible = new ArrayList<ImageView>();
 	private static Game game;
 	private static ArrayList<Circle> playerAvatars;
-	private Player myClient;
 
 
 
@@ -358,8 +359,6 @@ public class GameController implements Initializable{
 		avatarContainer = new AvatarContainer();
 
 		game = ClientThread.getGame();
-		myClient = Player.getPlayerID(ClientThread.getId());
-		
 
 		initTileArray();
 		initStartBox();
@@ -371,16 +370,12 @@ public class GameController implements Initializable{
 		initNumOfDeck();
 		initStartBoard();
 		initMoveCardArray();
-		
-		
-		
 		initPlayerMoveCards();
 		initPlayerAvatars();
 
 
 		initScoreTable();
 		initMessage();
-		
 
 		for(Player player : players){
 			System.out.println(player.getPlayerCards());
@@ -459,15 +454,21 @@ public class GameController implements Initializable{
 
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
-		avatarColorColumn.setText("Spielfigur");
+		//		avatarColorColumn.setText("Spielfigur");
+		avatarColorRow.setText("Spielfigur");
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));	
+		avatarColorCell.setItem(CreateCircle.getCreateCircle().createCircle(players.get(0).getPlayerAvatars().get(0)));
+		avatarColorCell.getItem().setFill(CreateCircleColor.getCreateCircleColor().createColor(players.get(0).getPlayerAvatars().get(0).getColor()));
+		avatarColorRow.getChildrenUnmodifiable().add(avatarColorCell);
+
+		//		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Avatar>("avatarColor"));	
 
 
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().clear();
-		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
+		scoreTable.getColumns().addAll(userNameColumn, scoreColumn);
+		scoreTable.getChildrenUnmodifiable().add(avatarColorRow);
 	}
 
 	public void initMessage(){
@@ -477,11 +478,7 @@ public class GameController implements Initializable{
 		message.setVisible(false);
 		rootPane.getChildren().add(message);
 
-		if(currentPlayer.getClientID() == myClient.getClientID()){
-			setMessage("Du bist dran!");
-		}else{
-			setMessage(currentPlayer.getUserName()+" ist dran!");
-		}
+		setMessage(currentPlayer.getUserName()+" ist dran!");
 	}
 
 	public void initPlayers(){
@@ -523,16 +520,17 @@ public class GameController implements Initializable{
 	}
 
 	public void initPlayerMoveCards(){
-		for(Player player : players){
-			if(myClient.getClientID() == player.getClientID()){
-				myClient.setPlayerCards(player.getPlayerCards());
-			}
-		}
-		
 		int countMoveCard = 0;
+		int countPlayer = 0;
+		Player player;
+		for(int i = 0; i < players.size(); i++){
+			if(players.get(i).getUserName().equals(System.getProperty("user.name")));
+			countPlayer = i;
+		}
+		player = players.get(countPlayer);
 
-		for(int i = 0; i < myClient.getPlayerCards().size(); i++){			
-			moveImages.get(countMoveCard).setImage(new Image(FileProvider.getFileProvider().getFile(myClient.getPlayerCards().get(i).getImage().getimagePath())));
+		for(int i = 0; i < player.getPlayerCards().size(); i++){			
+			moveImages.get(countMoveCard).setImage(new Image(FileProvider.getFileProvider().getFile(player.getPlayerCards().get(i).getImage().getimagePath())));
 			countMoveCard++;
 		}
 
@@ -707,7 +705,6 @@ public class GameController implements Initializable{
 		game.setCurrentPlayer(currentPlayer);
 		game.setCurrentPlayerPosition(currentPlayerPosition);
 		game.setCards(cards);
-		game.setPlayers(players);
 		game.setWhat("spielzugBeendet");
 
 
@@ -1287,10 +1284,11 @@ public class GameController implements Initializable{
 				//update currentPlayer
 				currentPlayer = game.getCurrentPlayer();
 				//update Players
+				players.clear();
 				for(int i = 0; i<game.getPlayers().length; i++){
-					players.set(i, game.getPlayers()[i]);
+					players.add(game.getPlayers()[i]);
 				}
-
+				
 				//Tiles von startBoard Liste setzen
 				int countTile = 0;
 				for(int i = 0; i < startBoard.size(); i++){
@@ -1298,18 +1296,16 @@ public class GameController implements Initializable{
 					tileImages[countTile].setImage(img);
 					countTile++;
 				}
-
-
-
-
+				
+				
 				//update numOfDeck
 				String numberOfDeck = String.valueOf(cards.size());
 				numOfDeck.setText(numberOfDeck);
-
+				
 				//update Message
 				setMessage(currentPlayer.getUserName()+" ist dran!");
-
-
+				
+				
 				//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
 				scoreTable.getColumns().clear();
 				userNameColumn.setText("SpielerName");

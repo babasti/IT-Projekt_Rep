@@ -52,13 +52,9 @@ public class ClientThread implements Runnable, Serializable{
 						}if(game.getWhat().equals("sitzung erstellt")){
 							if(!LobbyController.sessionAlreadyExist(game.getSession().getSessionName())){
 								// hier fehler wegen clienthread und gui
-								Platform.runLater(new Runnable(){
-									public void run(){
-										LobbyController.offeneSitzungen.getItems().addAll(game.getSession().getSessionName());
-										LobbyController.offeneSitzungenList.add(game.getSession().getSessionName());
-										LobbyController.openSessions.add(game.getSession());
-									}
-								});
+								LobbyController.offeneSitzungen.getItems().addAll(game.getSession().getSessionName());
+								LobbyController.offeneSitzungenList.add(game.getSession().getSessionName());
+								LobbyController.openSessions.add(game.getSession());
 							}
 						}if(game.getWhat().equals("Player ist Sitzung beigetreten")){
 							for(Session s:LobbyController.openSessions){
