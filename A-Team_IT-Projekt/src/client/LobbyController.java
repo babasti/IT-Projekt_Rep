@@ -85,11 +85,11 @@ public class LobbyController implements Initializable, Serializable {
 		lobbyPane.getChildren().add(offeneSitzungen);
 
 		fehlermeldung = new Label();
-		fehlermeldung.setLayoutX(325);
+		fehlermeldung.setLayoutX(350);
 		fehlermeldung.setLayoutY(432);
 		fehlermeldung.setTextFill(Color.web("#e44317"));
 		fehlermeldung.setEffect(text_Sitzungsname.getEffect());
-		fehlermeldung.setFont(Font.font(18));
+		fehlermeldung.setFont(Font.font(24));
 		fehlermeldung.toFront();
 		lobbyPane.getChildren().add(fehlermeldung);
 
