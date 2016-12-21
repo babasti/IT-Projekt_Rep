@@ -5,12 +5,9 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import server.Server;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import common.Game;
 import common.Player;
 import common.Session;

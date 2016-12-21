@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -18,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
@@ -34,14 +32,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+
 import common.Avatar;
 import common.AvatarContainer;
 import common.Card;
 import common.Game;
 import common.ImageContainer;
 import common.Player;
-import common.SCircle;
 import common.Tile;
 
 public class GameController implements Initializable{
@@ -493,14 +490,16 @@ public class GameController implements Initializable{
 
 		playerAvatars = new ArrayList<Circle>();
 		//den avatars die zuständige farbe zuteilen und in die entsprechenden Boxen zuteilen
-
+		Circle circle;
+		
 		for(int y = 0; y < players.size(); y++){
 			for(int i = 0; i < 3; i++){
-				sbPlayer[y].getChildren().add(CreateCircle.getCreateCircle().createCircle(players.get(y).getPlayerAvatars().get(i)));
+				sbPlayer[y].getChildren().add(circle = CreateCircle.getCreateCircle().createCircle(players.get(y).getPlayerAvatars().get(i)));
 				sbPlayer[y].setVisible(true);
 				sbPlayer[y].toFront();
-				playerAvatars.add(CreateCircle.getCreateCircle().createCircle(currentPlayer.getPlayerAvatars().get(i)));
+				playerAvatars.add(circle);
 			}
+			
 		}
 
 
