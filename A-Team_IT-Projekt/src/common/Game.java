@@ -3,6 +3,7 @@ package common;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import client.ClientThread;
 
 public class Game implements Serializable {
 	/**
@@ -24,9 +25,9 @@ public class Game implements Serializable {
 	private Player p;
 	private String[] a;
 	private String what;
-	private String PCName;
 	private int numOfPlayers;
 	private Session session;
+	private int id;
 
 	public Game(Session session, String s){
 		this.session = session;
@@ -85,6 +86,8 @@ public class Game implements Serializable {
 			what = "arrayList regPlayers an Client";
 		}if(s.equals("arrayList openSessions an Client")){
 			what = "arrayList openSessions an Client";
+		}if(s.equals("client id")){
+			what = "client id";
 		}
 	}
 
@@ -107,10 +110,9 @@ public class Game implements Serializable {
 		what = "spieler hat sich registriert";
 	}
 
-	public Game(Player p, String s, String PCName){
+	public Game(Player p, String s){
 		this.p = p;
 		this.s = s;
-		this.PCName = PCName;
 		if(s.equals("player hat sich eingeloggt")){
 			what = "player hat sich eingeloggt";
 		}
@@ -119,6 +121,12 @@ public class Game implements Serializable {
 	public Game(String[] a){
 		this.a = a;
 		what = "PC Name und User an Server";
+	}
+	
+	public Game(int id, String s){
+		this.id = id;
+		this.s = s;
+		what = "client id";
 	}
 	
 	public Session getSession(){
@@ -147,6 +155,10 @@ public class Game implements Serializable {
 
 	public Player[] getPlayers(){
 		return players;
+	}
+	
+	public int getId(){
+		return this.id;
 	}
 
 	public void setSession(Session session){
