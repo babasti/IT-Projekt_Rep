@@ -21,6 +21,7 @@ public class ClientThread implements Runnable, Serializable{
 	public static ArrayList<Session> sessionList;
 	public static Session startedSession;
 	private static Game game;
+	private static int id;
 
 	ClientThread(Socket socket){
 		this.socket = socket;
@@ -38,8 +39,19 @@ public class ClientThread implements Runnable, Serializable{
 						game = (Game)obj;
 						if(game.getWhat().equals("arrayList regPlayers von Server")){
 							regPlayers = game.getAl();
+						}
+						if(game.getWhat().equals("player hat sich eingeloggt")){
+							for(Player player:regPlayers){
+								if(player.getUserName().equals(game.getP().getUserName())){
+									player.setClientID(game.getP().getClientID());
+								}
+							}
+						}
+						if(game.getWhat().equals("client id")){
+							this.id = game.getId();
 						}if(game.getWhat().equals("sitzung erstellt")){
 							if(!LobbyController.sessionAlreadyExist(game.getSession().getSessionName())){
+								// hier fehler wegen clienthread und gui
 								LobbyController.offeneSitzungen.getItems().addAll(game.getSession().getSessionName());
 								LobbyController.offeneSitzungenList.add(game.getSession().getSessionName());
 								LobbyController.openSessions.add(game.getSession());
@@ -56,13 +68,6 @@ public class ClientThread implements Runnable, Serializable{
 									LobbyController.fehlermeldung.setText(game.getP().getUserName()+" ist der Sitzung "+game.getSession().getSessionName()+" beigetreten.");
 								}
 							});
-						}if(game.getWhat().equals("player hat sich eingeloggt")){
-							for(Player p:regPlayers){
-								if(game.getP().getUserName().equals(p.getUserName())){
-									p.setAlreadyLoggedIn(true);
-									p.setPCName(game.getP().getPCName());
-								}
-							}
 						}if(game.getWhat().equals("spieler hat sich registriert")){
 							regPlayers.add(game.getP());
 						}
@@ -82,8 +87,9 @@ public class ClientThread implements Runnable, Serializable{
 						}
 						if(game.getWhat().equals("spielzugBeendet")){
 							GameController.updateGame(game);
+
 						}
-						
+
 						//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
 						//um diese in der ListView anzuzeigen
 						if(game.getWhat().equals("arrayList openSessions an Client")){
@@ -163,9 +169,15 @@ public class ClientThread implements Runnable, Serializable{
 		}
 	}
 
+
 	public static Game getGame(){
 		return game;
 	}
+
+	public static int getId(){
+		return id;
+	}
+
 }
 
 

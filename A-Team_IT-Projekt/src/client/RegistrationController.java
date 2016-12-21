@@ -90,9 +90,10 @@ public class RegistrationController implements Initializable {
 			}else if(!(eingabeDatum.after(oldest) && eingabeDatum.before(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())))){
 				text_Fehlermeldung.setText("Das eingegebene Datum ist ungültig.");
 			}else{
-				Player p = new Player(eingabeName, eingabePW1, eingabeDatum, System.getProperty("user.name"));
+				Player p = new Player(eingabeName, eingabePW1, eingabeDatum);
 				p.setAlreadyLoggedIn(true);
-				ClientThread.sendToServer(new Game(p, "player hat sich eingeloggt", System.getProperty("user.name")));
+				p.setClientID(ClientThread.getId());
+				ClientThread.sendToServer(new Game(p, "player hat sich eingeloggt"));
 				try{
 					//Weiterleitung in Lobby				
 					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));

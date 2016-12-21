@@ -16,19 +16,18 @@ public class Player implements Serializable{
 	private String userName;
 	private Date dateOfBirth;
 	private String password;
+	private int clientID;
 	public ArrayList<Card> playerCards;
 	private int score;
-	private String PCName;
 	private boolean alreadyLoggedIn = false;
 	private ArrayList<Avatar> playerAvatars;
 	private Avatar avatarColor;
 
 
-	public Player(String userName, String password, Date dateOfBirth, String PCName){
+	public Player(String userName, String password, Date dateOfBirth){
 		this.userName = userName;
 		this.dateOfBirth= dateOfBirth;
 		this.password = password;
-		this.PCName = PCName;
 		playerCards = new ArrayList<Card>();
 		score = 0;
 		playerAvatars = new ArrayList<Avatar>();
@@ -54,25 +53,20 @@ public class Player implements Serializable{
 	public String getPassword(){
 		return this.password;
 	}
-
-	public String getPCName(){
-		return this.PCName;
+	
+	public int getClientID(){
+		return this.clientID;
 	}
-
-	public void setPCName(String PCName){
-		this.PCName = PCName;
-	}
-
-	//wenn PCName des registrierten Benutzers nicht mit aktuellem PCNamen übereinstimmt
-	public void updatePCName(){
-		this.setPCName(System.getProperty("user.name"));
+	
+	public void setClientID(int clientID){
+		this.clientID = clientID;
 	}
 
 	//identifiziert Player über dessen PCNamen
-	public static Player getPlayerPC(String PCName){
+	public static Player getPlayerID(int clientID){
 		Player searchedPlayer = null;
 		for(Player p:ClientThread.regPlayers){
-			if(p.getPCName().equals(PCName)){
+			if(p.getClientID() == clientID){
 				searchedPlayer = p;
 			}
 		}

@@ -26,10 +26,6 @@ import javafx.stage.Stage;
 
 public class LoginController implements Initializable, Serializable{
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5871514816795748970L;
 
 	@FXML
@@ -69,7 +65,6 @@ public class LoginController implements Initializable, Serializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -85,7 +80,8 @@ public class LoginController implements Initializable, Serializable{
 					if(p.getPassword().equals(eingabePW)){// Benutzer existiert&Passwort korrekt
 						//p.updatePCName();
 						p.setAlreadyLoggedIn(true);
-						ClientThread.sendToServer(new Game(p, "player hat sich eingeloggt", System.getProperty("user.name")));
+						p.setClientID(ClientThread.getId());
+						ClientThread.sendToServer(new Game(p, "player hat sich eingeloggt"));
 						text_Fehlermeldung.setText("Eingaben korrekt");
 						try{
 							//Weiterleitung in Lobby	
@@ -113,7 +109,6 @@ public class LoginController implements Initializable, Serializable{
 				text_Fehlermeldung.setText("Diesen Benutzer gibt es noch nicht.\n Bitte registrieren Sie sich.");
 			}
 		}
-
 	}
 
 	public void switchToRegistration(){
@@ -163,6 +158,7 @@ public class LoginController implements Initializable, Serializable{
 			
 			ClientThread cThread = new ClientThread(socket);
 			new Thread(cThread).start();
+			ClientThread.sendToServer(new Game("client id"));
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

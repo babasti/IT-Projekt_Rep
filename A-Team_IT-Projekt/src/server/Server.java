@@ -70,7 +70,7 @@ public class Server implements Serializable{
 			}
 			System.out.println("Connection from: "+socket.getRemoteSocketAddress());
 			System.out.println("Client Nr : "+counter);
-			ServerThread sThread = new ServerThread(socket);
+			ServerThread sThread = new ServerThread(socket, counter);
 			new Thread(sThread).start();	
 		}
 	}
@@ -83,7 +83,7 @@ public class Server implements Serializable{
 				String[] next = scan.nextLine().split(":");
 				String[] d = next[2].split("-");
 				Date date = new Date(Integer.parseInt(d[2])-1900, Integer.parseInt(d[1])-1, Integer.parseInt(d[0]));
-				regPlayers.add(new Player(next[0], next[1], date, next[3]));
+				regPlayers.add(new Player(next[0], next[1], date));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -102,7 +102,7 @@ public class Server implements Serializable{
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 			for(Player p:Server.regPlayers){
-				bw.write(p.getUserName()+":"+p.getPassword()+":"+dateFormat.format(p.getDateOfBirth())+":"+p.getPCName()+"\n");	
+				bw.write(p.getUserName()+":"+p.getPassword()+":"+dateFormat.format(p.getDateOfBirth())+"\n");	
 			}
 			bw.close();
 		}catch(Exception e){

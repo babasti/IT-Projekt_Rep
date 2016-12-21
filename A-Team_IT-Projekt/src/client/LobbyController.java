@@ -26,7 +26,6 @@ import javafx.scene.text.Font;
 public class LobbyController implements Initializable, Serializable {
 
 	private static final long serialVersionUID = -1547512304397946316L;
-
 	@FXML
 	Label text_OffeneSitzungen;
 
@@ -102,7 +101,7 @@ public class LobbyController implements Initializable, Serializable {
 		try{
 			String sessionName = tf_Sitzungsname.getText();
 			Integer numOfPlayers = (Integer) cb_AnzahlSpieler.getValue();
-			Player player = Player.getPlayerPC(System.getProperty("user.name"));
+			Player player = Player.getPlayerID(ClientThread.getId());
 			if(tf_Sitzungsname.getText().isEmpty() || cb_AnzahlSpieler.getSelectionModel().isEmpty()){
 				fehlermeldung.setText("Bitte geben Sie einen Sitzungsnamen sowie die Anzahl der Spieler an.");
 			}else{
@@ -144,7 +143,7 @@ public class LobbyController implements Initializable, Serializable {
 					//löscht den Player aus der Session
 					if(openSessions.get(z).getSessionName().equals(selectSession().getSessionName())){
 						Player[] players = selectSession().getPlayers();
-						Player currentPlayer = Player.getPlayerPC(System.getProperty("user.name"));
+						Player currentPlayer = Player.getPlayerID(ClientThread.getId());
 						for (int i = 0; i<players.length;i++){
 							if(!(players[i] == null)){
 								if(players[i].getUserName().equals(currentPlayer.getUserName())){
@@ -194,7 +193,7 @@ public class LobbyController implements Initializable, Serializable {
 		if(!offeneSitzungen.getSelectionModel().isEmpty()){
 			Player[] players = selectSession().getPlayers();
 			int index = getIndexPlayerArray(players);
-			Player p = Player.getPlayerPC(System.getProperty("user.name"));
+			Player p = Player.getPlayerID(ClientThread.getId());
 			boolean alreadyInSession = false;
 			for(Player player:players){
 				if(player != null){
@@ -234,7 +233,7 @@ public class LobbyController implements Initializable, Serializable {
 	public void startSession(){
 		if (!offeneSitzungen.getSelectionModel().isEmpty()){
 			//nur der Sitzungsersteller darf die Sitzung starten
-			if(selectSession().getPlayers()[0].getPCName().equals(System.getProperty("user.name"))){
+			if(selectSession().getPlayers()[0].getClientID() == ClientThread.getId()){
 				//prüft, ob Sitzung voll ist
 				Player[] players = selectSession().getPlayers();
 				//Array muss voll sein um spielen zu können

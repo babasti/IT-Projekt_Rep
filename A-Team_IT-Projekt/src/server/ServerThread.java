@@ -29,20 +29,24 @@ public class ServerThread implements Serializable, Runnable{
 
 	private static final long serialVersionUID = 858159327570071613L;
 	private static Socket socket = null;
-	ServerThread(Socket socket){
+	private static int id;
+	ServerThread(Socket socket, int id){
 		this.socket = socket;
+		this.id = id;
 	}
 
 	public void run(){
 		Game g;
 		Object obj;
 		try{
-			int counter = 0;
 			while(true){
 				synchronized(Server.objectInputStream){
 					obj = Server.objectInputStream.readObject();
 					if(obj instanceof Game){
 						g = (Game)obj;
+						if(g.getWhat().equals("client id")){
+							sendToClient(new Game(id, "client id"));
+						}
 						//wenn ein client arrayList der Player anfragt
 						if(g.getWhat().equals("arrayList regPlayers an Client")){
 							sendToClient(new Game(Server.regPlayers));
@@ -56,15 +60,13 @@ public class ServerThread implements Serializable, Runnable{
 							ArrayList<String> names = new ArrayList<String>();
 							for(Player p:Server.regPlayers){
 								names.add(p.getUserName());
+								if(g.getP().getUserName().equals(p.getUserName())){
+									p.setClientID(id);
+								}
 							}
 							//nur Login
 							if(names.contains(g.getP().getUserName())){
-								for(Player p:Server.regPlayers){
-									if(g.getP().getUserName().equals(p.getUserName())){
-										sendToAllClients(g);
-										Server.arrayListToFile();
-									}
-								}
+								sendToAllClients(g);
 								//neuer Player hat sich registriert
 							}else{
 								Server.regPlayers.add(g.getP());
@@ -94,7 +96,7 @@ public class ServerThread implements Serializable, Runnable{
 						if(g.getWhat().equals("Player aus Sitzung ausgetreten")){
 							sendToAllClients(g);
 						}
-						
+
 						if(g.getWhat().equals("spielzugBeendet")){
 							sendToAllClients(g);
 						}
