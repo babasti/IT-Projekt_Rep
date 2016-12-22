@@ -36,7 +36,9 @@ public class AvatarContainer implements Serializable{
 		for(String color : avatarColors){
 			for(int i = 0; i < 3; i++){
 				Avatar avatar = new Avatar(color);
+				Avatar.setCount();
 				avatars.add(avatar);
+				
 			}
 		}
 	}

@@ -19,6 +19,7 @@ public class Game implements Serializable {
 	private Player currentPlayer;
 	private int currentPlayerPosition;
 	private String currentAvatarPositionID;
+	private String selectetAvatarID;
 
 	private String s;
 	private ArrayList<Player> al;
@@ -300,6 +301,14 @@ public class Game implements Serializable {
 	
 	public String getCurrentAvatarPositionID(){
 		return this.currentAvatarPositionID;
+	}
+
+	public String getSelectetAvatarID() {
+		return selectetAvatarID;
+	}
+
+	public void setSelectetAvatarID(String selectetAvatarID) {
+		this.selectetAvatarID = selectetAvatarID;
 	}
 	
 }

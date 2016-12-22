@@ -102,8 +102,8 @@ public class ServerThread implements Serializable, Runnable{
 								g.setCards(g.setStartMoveCards());
 							}
 							
-							
 							sendToAllClients(g);
+//							sendToAllOtherClients(g);
 						}
 					}
 				}
@@ -145,6 +145,20 @@ public class ServerThread implements Serializable, Runnable{
 			}
 		}
 	}
+	
+//	public synchronized static void sendToAllOtherClients(Game game){
+//		for(ObjectOutputStream oos: Server.openOutputStreams){
+//			if(!(oos.equals(Server.objectOutputStream))){
+//				try {
+//					oos.writeObject(game);
+//					oos.flush();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 }
 
 

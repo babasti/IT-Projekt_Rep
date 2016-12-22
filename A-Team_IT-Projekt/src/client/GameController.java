@@ -321,11 +321,12 @@ public class GameController implements Initializable{
 	private static Card selectetCard;
 	private static ImageView selectetCardImageView;
 	private static Circle selectetAvatar;
+	private static String selectetAvatarID;
 	private static ArrayList<HBox> tileBox;
 	private static ArrayList<Tile> proformaStartGameBoard;
 	private static ArrayList<ImageView> possibleTilesArray;
 	private static HBox currentAvatarPosition;
-	private static String currentAvatarPositionID;
+	private static String boxID;
 	private static  HBox[] ebPlayer;
 	private HBox[] sbPlayer;
 	public static Player currentPlayer;
@@ -341,6 +342,7 @@ public class GameController implements Initializable{
 	private static ArrayList<Circle> playerAvatars;
 	private static Player myClient;
 	private int myClientPosition;
+	private static ArrayList<Circle> totalCircle;
 
 
 
@@ -495,6 +497,7 @@ public class GameController implements Initializable{
 	public void initPlayerAvatars(){
 
 		playerAvatars = new ArrayList<Circle>();
+		totalCircle = new ArrayList<Circle>();
 		//den avatars die zuständige farbe zuteilen und in die entsprechenden Boxen zuteilen
 		Circle circle;
 
@@ -506,6 +509,7 @@ public class GameController implements Initializable{
 				if(myClient.getClientID() == players.get(y).getClientID()){
 					playerAvatars.add(circle);
 				}
+				totalCircle.add(circle);
 			}
 
 		}
@@ -717,7 +721,8 @@ public class GameController implements Initializable{
 		game.setCards(cards);
 		game.setPlayers(players);
 		game.setWhat("spielzugBeendet");
-		game.setCurrentAvatarPositionID(currentAvatarPositionID);
+		game.setCurrentAvatarPositionID(boxID);
+		game.setSelectetAvatarID(selectetAvatarID);
 		
 
 
@@ -1153,7 +1158,6 @@ public class GameController implements Initializable{
 
 		GameController.selectetAvatar = selectetAvatar;
 		GameController.currentAvatarPosition = (HBox) selectetAvatar.getParent();
-		setCurrentAvatarPositionID(currentAvatarPosition.getId()); 
 		
 	}
 
@@ -1285,7 +1289,9 @@ public class GameController implements Initializable{
 		//update currentPlayer
 		currentPlayer = game.getCurrentPlayer();
 		
-		currentAvatarPositionID = game.getCurrentAvatarPositionID();
+		boxID = game.getCurrentAvatarPositionID();
+		
+		selectetAvatarID = game.getSelectetAvatarID();
 
 		Platform.runLater(new Runnable(){
 			public void run(){
@@ -1297,9 +1303,6 @@ public class GameController implements Initializable{
 					countTile++;
 				}
 
-				
-				
-
 				//update numOfDeck
 				String numberOfDeck = String.valueOf(cards.size());
 				numOfDeck.setText(numberOfDeck);
@@ -1309,6 +1312,8 @@ public class GameController implements Initializable{
 
 				//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
 				updateTableview();
+				
+				moveOpponentAvatar(boxID, selectetAvatarID);
 
 			}
 		});
@@ -1345,12 +1350,26 @@ public class GameController implements Initializable{
 		}
 	}
 	
-	public static void setCurrentAvatarPositionID(String currentAvatarPositionID){
-		GameController.currentAvatarPositionID = currentAvatarPositionID;
+	public static void setBoxID(String currentAvatarPositionID){
+		GameController.boxID = currentAvatarPositionID;
 	}
 	
-	public void moveOpponentAvatar(String currentAvatarPositionID){
-		//methode um Avatar vom Gegner zu bewegen.
+	public static void moveOpponentAvatar(String currentAvatarPositionID, String selectetAvatarID){
+		for(Circle circle : totalCircle){
+			if(circle.getId().equals(selectetAvatarID)){
+				tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).getChildren().add(circle);
+				tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).setVisible(true);
+				tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).toFront();
+			}
+		}
+	}
+
+	public String getSelectetAvatarID() {
+		return selectetAvatarID;
+	}
+
+	public static void setSelectetAvatarID(String selectetAvatarID) {
+		GameController.selectetAvatarID = selectetAvatarID;
 	}
 
 }

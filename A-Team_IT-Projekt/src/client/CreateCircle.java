@@ -26,6 +26,7 @@ public class CreateCircle {
 		circle.setVisible(true);
 		circle.toFront();
 		circle.setFill(CreateCircleColor.getCreateCircleColor().createColor(avatar.getColor()));
+		circle.setId(String.valueOf(avatar.getAvatarID()));
 		return circle;
 	}
 

@@ -56,6 +56,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 	private int currentPlayerPosition;
 	private ArrayList<Circle> playersAvatar;
 	private Player currentPlayer;
+	private String boxID;
 
 
 
@@ -90,6 +91,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 						tileBox.get(i).getChildren().add(selectetAvatar);
 						tileBox.get(i).setVisible(true);
 						tileBox.get(i).toFront();
+						setBoxID(tileBox.get(i).getId());
 						if(i != 0){
 							GameController.collectTile(startBoard.get(i), i);
 							break;
@@ -109,6 +111,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 				ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
 				ebPlayer[currentPlayerPosition].setVisible(true);
 				ebPlayer[currentPlayerPosition].toFront();
+				setBoxID(ebPlayer[currentPlayerPosition].getId());
 				GameController.collectLastTile();
 				if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
 					switchToResult();
@@ -120,6 +123,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 						ebPlayer[currentPlayerPosition].getChildren().add(selectetAvatar);
 						ebPlayer[currentPlayerPosition].setVisible(true);
 						ebPlayer[currentPlayerPosition].toFront();
+						setBoxID(ebPlayer[currentPlayerPosition].getId());
 						GameController.collectLastTile();
 						if(ebPlayer[currentPlayerPosition].getChildren().containsAll(playersAvatar)){
 							switchToResult();
@@ -131,6 +135,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 							tileBox.get(i).getChildren().add(selectetAvatar);
 							tileBox.get(i).setVisible(true);
 							tileBox.get(i).toFront();
+							setBoxID(tileBox.get(i).getId());
 							GameController.collectTile(startBoard.get(i), i);
 							break;
 						}else{
@@ -182,7 +187,9 @@ public class MoveAvatarController implements Initializable, Serializable {
 		//somit haben wir eine Sicherheit bei der Abfrage ob wir einen Spielzug
 		//tätigen können
 
-
+		
+		GameController.setSelectetAvatarID(selectetAvatar.getId());
+		GameController.setBoxID(boxID);
 		GameController.setSelectetAvatar();
 		GameController.setSelectetCard();
 
@@ -253,6 +260,14 @@ public class MoveAvatarController implements Initializable, Serializable {
 
 	public static HBox[] getEbPlayer(){
 		return ebPlayer;
+	}
+
+	public String getBoxID() {
+		return boxID;
+	}
+
+	public void setBoxID(String boxID) {
+		this.boxID = boxID;
 	}
 
 }
