@@ -1,25 +1,24 @@
 package client;
 
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import common.Player;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
+import common.Player;
 
 
 //Klasse um zusätzliche Karten zu kaufen
-public class BuyCardController implements Initializable, Serializable {
+public class BuyCardController implements Initializable{
 
 	@FXML
 	Label message;
@@ -60,14 +59,7 @@ public class BuyCardController implements Initializable, Serializable {
 					count++;
 				}
 
-				GameController.scoreTable.getColumns().clear();
-				GameController.userNameColumn.setText("SpielerName");
-				GameController.scoreColumn.setText("Score");
-				GameController.userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
-				GameController.scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-
-				GameController.scoreTable.setItems(GameController.playersData);
-				GameController.scoreTable.getColumns().addAll(GameController.userNameColumn, GameController.scoreColumn);
+				GameController.updateTableview();
 
 				//Fenster sobald die Karten gekauft wurden schliessen
 				Stage stage = (Stage)b_Buy.getScene().getWindow();

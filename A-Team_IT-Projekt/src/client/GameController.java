@@ -325,6 +325,7 @@ public class GameController implements Initializable{
 	private static ArrayList<Tile> proformaStartGameBoard;
 	private static ArrayList<ImageView> possibleTilesArray;
 	private static HBox currentAvatarPosition;
+	private static String currentAvatarPositionID;
 	private static  HBox[] ebPlayer;
 	private HBox[] sbPlayer;
 	public static Player currentPlayer;
@@ -377,9 +378,10 @@ public class GameController implements Initializable{
 		initScoreTable();
 		initMessage();
 
-		for(Player player : players){
-			if(myClient.getClientID() == player.getClientID()){
-				myClientPosition = players.indexOf(player);
+		for(int i = 0; i < players.size(); i++){
+			if(myClient.getClientID() == players.get(i).getClientID()){
+				myClientPosition = i;
+				break;
 			}
 		}
 	}	
@@ -457,10 +459,10 @@ public class GameController implements Initializable{
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
 		avatarColorColumn.setText("Spielfigur");
-		
+
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
-		
+
 		avatarColorColumn.setCellValueFactory(new PropertyValueFactory<Player, Circle>("avatarCircle"));
 
 
@@ -485,8 +487,8 @@ public class GameController implements Initializable{
 
 	public void initPlayers(){
 		players = new ArrayList<Player>();
-		for(int i = 0; i < game.getSession().getPlayers().length; i++){
-			players.add(game.getSession().getPlayers()[i]);
+		for(int i = 0; i < game.getPlayers().length; i++){
+			players.add(game.getPlayers()[i]);
 		}
 	}
 
@@ -501,7 +503,7 @@ public class GameController implements Initializable{
 				sbPlayer[y].getChildren().add(circle = CreateCircle.getCreateCircle().createCircle(players.get(y).getPlayerAvatars().get(i)));
 				sbPlayer[y].setVisible(true);
 				sbPlayer[y].toFront();
-				if(y == myClientPosition){
+				if(myClient.getClientID() == players.get(y).getClientID()){
 					playerAvatars.add(circle);
 				}
 			}
@@ -512,15 +514,19 @@ public class GameController implements Initializable{
 		//handler für alle Avatars setzen, sobald ein Avatar gewählt wurde durch Click wird der Effekt gesetzt
 		//der Player kann jeweils nur einen Avatar wählen in der StartBox
 
+		
+		for(Player player : players){
+			if(myClient.getClientID() == player.getClientID()){
+				for(int i = 0; i < 3; i++){
+					sbPlayer[players.indexOf(player)].getChildren().get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
 
-		for(int i = 0; i < 3; i++){
-			sbPlayer[myClientPosition].getChildren().get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
-
-				@Override
-				public void handle(MouseEvent event) {
-					handleSelectetAvatar(event);
+					
+						public void handle(MouseEvent event) {
+							handleSelectetAvatar(event);
+						}
+					});
 				}
-			});
+			}
 		}
 	}
 
@@ -711,10 +717,11 @@ public class GameController implements Initializable{
 		game.setCards(cards);
 		game.setPlayers(players);
 		game.setWhat("spielzugBeendet");
+		game.setCurrentAvatarPositionID(currentAvatarPositionID);
+		
 
 
 		ClientThread.sendToServer(game);
-		//hier wird die methode sendToServer aufgerufen
 
 	}	
 
@@ -1146,6 +1153,8 @@ public class GameController implements Initializable{
 
 		GameController.selectetAvatar = selectetAvatar;
 		GameController.currentAvatarPosition = (HBox) selectetAvatar.getParent();
+		setCurrentAvatarPositionID(currentAvatarPosition.getId()); 
+		
 	}
 
 	public static Card getSelectetCard(){
@@ -1266,8 +1275,8 @@ public class GameController implements Initializable{
 
 	public static void updateGame(Game game){
 		GameController.game = game;
-		for(int i = 0; i < GameController.game.getPlayers().length; i++){
-			players.set(i, GameController.game.getPlayers()[i]);
+		for(int i = 0; i < game.getPlayers().length; i++){
+			players.set(i, game.getPlayers()[i]);
 		}
 		//update Tiles
 		startBoard = game.getStartBoard();
@@ -1276,6 +1285,8 @@ public class GameController implements Initializable{
 		//update currentPlayer
 		currentPlayer = game.getCurrentPlayer();
 		
+		currentAvatarPositionID = game.getCurrentAvatarPositionID();
+
 		Platform.runLater(new Runnable(){
 			public void run(){
 				//Tiles von startBoard Liste setzen
@@ -1286,6 +1297,8 @@ public class GameController implements Initializable{
 					countTile++;
 				}
 
+				
+				
 
 				//update numOfDeck
 				String numberOfDeck = String.valueOf(cards.size());
@@ -1302,6 +1315,11 @@ public class GameController implements Initializable{
 	}
 
 	protected static void updateTableview() {
+		playersData.clear();
+		for(Player player : players){
+			playersData.add(player);
+		}
+
 		scoreTable.getColumns().clear();
 		userNameColumn.setText("SpielerName");
 		scoreColumn.setText("Score");
@@ -1312,7 +1330,7 @@ public class GameController implements Initializable{
 
 		scoreTable.setItems(playersData);
 		scoreTable.getColumns().addAll(userNameColumn, scoreColumn, avatarColorColumn);
-		
+
 	}
 
 	public static void setGame(Game game){
@@ -1327,4 +1345,12 @@ public class GameController implements Initializable{
 		}
 	}
 	
+	public static void setCurrentAvatarPositionID(String currentAvatarPositionID){
+		GameController.currentAvatarPositionID = currentAvatarPositionID;
+	}
+	
+	public void moveOpponentAvatar(String currentAvatarPositionID){
+		//methode um Avatar vom Gegner zu bewegen.
+	}
+
 }

@@ -12,12 +12,13 @@ public class Game implements Serializable {
 	private static final long serialVersionUID = -2361871497549590976L;
 	private ImageContainer imageContainer;
 	private AvatarContainer avatarContainer;
-	private static Player[] players;
+	private Player[] players;
 	private ArrayList<Tile> startBoard;
 	private ArrayList<Card> cards;
 	private ArrayList<Tile> proformaStartGameBoard;
 	private Player currentPlayer;
 	private int currentPlayerPosition;
+	private String currentAvatarPositionID;
 
 	private String s;
 	private ArrayList<Player> al;
@@ -48,7 +49,7 @@ public class Game implements Serializable {
 			avatarContainer = new AvatarContainer();
 			cards = setStartMoveCards();
 			startBoard = setStartTiles();
-			players = new Player[session.getPlayers().length];
+			players = new Player[numOfPlayers];
 			players = session.getPlayers();
 			
 			for(int i = 0; i < players.length; i++){
@@ -288,10 +289,17 @@ public class Game implements Serializable {
 	}
 	
 	public void setPlayers(ArrayList<Player> playersList){
-		players = getSession().getPlayers(); 
 		for(int i = 0; i < playersList.size(); i++){
 			players[i] = playersList.get(i);
 		}
+	}
+	
+	public void setCurrentAvatarPositionID(String currentAvatarPositionID){
+		this.currentAvatarPositionID = currentAvatarPositionID;
+	}
+	
+	public String getCurrentAvatarPositionID(){
+		return this.currentAvatarPositionID;
 	}
 	
 }
