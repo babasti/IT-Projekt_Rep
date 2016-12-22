@@ -2,8 +2,6 @@ package common;
 
 import java.io.Serializable;
 
-import client.CreateAvatarID;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class Avatar implements Serializable {
