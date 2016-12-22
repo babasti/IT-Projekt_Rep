@@ -1312,8 +1312,11 @@ public class GameController implements Initializable{
 
 				//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
 				updateTableview();
-				
-				moveOpponentAvatar(boxID, selectetAvatarID);
+				try{
+					moveOpponentAvatar(boxID, selectetAvatarID);
+				}catch (IllegalArgumentException e){
+					System.out.println("Avatar ist bereits in der Box");
+				}
 
 			}
 		});

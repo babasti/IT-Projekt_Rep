@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
+import server.Server;
 import common.Game;
 import common.Player;
 import common.Session;
@@ -156,6 +156,16 @@ public class ClientThread implements Runnable, Serializable{
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+		}
+		finally{
+			try {		
+				LoginController.objectInputStream.close();
+				LoginController.objectOutputStream.close();
+				socket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
