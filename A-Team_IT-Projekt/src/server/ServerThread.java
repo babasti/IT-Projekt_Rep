@@ -59,6 +59,7 @@ public class ServerThread implements Serializable, Runnable{
 								names.add(p.getUserName());
 								if(g.getP().getUserName().equals(p.getUserName())){
 									p.setClientID(id);
+									p.setAlreadyLoggedIn(true);
 								}
 							}
 							//nur Login
