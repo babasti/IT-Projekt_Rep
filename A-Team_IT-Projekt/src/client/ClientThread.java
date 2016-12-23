@@ -73,25 +73,66 @@ public class ClientThread implements Runnable, Serializable{
 						}
 						if(game.getWhat().equals("spielLaden")){
 							startedSession = game.getSession();
+							ArrayList<String> names = new ArrayList<String>();
+							for(Player p:game.getSession().getPlayers()){
+								names.add(p.getUserName());
+							}
+							if(names.contains(Player.getPlayerID(this.getId()).getUserName())){
+								GameController.showGame();
 
-							GameController.showGame();
+								//schliesst das alte GUI
+								Platform.runLater(new Runnable(){
+									public void run(){
+										Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
+										stage1.close();
+									}
+								});
 
-							//schliesst das alte GUI
-							Platform.runLater(new Runnable(){
-								public void run(){
-									Stage stage1 = (Stage)LobbyController.offeneSitzungen.getScene().getWindow();
-									stage1.close();
+							}else{
+								String string = null;
+								for (int i = 0; i < LobbyController.offeneSitzungenList.size(); i++){
+									if(LobbyController.offeneSitzungenList.get(i).equals(game.getSession().getSessionName())){
+										string = LobbyController.offeneSitzungenList.get(i);
+									}
 								}
-							});
+								//wird hier nochmals übergeben, da stringToBeRemoved final sein muss
+								final String stringToBeRemoved = string;
+								Platform.runLater(new Runnable(){
+									public void run(){
+										LobbyController.offeneSitzungenList.remove(stringToBeRemoved);
+									}
+								});
+								// Session aus ArrayList <Session> openSessions löschen
+								Session sessionToBeRemoved = null;
+								for(int b = 0; b < LobbyController.openSessions.size(); b++){
+									if(LobbyController.openSessions.get(b).getSessionName().equals(game.getSession().getSessionName())){
+										sessionToBeRemoved = LobbyController.openSessions.get(b);
+									}
+								}
+								LobbyController.openSessions.remove(sessionToBeRemoved);
+								//Item aus ListView <String> offeneSitzungen löschen
+								for (int c = 0; c < LobbyController.offeneSitzungen.getItems().size();c++){
+									if (LobbyController.offeneSitzungen.getItems().get(c).equals(game.getSession().getSessionName())){
+										string = LobbyController.offeneSitzungen.getItems().get(c);
+									}
+								}
+								final String toBeRemoved = string;
+								Platform.runLater(new Runnable(){
+									public void run(){
+										LobbyController.offeneSitzungen.getItems().remove(toBeRemoved);
+									}
+								});
+							}
+							if(game.getWhat().equals("spielzugBeendet")){
+								GameController.updateGame(game);
 
-						}
-						if(game.getWhat().equals("spielzugBeendet")){
-							GameController.updateGame(game);
+							}
 
-						}
-						
-						if(game.getWhat().equals("gameOver")){
-							GameController.showResult(game);
+							if(game.getWhat().equals("gameOver")){
+								GameController.showResult(game);
+							}
+
+
 						}
 
 						//Wenn Lobby gestartet wird, erhält Client arrayList mit den offenen Sitzungen
@@ -161,16 +202,16 @@ public class ClientThread implements Runnable, Serializable{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-//		finally{
-//			try {		
-//				LoginController.objectInputStream.close();
-//				LoginController.objectOutputStream.close();
-//				socket.close();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		//		finally{
+		//			try {		
+		//				LoginController.objectInputStream.close();
+		//				LoginController.objectOutputStream.close();
+		//				socket.close();
+		//			} catch (IOException e) {
+		//				// TODO Auto-generated catch block
+		//				e.printStackTrace();
+		//			}
+		//		}
 	}
 
 	//sendet Objekt an Server

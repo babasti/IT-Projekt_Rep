@@ -70,7 +70,12 @@ public class ServerThread implements Serializable, Runnable{
 								sendToAllClients(new Game(Server.regPlayers, g.getP(), "spieler hat sich registriert"));
 								Server.arrayListToFile();
 							}					
-						}if(g.getWhat().equals("spiel gestartet")){							
+						}if(g.getWhat().equals("spiel gestartet")){	
+							for(int i=0; i<Server.openSessions.size();i++){
+								if(Server.openSessions.get(i).getSessionName().equals(g.getSession().getSessionName())){
+									Server.openSessions.remove(i);
+								}
+							}
 							Game game = new Game(g.getSession(), "spielLaden");
 							game.setSession(g.getSession());
 							sendToAllClients(game);
@@ -98,7 +103,7 @@ public class ServerThread implements Serializable, Runnable{
 							if(g.getCards().size() == 0){
 								g.setCards(g.setStartMoveCards());
 							}
-							
+
 							sendToAllClients(g);
 						}
 						if(g.getWhat().equals("gameOver")){
@@ -112,16 +117,16 @@ public class ServerThread implements Serializable, Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		finally{
-//			try {		
-//				objectInputStream.close();
-//				objectOutputStream.close();
-//				socket.close();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		//		finally{
+		//			try {		
+		//				objectInputStream.close();
+		//				objectOutputStream.close();
+		//				socket.close();
+		//			} catch (IOException e) {
+		//				// TODO Auto-generated catch block
+		//				e.printStackTrace();
+		//			}
+		//		}
 	}
 
 	public synchronized void sendToClient(Game g){
