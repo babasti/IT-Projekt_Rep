@@ -112,16 +112,16 @@ public class ServerThread implements Serializable, Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally{
-			try {		
-				objectInputStream.close();
-				objectOutputStream.close();
-				socket.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		finally{
+//			try {		
+//				objectInputStream.close();
+//				objectOutputStream.close();
+//				socket.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	public synchronized void sendToClient(Game g){
