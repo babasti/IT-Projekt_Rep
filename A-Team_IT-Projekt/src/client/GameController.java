@@ -949,7 +949,7 @@ public class GameController implements Initializable{
 		moveImages.get(count).setVisible(true);
 		int countCards = 0;
 
-		currentPlayer.getPlayerCards().add(cards.get(countCards));
+		myClient.getPlayerCards().add(cards.get(countCards));
 
 		Image img = new Image(FileProvider.getFileProvider().getFile(cards.get(countCards).getImage().getimagePath()));
 		moveImages.get(count).setImage(img);
@@ -976,9 +976,8 @@ public class GameController implements Initializable{
 	//passenden Tiles werden auch gehighlightet
 	public void showPossibleMove(MouseEvent event){
 		String selectetMoveCard = handleMoveCard(event);
-
-		String subString = selectetMoveCard.substring(8);
-		int moveCardPosition = Integer.parseInt(subString);
+		
+		int moveCardPosition = Integer.parseInt(selectetMoveCard.substring(8));
 
 		Card selectMoveCard = myClient.getPlayerCards().get(moveCardPosition-1);
 
@@ -1426,5 +1425,9 @@ public class GameController implements Initializable{
 	public static void close(){
 		Stage stage = ResourceProvider.getResourceProvider().getButtonStage(message);
 		stage.close();
+	}
+
+	public static Player getMyClient() {
+		return myClient;
 	}
 }

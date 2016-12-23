@@ -174,8 +174,12 @@ public class MoveAvatarController implements Initializable, Serializable {
 
 		//gespielte Bewegungskarte vom Player Array löschen und eine neue Karte aus dem Deck ziehen
 		//die neue Karte wird an der Position der gespielten Karte gesetzt
-		GameController.currentPlayer.playerCards.set(Integer.parseInt(selectetCardImageView.getId().substring(8))-1, GameController.cards.get(0));
-		GameController.moveImages.get(Integer.parseInt(selectetCardImageView.getId().substring(8))-1).setImage(new Image(FileProvider.getFileProvider().getFile(GameController.cards.get(0).getImage().getimagePath())));
+		
+		Card card =  GameController.cards.get(0);
+		int cardIndex = Integer.parseInt(selectetCardImageView.getId().substring(8))-1;
+		
+		GameController.getMyClient().playerCards.set(cardIndex, card);
+		GameController.moveImages.get(Integer.parseInt(selectetCardImageView.getId().substring(8))-1).setImage(new Image(FileProvider.getFileProvider().getFile(card.getImage().getimagePath())));
 		GameController.cards.remove(0);
 
 		GameController.numOfDeck.setText(String.valueOf(GameController.cards.size()));
