@@ -1322,6 +1322,8 @@ public class GameController implements Initializable{
 		for(int i = 0; i < game.getPlayers().length; i++){
 			players.set(i, game.getPlayers()[i]);
 		}
+		
+		currentPlayerPosition = game.getCurrentPlayerPosition();
 		//update Tiles
 		startBoard = game.getStartBoard();
 		//update cards (Deck)

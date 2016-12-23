@@ -1,29 +1,15 @@
 package server;
 
-import java.io.*;
-
-import client.ClientThread;
-import client.LobbyController;
-import common.Game;
-import common.Player;
-import common.Session;
-
-import java.lang.reflect.Array;
-import java.net.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.net.Socket;
+import java.util.ArrayList;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import common.Game;
+import common.Player;
+import common.Session;
 
 public class ServerThread implements Serializable, Runnable{
 

@@ -261,6 +261,10 @@ public class Game implements Serializable {
 		}
 	}
 	
+	public int getCurrentPlayerPosition(){
+		return this.currentPlayerPosition;
+	}
+	
 	public void setCurrentPlayerPosition(int currentPlayerPosition){
 		this.currentPlayerPosition = currentPlayerPosition;
 	}
