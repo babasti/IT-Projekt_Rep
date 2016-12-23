@@ -27,7 +27,7 @@ import common.Tile;
 
 
 //Diese Klasse wird benötigt um eine Spielfigur zu bewegen oder die Aktion
-//abzubrechen damit der Spieler nochmals eine figur und eine Karte wählen kann
+//abzubrechen damit der Spieler nochmals eine figur und eine Karte w�hlen kann
 
 public class MoveAvatarController implements Initializable, Serializable {
 
@@ -36,7 +36,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 	 */
 	private static final long serialVersionUID = -6388869005591116075L;
 	@FXML
-	Button b_SpielzugBestätigen;
+	Button b_SpielzugBest�tigen;
 	@FXML
 	Button b_SpielzugAbbruch;
 
@@ -84,7 +84,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 
 		if(currentAvatarPosition.getId().contains("sb_player")){
 			//die Figur wird auf das erste Tile aus der startBoard Liste gesetzt
-			//welches mit der ausgewählten Bewegungskarte übereinstimmt
+			//welches mit der ausgew�hlten Bewegungskarte übereinstimmt
 			for(int i = 0; i < startBoard.size(); i++){
 				if(startBoard.get(i).getColor().equals(selectetCard.getColor())){
 					if(tileBox.get(i).getChildren().isEmpty()){
@@ -151,7 +151,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 		}
 
 
-		//sobald die Figur gesetzt wurde, werden sämtliche Effekte zurückgesetzt
+		//sobald die Figur gesetzt wurde, werden s�mtliche Effekte zurückgesetzt
 		tileShadowMove = GameController.getTileShadow();
 		possibleTilesArrayMove = GameController.getPossibleTilesArray();
 		tileShadowMove.setChoke(0);
@@ -185,7 +185,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 		//damit wir weitere aktionen durchführen können, müssen die selectetAvatar
 		//und selectetCard auf null gesetzt werden
 		//somit haben wir eine Sicherheit bei der Abfrage ob wir einen Spielzug
-		//tätigen können
+		//t�tigen können
 
 		
 		GameController.setSelectetAvatarID(selectetAvatar.getId());
@@ -194,7 +194,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 		GameController.setSelectetCard();
 
 
-		Stage stage = (Stage)b_SpielzugBestätigen.getScene().getWindow();
+		Stage stage = (Stage)b_SpielzugBest�tigen.getScene().getWindow();
 		stage.close();
 	}
 

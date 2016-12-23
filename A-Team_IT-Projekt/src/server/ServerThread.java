@@ -30,9 +30,16 @@ public class ServerThread implements Serializable, Runnable{
 	private static final long serialVersionUID = 858159327570071613L;
 	private static Socket socket = null;
 	private static int id;
+	private ObjectInputStream objectInputStream;
 	ServerThread(Socket socket, int id){
 		this.socket = socket;
 		this.id = id;
+		try {
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void run(){
@@ -40,8 +47,8 @@ public class ServerThread implements Serializable, Runnable{
 		Object obj;
 		try{
 			while(true){
-				synchronized(Server.objectInputStream){
-					obj = Server.objectInputStream.readObject();
+				synchronized(objectInputStream){
+					obj = objectInputStream.readObject();
 					if(obj instanceof Game){
 						g = (Game)obj;
 						if(g.getWhat().equals("client id")){
@@ -117,7 +124,7 @@ public class ServerThread implements Serializable, Runnable{
 		}
 		finally{
 			try {		
-				Server.objectInputStream.close();
+				objectInputStream.close();
 				Server.objectOutputStream.close();
 				socket.close();
 			} catch (IOException e) {

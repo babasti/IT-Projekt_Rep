@@ -31,7 +31,6 @@ public class Server implements Serializable{
 	public static Session startedSession;
 	private ServerSocket serverSocket;
 	public static ObjectOutputStream objectOutputStream;
-	public static ObjectInputStream objectInputStream;
 
 	public static void main(String[] args) throws Exception{
 		new Server().runServer();
@@ -65,8 +64,7 @@ public class Server implements Serializable{
 			counter++;
 			try {
 				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-				objectOutputStream.flush();
-				objectInputStream = new ObjectInputStream(socket.getInputStream());	
+				objectOutputStream.flush();	
 				Server.openOutputStreams.add(objectOutputStream);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
