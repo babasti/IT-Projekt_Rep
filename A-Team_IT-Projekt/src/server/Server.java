@@ -30,7 +30,6 @@ public class Server implements Serializable{
 	public static ArrayList<Session> openSessions;
 	public static Session startedSession;
 	private ServerSocket serverSocket;
-	public static ObjectOutputStream objectOutputStream;
 
 	public static void main(String[] args) throws Exception{
 		new Server().runServer();
@@ -62,14 +61,7 @@ public class Server implements Serializable{
 		while(true){
 			Socket socket = serverSocket.accept();
 			counter++;
-			try {
-				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-				objectOutputStream.flush();	
-				Server.openOutputStreams.add(objectOutputStream);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			System.out.println("Connection from: "+socket.getRemoteSocketAddress());
 			System.out.println("Client Nr : "+counter);
 			ServerThread sThread = new ServerThread(socket, counter);

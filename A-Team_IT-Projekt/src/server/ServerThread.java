@@ -31,11 +31,15 @@ public class ServerThread implements Serializable, Runnable{
 	private static Socket socket = null;
 	private static int id;
 	private ObjectInputStream objectInputStream;
+	private ObjectOutputStream objectOutputStream;
 	ServerThread(Socket socket, int id){
 		this.socket = socket;
 		this.id = id;
 		try {
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			objectOutputStream.flush();	
+			Server.openOutputStreams.add(objectOutputStream);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,7 +129,7 @@ public class ServerThread implements Serializable, Runnable{
 		finally{
 			try {		
 				objectInputStream.close();
-				Server.objectOutputStream.close();
+				objectOutputStream.close();
 				socket.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -134,10 +138,10 @@ public class ServerThread implements Serializable, Runnable{
 		}
 	}
 
-	public synchronized static void sendToClient(Game g){
+	public synchronized void sendToClient(Game g){
 		try {
-			Server.objectOutputStream.writeObject(g);
-			Server.objectOutputStream.flush();
+			objectOutputStream.writeObject(g);
+			objectOutputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

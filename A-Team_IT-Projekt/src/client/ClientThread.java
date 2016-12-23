@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import server.Server;
+
 import common.Game;
 import common.Player;
 import common.Session;
