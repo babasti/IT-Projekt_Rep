@@ -1072,7 +1072,7 @@ public class GameController implements Initializable{
 			}
 		}
 		moveCard.setEffect(iShadow);
-		selectetCard = currentPlayer.getPlayerCards().get(Integer.parseInt(moveCardId.substring(8))-1);
+		selectetCard = myClient.getPlayerCards().get(Integer.parseInt(moveCardId.substring(8))-1);
 		selectetCardImageView = moveCard;
 		possibleTilesArray = new ArrayList<ImageView>();
 		for(int i = 0; i < startBoard.size(); i++){
