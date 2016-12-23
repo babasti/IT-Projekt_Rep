@@ -518,13 +518,13 @@ public class GameController implements Initializable{
 		//handler für alle Avatars setzen, sobald ein Avatar gewählt wurde durch Click wird der Effekt gesetzt
 		//der Player kann jeweils nur einen Avatar wählen in der StartBox
 
-		
+
 		for(Player player : players){
 			if(myClient.getClientID() == player.getClientID()){
 				for(int i = 0; i < 3; i++){
 					sbPlayer[players.indexOf(player)].getChildren().get(i).setOnMouseClicked(new EventHandler<MouseEvent>(){
 
-					
+
 						public void handle(MouseEvent event) {
 							handleSelectetAvatar(event);
 						}
@@ -711,6 +711,15 @@ public class GameController implements Initializable{
 
 	// Player beendet seinen spielzug und das Game Objekt wird an den Server gesendet
 	// und vom Server zu den anderen Clients
+	public static void sendGameOver(){
+		game.setStartBoard(startBoard);
+		game.setCards(cards);
+		game.setPlayers(players);
+		game.setWhat("gameOver");
+
+		ClientThread.sendToServer(game);
+	}
+
 	public void finishTurn(){
 		setCurrentPlayerPosition();
 		setCurrentPlayer();
@@ -723,7 +732,7 @@ public class GameController implements Initializable{
 		game.setWhat("spielzugBeendet");
 		game.setCurrentAvatarPositionID(boxID);
 		game.setSelectetAvatarID(selectetAvatarID);
-		
+
 
 
 		ClientThread.sendToServer(game);
@@ -1158,7 +1167,7 @@ public class GameController implements Initializable{
 
 		GameController.selectetAvatar = selectetAvatar;
 		GameController.currentAvatarPosition = (HBox) selectetAvatar.getParent();
-		
+
 	}
 
 	public static Card getSelectetCard(){
@@ -1276,6 +1285,37 @@ public class GameController implements Initializable{
 		});	
 	}
 
+	public static void showResult(Game game){
+		GameController.game = game;
+		for(int i = 0; i < game.getPlayers().length; i++){
+			players.set(i, game.getPlayers()[i]);
+		}
+		//update Tiles
+		startBoard = game.getStartBoard();
+		//update cards (Deck)
+		cards = game.getCards();
+
+
+		Platform.runLater(new Runnable(){
+			public void run(){
+				int countTile = 0;
+				for(int i = 0; i < startBoard.size(); i++){
+					Image img = new Image(FileProvider.getFileProvider().getFile(startBoard.get(i).getImage().getimagePath()));
+					tileImages[countTile].setImage(img);
+					countTile++;
+				}
+
+				//update numOfDeck
+				String numberOfDeck = String.valueOf(cards.size());
+				numOfDeck.setText(numberOfDeck);
+
+				//die Score Tabelle wird aktualisiert mit den entsprechenden Punkten
+				updateTableview();
+				Client.loadResult();
+			}
+		});
+	}
+
 
 	public static void updateGame(Game game){
 		GameController.game = game;
@@ -1288,9 +1328,9 @@ public class GameController implements Initializable{
 		cards = game.getCards();
 		//update currentPlayer
 		currentPlayer = game.getCurrentPlayer();
-		
+
 		boxID = game.getCurrentAvatarPositionID();
-		
+
 		selectetAvatarID = game.getSelectetAvatarID();
 
 		Platform.runLater(new Runnable(){
@@ -1352,17 +1392,23 @@ public class GameController implements Initializable{
 			setMessage(currentPlayer.getUserName()+" ist dran!");
 		}
 	}
-	
+
 	public static void setBoxID(String currentAvatarPositionID){
 		GameController.boxID = currentAvatarPositionID;
 	}
-	
+
 	public static void moveOpponentAvatar(String currentAvatarPositionID, String selectetAvatarID){
 		for(Circle circle : totalCircle){
 			if(circle.getId().equals(selectetAvatarID)){
-				tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).getChildren().add(circle);
-				tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).setVisible(true);
-				tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).toFront();
+				if(currentAvatarPositionID.contains("eb_player")){
+					ebPlayer[Integer.parseInt(currentAvatarPositionID.substring(9))-1].getChildren().add(circle);
+					ebPlayer[Integer.parseInt(currentAvatarPositionID.substring(9))-1].setVisible(true);
+					ebPlayer[Integer.parseInt(currentAvatarPositionID.substring(9))-1].toFront();
+				}else{
+					tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).getChildren().add(circle);
+					tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).setVisible(true);
+					tileBox.get(Integer.parseInt(currentAvatarPositionID.substring(7))-1).toFront();
+				}
 			}
 		}
 	}
@@ -1375,4 +1421,8 @@ public class GameController implements Initializable{
 		GameController.selectetAvatarID = selectetAvatarID;
 	}
 
+	public static void close(){
+		Stage stage = ResourceProvider.getResourceProvider().getButtonStage(message);
+		stage.close();
+	}
 }

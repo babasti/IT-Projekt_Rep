@@ -1,7 +1,10 @@
 package client;
 
-import java.io.InputStream;
 import java.net.URL;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 
 
@@ -20,5 +23,9 @@ public class ResourceProvider {
 	
 	public URL getResource(String path){
 		return getClass().getResource(path);
+	}
+	
+	public Stage getButtonStage(Label label){
+		return (Stage)label.getScene().getWindow();
 	}
 }

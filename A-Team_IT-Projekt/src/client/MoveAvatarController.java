@@ -246,16 +246,7 @@ public class MoveAvatarController implements Initializable, Serializable {
 	}
 
 	public void switchToResult(){
-		try{
-			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Result.fxml"));
-			Pane rootPane = (Pane) fxmlloader.load();
-			Stage stage = new Stage();
-			stage.setResizable(false);
-			stage.setScene(new Scene(rootPane));
-			stage.show();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+		GameController.sendGameOver();
 	}
 
 	public static HBox[] getEbPlayer(){

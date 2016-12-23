@@ -28,8 +28,18 @@ public class Client extends Application implements Serializable{
 		}
 	}
 	
-	public static void startLoadGame(){
-		loadGame();
+	
+	public static void loadResult(){
+		
+		try{
+			Pane pane = FXMLLoader.load(ResourceProvider.getResourceProvider().getResource("Result.fxml"));
+			Stage stage = new Stage();
+			stage.setResizable(false);
+			stage.setScene(new Scene(pane));
+			stage.show();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public static void loadGame(){
