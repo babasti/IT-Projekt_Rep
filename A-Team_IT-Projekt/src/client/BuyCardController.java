@@ -47,11 +47,11 @@ public class BuyCardController implements Initializable{
 			message.setText("Im Deck hat es weniger als "+numOfCards+" Karten");
 			setMessageLayout();
 		}else{
-			if(currentPlayer.getScore() < costs){
+			if(GameController.getMyClient().getScore() < costs){
 				message.setText("Du hast zu wenig Punkte um "+numOfCards+" zu kaufen!");
 				setMessageLayout();
 			}else{
-				currentPlayer.subFromScore(costs);
+				GameController.getMyClient().subFromScore(costs);
 				//count startet bei 5 weil die zusätzliche Karte 
 				//ab moveCard6 hinzugefügt werden sollen
 				for(int i = 0; i < numOfCards; i++){
