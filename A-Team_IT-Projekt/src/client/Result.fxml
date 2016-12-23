@@ -19,7 +19,7 @@
             <Font size="53.0" />
          </font>
       </Label>
-      <Button fx:id="b_BackToLobby" layoutX="217.0" layoutY="290.0" mnemonicParsing="false" onAction="#backToLobby" text="zur Lobby">
+      <Button fx:id="b_BackToLobby" layoutX="217.0" layoutY="290.0" mnemonicParsing="false" onAction="#backToLobby" text="Spiel beenden!">
          <font>
             <Font size="29.0" />
          </font>

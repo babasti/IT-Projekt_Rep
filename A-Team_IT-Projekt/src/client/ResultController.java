@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import common.Player;
 
 public class ResultController implements Initializable{
@@ -40,24 +40,7 @@ public class ResultController implements Initializable{
 
 	public void backToLobby(){
 
-		try{
-			//Weiterleitung in Lobby	
-			FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
-			Pane lobbyPane = (Pane)fxmlloader.load();
-			Stage stage = new Stage();
-			stage.setResizable(false);
-			stage.setScene(new Scene(lobbyPane));
-			stage.show();
-
-
-			GameController.close();
-			Stage stage1 = (Stage)b_BackToLobby.getScene().getWindow();
-			stage1.close();
-
-		}catch(Exception e){
-			e.printStackTrace();
-
-		}
+		Platform.exit();
 
 	}
 
@@ -83,7 +66,7 @@ public class ResultController implements Initializable{
 			}
 		}
 		
-		l_winner.setText(winner.getUserName() +" ist der Sieger mit\n"+ winner.getScore()+" Punkte\nGlückwunsch Brate!");
+		l_winner.setText(winner.getUserName() +" ist der Sieger mit\n"+ winner.getScore()+" Punkte\nGlückwunsch!");
 		l_winner.setTextFill(Color.RED);
 		l_winner.setFont(Font.font(25));
 	}
